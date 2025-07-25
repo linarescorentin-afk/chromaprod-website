@@ -1,78 +1,143 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import VideoComponent from "./VideoComponent";
+import { useEffect, useState } from "react";
 import PhotoComponent from "./PhotoComponent";
-
-type ScrollSide = "basic" | "left" | "right";
+import VideoComponent from "./VideoComponent";
+import {
+  animate,
+  motion,
+  percent,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
+import Image from "next/image";
 
 export default function HomeComponent() {
-  const leftRef = useRef<HTMLDivElement>(null);
-  const rightRef = useRef<HTMLDivElement>(null);
+  const dragX = useMotionValue(0);
+  const [widthPercent, setWidthPercent] = useState(0);
+  const [screenWidth, setScreenWidth] = useState<number | null>(null);
+  const [isLocked, setIsLocked] = useState(true);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
+  const [isPhotoVisible, setIsPhotoVisible] = useState(false);
 
-  const [scrollY, setScrollY] = useState(0);
-  const [activeSide, setActiveSide] = useState<ScrollSide>("basic");
-
-  const maxScroll = 150;
-  const progress = Math.min(scrollY / maxScroll, 1);
-
-  const getWidth = (side: "left" | "right") => {
-    if (activeSide === "basic") return "50%";
-    if (activeSide === side) return `${50 + progress * 50}%`;
-    return `${50 - progress * 50}%`;
-  };
-
+  // ✅ Récupère la largeur de l’écran après le montage (côté client)
   useEffect(() => {
-    const el = leftRef.current;
-    const handleScroll = () => {
-      if (!el) return;
-      const top = el.scrollTop;
-      setScrollY(top);
-      setActiveSide("left");
-    };
-    el?.addEventListener("scroll", handleScroll);
-    return () => el?.removeEventListener("scroll", handleScroll);
-  }, []);
+    setScreenWidth(window.innerWidth);
 
-  useEffect(() => {
-    const el = rightRef.current;
-    const handleScroll = () => {
-      if (!el) return;
-      const top = el.scrollTop;
-      setScrollY(top);
-      setActiveSide("right");
-      if (top === 0) setActiveSide("basic");
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+
+    // On centre la barre au montage
+    dragX.set(window.innerWidth / 2);
+
+    // Écoute dragX pour calculer le % en direct
+    const unsubscribe = dragX.on("change", (latest) => {
+      if (screenWidth) {
+        const percent = (latest / screenWidth) * 100;
+        setWidthPercent(Math.round(percent));
+        console.log(`Width: ${percent.toFixed(1)}%`);
+
+        // ✅ lock tant qu’on est entre 1% et 98%
+        if (percent > 1 && percent < 98) {
+          setIsLocked(true);
+        } else {
+          setIsLocked(false);
+        }
+        if (percent >= 98) {
+          setIsVideoVisible(true);
+        } else {
+          setIsVideoVisible(false);
+        }
+
+        if (percent <= 1) {
+          setIsPhotoVisible(true);
+        } else {
+          setIsPhotoVisible(false);
+        }
+      }
+    });
+
+    console.log(percent);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      unsubscribe();
     };
-    el?.addEventListener("scroll", handleScroll);
-    return () => el?.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [dragX, screenWidth]);
+
+  // ✅ Fonction pour “auto-drag” la barre
+  function moveBarTo(target: "video" | "photo") {
+    if (!screenWidth) return;
+    const min = screenWidth * 0.01;
+    const max = screenWidth * 0.98;
+
+    const targetX = target === "video" ? max : min;
+
+    // ✅ Framer Motion anime automatiquement la value
+    animate(dragX, targetX, {
+      type: "spring",
+      stiffness: 200,
+      damping: 30,
+    });
+  }
+
+  // ✅ Clamp la largeur SEULEMENT si screenWidth est défini
+  const clampedWidth = useTransform(dragX, (x) => {
+    if (!screenWidth) return x; // le temps que le SSR soit hydraté
+    const min = screenWidth * 0.01;
+    const max = screenWidth * 0.98;
+    return Math.min(Math.max(x, min), max);
+  });
 
   return (
-    <div className="w-screen h-screen relative overflow-hidden font-sans">
-      {/* Left Panel */}
-      <div
-        ref={leftRef}
-        className={`absolute top-0 left-0 h-full bg-black text-white scroll-smooth overflow-y-scroll no-scrollbar transition-all duration-300 ease-in-out p-5 ${
-          activeSide === "right" ? "z-0" : "z-10"
-        }`}
-        style={{ width: getWidth("left") }}
+    <div className={``}>
+      {/* SECTION VIDEO */}
+      <motion.div
+        className="absolute top-0 bg-black z-10 overflow-x-hidden"
+        style={{ width: clampedWidth }}
       >
-        <VideoComponent />
-        <div className="h-[200vh]" />
-      </div>
+        <VideoComponent isVideoVisible={isVideoVisible} moveBarTo={moveBarTo} />
+      </motion.div>
 
-      {/* Right Panel */}
-      <div
-        ref={rightRef}
-        className={`absolute top-0 right-0 h-full bg-neutral-900 text-white scroll-smooth overflow-x-scroll no-scrollbar transition-all duration-300 ease-in-out p-5 pl-0 w-full `}
+      {/* SECTION PHOTO */}
+      <PhotoComponent isPhotoVisible={isPhotoVisible} moveBarTo={moveBarTo} />
+
+      {/* BARRE DRAGGABLE */}
+      <motion.div
+        drag="x"
+        dragConstraints={{
+          left: screenWidth ? screenWidth * 0.01 : 0,
+          right: screenWidth ? screenWidth * 0.99 : 1000,
+        }}
+        onDrag={(e, info) => {
+          if (!screenWidth) return;
+          const min = screenWidth * 0.01;
+          const max = screenWidth * 0.98;
+          dragX.set(Math.min(Math.max(info.point.x, min), max));
+        }}
+        style={{ x: dragX }}
+        className="fixed top-0 h-screen w-[30px] cursor-ew-resize z-50 flex justify-start"
       >
-        <PhotoComponent />
-        <div className="h-[200vh]" />
-      </div>
+        <div className="h-full w-[2px] bg-red-600" />
+        <Image
+          src="/doublearrow.svg"
+          height={100}
+          width={100}
+          alt="arrow"
+          className="absolute transform -translate-x-7 -translate-y-1/2 top-10 left-1/2 pointer-events-none"
+        />
+        <Image
+          src="/doublearrow.svg"
+          height={100}
+          width={100}
+          alt="arrow"
+          className="absolute transform -translate-x-7 -translate-y-1/2 bottom-10 left-1/2 pointer-events-none"
+        />
+      </motion.div>
 
-      {/* Debug Panel */}
-      <div className="absolute bottom-4 left-4 bg-white text-black px-3 py-1 rounded text-sm z-50 shadow">
-        ScrollY: {scrollY.toFixed(0)}px | Active: {activeSide}
+      {/* ✅ Debug affichage largeur */}
+      <div className="fixed bottom-4 left-4 bg-white text-black px-3 z-20 py-1 rounded shadow">
+        Largeur section vidéo: {widthPercent}%
       </div>
     </div>
   );

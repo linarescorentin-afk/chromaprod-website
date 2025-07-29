@@ -100,7 +100,7 @@ export default function HomeComponent() {
       </motion.div>
 
       {/* SECTION PHOTO */}
-      <PhotoComponent isPhotoVisible={isPhotoVisible} moveBarTo={moveBarTo} />
+      {/* <PhotoComponent isPhotoVisible={isPhotoVisible} moveBarTo={moveBarTo} /> */}
 
       {/* BARRE DRAGGABLE */}
       <motion.div

@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
-import { Oswald } from "next/font/google";
+import { Karantina, Karla } from "next/font/google";
 import "./globals.css";
+import NavBar from "@/components/navigation/NavBar";
 
-const oswald = Oswald({
-  variable: "--font-oswald",
+const karantina = Karantina({
+  variable: "--font-karantina",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const karla = Karla({
+  variable: "--font-karla",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -21,7 +29,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${oswald.variable} antialiased`}>{children}</body>
+      <body className={`${karla.variable} ${karantina.variable} antialiased`}>
+        <NavBar />
+        {children}
+      </body>
     </html>
   );
 }

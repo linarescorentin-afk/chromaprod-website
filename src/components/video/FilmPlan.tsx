@@ -1,3 +1,4 @@
+import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
@@ -7,6 +8,7 @@ export default function FilmPlan({
   texture,
   planeWidth,
   planeHeight,
+  shiftRef,
 }: {
   position: [number, number, number];
   registerMaterial: (
@@ -15,11 +17,14 @@ export default function FilmPlan({
   texture: THREE.Texture;
   planeWidth: number;
   planeHeight: number;
+  shiftRef: React.MutableRefObject<number>;
 }) {
   const materialRef = useRef<{
     shift: number;
     parallax: number | null;
     map: THREE.Texture | null;
+    time: number;
+    noiseStrength: number;
   } | null>(null);
 
   // ✅ on “donne” le ref au parent
@@ -30,10 +35,24 @@ export default function FilmPlan({
     }
   }, [registerMaterial, texture]);
 
+  useFrame((state) => {
+    if (materialRef.current) {
+      // ✅ update time pour animer la neige
+      materialRef.current.time = state.clock.elapsedTime;
+
+      // ✅ plus on scroll, plus la neige est intense (jusqu’à 0.4)
+      materialRef.current.noiseStrength = Math.max(
+        0.2,
+        Math.min(0.6, shiftRef.current),
+      );
+      // ✅ envoie aussi shift pour le reste (si besoin)
+      materialRef.current.shift = shiftRef.current;
+    }
+  });
   return (
     <mesh position={position}>
       <planeGeometry args={[planeWidth, planeHeight, 64, 64]} />
-      <filmEffectMaterial ref={materialRef} color="white" />
+      <filmEffectMaterial ref={materialRef} />
     </mesh>
   );
 }

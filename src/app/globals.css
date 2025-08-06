@@ -8,7 +8,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-oswald: var(--font-oswald);
+  --font-karantina: var(--font-karantina);
+  --font-karla: var(--font-karla);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,4 +35,8 @@ body {
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
+}
+
+canvas + div::-webkit-scrollbar {
+  display: none;
 }

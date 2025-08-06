@@ -3,22 +3,16 @@
 import { useEffect, useState } from "react";
 import PhotoComponent from "./PhotoComponent";
 import VideoComponent from "./VideoComponent";
-import {
-  animate,
-  motion,
-  percent,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
 
 export default function HomeComponent() {
   const dragX = useMotionValue(0);
-  const [widthPercent, setWidthPercent] = useState(0);
+  const [widthPercent, setWidthPercent] = useState(50);
   const [screenWidth, setScreenWidth] = useState<number | null>(null);
   const [isLocked, setIsLocked] = useState(true);
-  const [isVideoVisible, setIsVideoVisible] = useState(false);
-  const [isPhotoVisible, setIsPhotoVisible] = useState(false);
+  const [isVideoVisible, setIsVideoVisible] = useState(true);
+  const [isPhotoVisible, setIsPhotoVisible] = useState(true);
 
   // ✅ Récupère la largeur de l’écran après le montage (côté client)
   useEffect(() => {
@@ -35,7 +29,6 @@ export default function HomeComponent() {
       if (screenWidth) {
         const percent = (latest / screenWidth) * 100;
         setWidthPercent(Math.round(percent));
-        console.log(`Width: ${percent.toFixed(1)}%`);
 
         // ✅ lock tant qu’on est entre 1% et 98%
         if (percent > 1 && percent < 98) {
@@ -44,20 +37,18 @@ export default function HomeComponent() {
           setIsLocked(false);
         }
         if (percent >= 98) {
-          setIsVideoVisible(true);
+          setIsPhotoVisible(false);
         } else {
-          setIsVideoVisible(false);
+          setIsPhotoVisible(true);
         }
 
         if (percent <= 1) {
-          setIsPhotoVisible(true);
+          setIsVideoVisible(false);
         } else {
-          setIsPhotoVisible(false);
+          setIsVideoVisible(true);
         }
       }
     });
-
-    console.log(percent);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -90,17 +81,25 @@ export default function HomeComponent() {
   });
 
   return (
-    <div className={``}>
+    <div>
       {/* SECTION VIDEO */}
       <motion.div
         className="absolute top-0 bg-black z-10 overflow-x-hidden"
         style={{ width: clampedWidth }}
       >
-        <VideoComponent isVideoVisible={isVideoVisible} moveBarTo={moveBarTo} />
+        <VideoComponent
+          isVideoVisible={isVideoVisible}
+          moveBarTo={moveBarTo}
+          widthPercent={widthPercent}
+        />
       </motion.div>
 
       {/* SECTION PHOTO */}
-      {/* <PhotoComponent isPhotoVisible={isPhotoVisible} moveBarTo={moveBarTo} /> */}
+      <PhotoComponent
+        isPhotoVisible={isPhotoVisible}
+        moveBarTo={moveBarTo}
+        widthPercent={widthPercent}
+      />
 
       {/* BARRE DRAGGABLE */}
       <motion.div
@@ -118,27 +117,27 @@ export default function HomeComponent() {
         style={{ x: dragX }}
         className="fixed top-0 h-screen w-[30px] cursor-ew-resize z-50 flex justify-start"
       >
-        <div className="h-full w-[2px] bg-red-600" />
+        <div className="h-full w-[2px] bg-red-500 hover:bg-red-600 hover:scale-150 transform transition-all duration-300 ease-in-out" />
         <Image
           src="/doublearrow.svg"
           height={100}
           width={100}
           alt="arrow"
-          className="absolute transform -translate-x-7 -translate-y-1/2 top-10 left-1/2 pointer-events-none"
+          className="absolute transform -translate-x-[29px] -translate-y-1/2 top-10 left-1/2 pointer-events-none"
         />
         <Image
           src="/doublearrow.svg"
           height={100}
           width={100}
           alt="arrow"
-          className="absolute transform -translate-x-7 -translate-y-1/2 bottom-10 left-1/2 pointer-events-none"
+          className="absolute transform -translate-x-[29px] -translate-y-1/2 bottom-10 left-1/2 pointer-events-none"
         />
       </motion.div>
 
       {/* ✅ Debug affichage largeur */}
-      <div className="fixed bottom-4 left-4 bg-white text-black px-3 z-20 py-1 rounded shadow">
+      {/* <div className="fixed bottom-4 left-4 bg-white text-black px-3 z-20 py-1 rounded shadow">
         Largeur section vidéo: {widthPercent}%
-      </div>
+      </div> */}
     </div>
   );
 }

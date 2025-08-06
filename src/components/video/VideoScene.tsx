@@ -6,11 +6,20 @@ import { useEffect, useRef, useState } from "react";
 import { TextureLoader } from "three";
 import FilmPlan from "./FilmPlan";
 import "./materials/filmEffectMaterial";
+import * as THREE from "three";
+import { IVideo } from "../VideoComponent";
 
-function VideoScene() {
-  const [windowWidth, setWindowWidth] = useState<number>(0);
+function VideoScene({
+  widthPercent,
+  videos,
+}: {
+  widthPercent: number;
+  videos: IVideo[];
+}) {
+  // ✅ Référence pour le scroll
   const scroll = useScroll();
-  const planes = [0, -4.5, -9, -13.5];
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+
   const materials = useRef<
     ({ shift: number; parallax: number | null } | null)[]
   >([]);
@@ -29,21 +38,19 @@ function VideoScene() {
 
   // ✅ Détecte si on est sur mobile ou desktop
   const isMobile = windowWidth < 768;
+  const isTablet = windowWidth >= 768 && windowWidth < 1200;
+
+  const spacing = isMobile ? 4.7 : isTablet ? 4.7 : 4.65;
 
   // 📐 Taille des plans : horizontaux sur desktop, verticaux sur mobile
-  const baseWidth = 7;
-  const baseHeight = isMobile ? 7.8 : 3.8;
+  const planeWidth = isMobile ? 4.2 : isTablet ? 5.7 : 7;
+  const planeHeight = isMobile ? 3 : isTablet ? 4.1 : 4.2;
 
-  const scaleFactor = windowWidth / 1440; // 1440px = largeur de référence desktop
-  const planeWidth = baseWidth * scaleFactor;
-  const planeHeight = baseHeight * scaleFactor;
   // ✅ Textures
-  const textures = useLoader(TextureLoader, [
-    "/ph1.jpg",
-    "/ph3.jpg",
-    "/ph4.jpeg",
-    "/ph5.jpeg",
-  ]);
+  const textures = useLoader(
+    TextureLoader,
+    videos.map((video) => video.thumbnail),
+  );
 
   // ✅ Variables pour le bombé
   const lastOffset = useRef(0);
@@ -67,28 +74,50 @@ function VideoScene() {
     // ✅ bombage direct en fonction du scroll
     materials.current.forEach((mat, i) => {
       if (mat) {
-        mat.shift = currentShift.current * 0.5;
-        const localParallax = scroll.offset - i * 0.25;
-        mat.parallax = localParallax;
+        mat.shift = currentShift.current * 1.4;
+
+        // ✅ scroll relatif : on “ramène” le scroll sur la zone de cette image
+        const relativeScroll = scroll.offset * (textures.length - 1) - i;
+
+        // ✅ parallax toujours centré sur l’image
+        const parallaxIntensity = 0.3; // à ajuster
+        const relativeOffset = relativeScroll * parallaxIntensity;
+
+        mat.parallax = relativeOffset;
       }
     });
   });
 
   return (
     <Scroll>
-      {planes.map((posY, i) => (
-        <FilmPlan
-          key={i}
-          position={[0, posY, 0]}
-          registerMaterial={(ref) => {
-            if (ref && ref.parallax == null) ref.parallax = 0;
-            materials.current[i] = ref;
-          }}
-          texture={textures[i]}
-          planeWidth={planeWidth}
-          planeHeight={planeHeight}
-        />
-      ))}
+      {textures.map((texture, i) => {
+        const scaleMax = 1.02;
+
+        // ✅ valeur par défaut : scale au max
+        let smoothScale = scaleMax;
+
+        if (widthPercent > 50) {
+          // calcule un facteur entre 0 (à 50%) et 1 (à 100%)
+          const t = (widthPercent - 50) / 50;
+
+          // ✅ on lerp de 1.2 (scaleMax) vers 0.98 au fur et à mesure que widthPercent augmente
+          smoothScale = THREE.MathUtils.lerp(scaleMax, 0.98, t);
+        }
+        return (
+          <FilmPlan
+            key={i}
+            position={[0, -i * spacing, 0]}
+            registerMaterial={(ref) => {
+              if (ref && ref.parallax == null) ref.parallax = 0;
+              materials.current[i] = ref;
+            }}
+            shiftRef={currentShift}
+            texture={texture}
+            planeWidth={planeWidth * smoothScale}
+            planeHeight={planeHeight * smoothScale}
+          />
+        );
+      })}
     </Scroll>
   );
 }

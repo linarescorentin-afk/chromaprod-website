@@ -1,8 +1,18 @@
 import { ScrollControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PhotoScene from "./photo/PhotoScene";
 import SwitchButton from "./ui/SwitchButton";
+import { getPhotos } from "@/sanity/lib/getPhotos";
+
+export interface IPhoto {
+  image: string;
+  date: string | null;
+  client: string | null;
+  name: string | null;
+  formats: "horizontal" | "vertical";
+  categories: string[];
+}
 
 function PhotoComponent({
   isPhotoVisible,
@@ -14,18 +24,23 @@ function PhotoComponent({
   widthPercent: number;
 }) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const photos = useMemo(
-    () => [
-      "/ph1.jpg",
-      "/ph3.jpg",
-      "/ph4.jpeg",
-      "/ph5.jpeg",
-      "/ph6.jpeg",
-      "/ph7.jpeg",
-      "/ph8.jpeg",
-    ],
-    [],
-  );
+
+  const [photosFetched, setPhotos] = useState<IPhoto[]>([]);
+
+  useEffect(() => {
+    async function load() {
+      const data = await getPhotos();
+      setPhotos(data);
+    }
+    load();
+  }, []);
+
+  console.log("Photos fetched:", photosFetched);
+
+  if (!photosFetched.length) {
+    return <div className="text-white p-4">Chargement des photos...</div>;
+  }
+
   return (
     <div className="h-screen w-screen">
       <Canvas
@@ -33,25 +48,39 @@ function PhotoComponent({
         frameloop={isPhotoVisible ? "always" : "demand"}
       >
         <color attach="background" args={["#111"]} />
-        <ScrollControls pages={8} damping={0.5}>
+        <ScrollControls
+          pages={photosFetched.length + 0.85 + photosFetched.length * 0.025}
+          damping={0.5}
+        >
           <PhotoScene
-            photos={photos}
+            photos={photosFetched}
             selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}
             widthPercent={widthPercent}
           />
         </ScrollControls>
       </Canvas>
+
       {/* ✅ Overlay HTML */}
       {selectedIndex !== null && (
         <div className="fixed top-0 text-sm uppercase pointer-events-none left-0 flex flex-col items-start  justify-between z-50 transition-opacity duration-300 w-screen h-screen px-16 py-32 font-karla">
-          <div className="text-white  w-full flex justify-between ">
-            <h2 className=" font-karantina text-4xl mb-2">Photo</h2>
-            <p className="">scroll to close</p>
+          <div
+            className={`text-white   w-full flex ${photosFetched[selectedIndex].name ? "justify-between" : "justify-end"}`}
+          >
+            {photosFetched[selectedIndex].name && (
+              <h2 className=" font-karantina text-4xl mb-2">
+                {photosFetched[selectedIndex].name}
+              </h2>
+            )}
+            <p className="text-base">Scroll or click to close</p>
           </div>
           <div className="w-full  flex justify-between items-center">
-            <p>date de la photo</p>
-            <p>Noms du client</p>
+            {photosFetched[selectedIndex].date && (
+              <p>{photosFetched[selectedIndex].date}</p>
+            )}
+            {photosFetched[selectedIndex].client && (
+              <p>{photosFetched[selectedIndex].client}</p>
+            )}
           </div>
         </div>
       )}

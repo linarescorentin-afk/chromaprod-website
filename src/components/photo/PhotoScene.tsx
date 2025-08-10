@@ -11,8 +11,9 @@ import React, {
 import { TextureLoader } from "three";
 import PhotoPlane from "./PhotoPlane";
 import * as THREE from "three";
+import { IPhoto } from "../PhotoComponent";
 interface IProps {
-  photos: string[];
+  photos: IPhoto[];
   selectedIndex: number | null;
   setSelectedIndex: Dispatch<SetStateAction<number | null>>;
   widthPercent: number;
@@ -45,20 +46,17 @@ function PhotoScene({
   const isMobile = windowWidth < 728;
   const isTablet = windowWidth >= 728 && windowWidth < 1224;
   // 🖼️ Charge tes images
-  const textures = useLoader(TextureLoader, [...photos]);
+  const textures = useLoader(TextureLoader, [
+    ...photos.map((photo) => photo.image),
+  ]);
 
   // 📐 Infos sur les formats → tu peux adapter selon tes vraies images
-  const formats: ("horizontal" | "vertical")[] = [
-    "horizontal", // ph1
-    "vertical", // ph3
-    "horizontal", // ph4
-    "horizontal", // ph5
-    "vertical", // ph6
-    "horizontal", // ph7
-  ];
+  const formats: ("horizontal" | "vertical")[] = photos.map(
+    (photo) => photo.formats,
+  );
 
   // 📏 Dimensions de base
-  const baseWidth = isMobile ? 4.2 : isTablet ? 6 : 8;
+  const baseWidth = isMobile ? 4.2 : isTablet ? 6 : 7;
   const baseHeight = isMobile ? 3 : isTablet ? 4 : 5;
   const baseHeightVertical = isMobile ? 4.5 : isTablet ? 5 : 6.5;
 

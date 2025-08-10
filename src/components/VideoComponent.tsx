@@ -8,8 +8,10 @@ import SwitchButton from "./ui/SwitchButton";
 export interface IVideo {
   title: string;
   description: string;
-  src: string;
+  video: string;
   thumbnail: string;
+  clientName?: string;
+  categories: string[];
 }
 
 function VideoComponent({
@@ -26,44 +28,58 @@ function VideoComponent({
       {
         title: "Video 1",
         description: "Description of Video 1",
-        src: "/video1.mp4",
+        video: "/video1.mp4",
         thumbnail: "/ph1.jpg",
+        clientName: "Client 1",
+        categories: ["Category 1", "Category 2"],
       },
       {
         title: "Video 2",
         description: "Description of Video 2",
-        src: "/video2.mp4",
+        video: "/video2.mp4",
         thumbnail: "/ph3.jpg",
+        clientName: "Client 2",
+        categories: ["Category 2", "Category 3"],
       },
       {
         title: "Video 3",
         description: "Description of Video 3",
-        src: "/video3.mp4",
+        video: "/video3.mp4",
         thumbnail: "/ph4.jpeg",
+        clientName: "Client 3",
+        categories: ["Category 3", "Category 4"],
       },
       {
         title: "Video 4",
         description: "Description of Video 4",
-        src: "/video4.mp4",
+        video: "/video4.mp4",
         thumbnail: "/ph5.jpeg",
+        clientName: "Client 4",
+        categories: ["Category 4", "Category 5"],
       },
       {
         title: "Video 5",
         description: "Description of Video 5",
-        src: "/video5.mp4",
+        video: "/video5.mp4",
         thumbnail: "/ph6.jpeg",
+        clientName: "Client 5",
+        categories: ["Category 5", "Category 6"],
       },
       {
         title: "Video 6",
         description: "Description of Video 6",
-        src: "/video6.mp4",
+        video: "/video6.mp4",
         thumbnail: "/ph7.jpeg",
+        clientName: "Client 6",
+        categories: ["Category 6", "Category 7"],
       },
       {
         title: "Video 7",
         description: "Description of Video 7",
-        src: "/video7.mp4",
+        video: "/video7.mp4",
         thumbnail: "/ph8.jpeg",
+        clientName: "Client 7",
+        categories: ["Category 7", "Category 8"],
       },
     ],
     [],

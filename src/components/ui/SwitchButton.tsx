@@ -15,11 +15,11 @@ function SwitchButton({
 }) {
   return (
     <button
-      className={`font-karantina uppercase cursor-pointer text-[3rem]  opacity-20 hover:opacity-100 hover:scale-100 scale-95 transition-all duration-500 ease-in-out ${isVisible ? "opacity-100" : "opacity-50"} ${textposition} `}
+      className={`font-karantina uppercase h-20 w-20 cursor-pointer text-[3rem]  opacity-20 hover:opacity-100 hover:scale-100 scale-95 transition-all duration-500 ease-in-out ${isVisible ? "opacity-100" : "opacity-50"} ${textposition}  `}
       onClick={() => onClick()}
     >
-      <p className="leading-none">{text}</p>
-      <p className="text-sm font-karla">{subtext}</p>
+      <p className="leading-none hidden">{text}</p>
+      <p className="text-sm font-karla hidden">{subtext}</p>
     </button>
   );
 }

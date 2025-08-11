@@ -19,7 +19,7 @@ export default function Overlay({
         {videos.map((video, index) => (
           <motion.div
             key={index}
-            className="w-screen px-10 lg:px-64 h-screen flex flex-col py-20 lg:py-32 text-white font-karantina"
+            className="w-screen px-10 lg:px-32 h-screen flex flex-col py-20 lg:py-32 text-white font-karantina"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}

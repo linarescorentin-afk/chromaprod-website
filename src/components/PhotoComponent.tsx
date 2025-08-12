@@ -35,8 +35,6 @@ function PhotoComponent({
     load();
   }, []);
 
-  console.log("Photos fetched:", photosFetched);
-
   if (!photosFetched.length) {
     return <div className="text-white p-4">Chargement des photos...</div>;
   }
@@ -63,7 +61,7 @@ function PhotoComponent({
 
       {/* ✅ Overlay HTML */}
       {selectedIndex !== null && (
-        <div className="fixed top-0 text-sm uppercase pointer-events-none left-0 flex flex-col items-start  justify-between z-50 transition-opacity duration-300 w-screen h-screen px-16 py-32 font-karla">
+        <div className="fixed top-0 text-sm uppercase pointer-events-none left-0 flex flex-col items-start  justify-between z-50 transition-opacity duration-300 w-screen h-screen px-16 py-24 font-karla">
           <div
             className={`text-white   w-full flex ${photosFetched[selectedIndex].name ? "justify-between" : "justify-end"}`}
           >
@@ -72,7 +70,7 @@ function PhotoComponent({
                 {photosFetched[selectedIndex].name}
               </h2>
             )}
-            <p className="text-base">Scroll or click to close</p>
+            <p className="text-sm">Scroll or click to close</p>
           </div>
           <div className="w-full  flex justify-between items-center">
             {photosFetched[selectedIndex].date && (

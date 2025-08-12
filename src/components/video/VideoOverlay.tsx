@@ -19,7 +19,7 @@ export default function Overlay({
         {videos.map((video, index) => (
           <motion.div
             key={index}
-            className="px-10 w-full lg:px-64 h-screen flex flex-col py-20 lg:py-32 text-white font-karantina  mx-auto max-w-[1600px]"
+            className="px-10 w-full lg:px-64 h-screen flex flex-col py-20 lg:py-24 text-white font-karantina  mx-auto max-w-[1600px]"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -32,9 +32,6 @@ export default function Overlay({
               <p className="text-lg text-gray-300 font-karla">
                 {video.description}
               </p>
-            </div>
-            <div className="flex items-end justify-end h-full">
-              <button className="cursor-pointer underline">See project</button>
             </div>
           </motion.div>
         ))}

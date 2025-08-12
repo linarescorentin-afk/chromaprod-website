@@ -52,7 +52,7 @@ function VideoComponent({
         frameloop={isVideoVisible ? "always" : "demand"}
       >
         <color attach="background" args={["#111"]} />
-        <ScrollControls pages={videos.length} damping={0.8}>
+        <ScrollControls pages={videos.length + 0.5} damping={0.5}>
           <VideoScene
             onClick={onVideoClick}
             videos={videos}

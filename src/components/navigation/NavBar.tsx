@@ -1,20 +1,25 @@
 "use client";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import NavItem from "./NavItem";
 
 function NavBar() {
   const navItems = [
-    { name: "CORPORATE", href: "/" },
-    { name: "SOCIALE MEDIA", href: "/about" },
-    { name: "EVENTS", href: "/contact" },
     { name: "ABOUT", href: "/about" },
     { name: "CONTACT", href: "/contact" },
   ];
 
+  const [selectedFilter, setSelectedFilter] = useState<string>("ALL");
+
+  const filterButtons = ["All", "Corporate", "Events"];
+
   const pathname = usePathname();
-  console.log(pathname);
+
   const isStudio = pathname.includes("/studio"); // ou pathname.startsWith("/studio");
-  console.log(isStudio);
+
+  console.log(selectedFilter);
+
   return (
     <>
       {!isStudio && (
@@ -24,12 +29,16 @@ function NavBar() {
           <Image src="/chromalogo2.png" alt="Logo" width={200} height={100} />
           <div className="text-2xl bg-white flex items-center justify-between text-black w-[40%] h-10 space-x-0 relative rounded-sm shadow-2xl">
             {navItems.map((item) => (
-              <button
-                key={item.name}
-                className="text-black border-x border-black w-full h-full border-dashed"
-              >
-                {item.name}
-              </button>
+              <NavItem key={item.name} name={item.name} onClick={() => {}} />
+            ))}
+            {filterButtons.map((item) => (
+              <NavItem
+                key={item}
+                name={item}
+                onClick={() => {
+                  setSelectedFilter(item);
+                }}
+              />
             ))}
           </div>
         </div>

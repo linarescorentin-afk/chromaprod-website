@@ -83,7 +83,7 @@ export default function HomeComponent() {
   return (
     <div>
       {/* SECTION VIDEO */}
-      {/* <motion.div
+      <motion.div
         className="absolute top-0 bg-black z-10 overflow-x-hidden"
         style={{ width: clampedWidth }}
       >
@@ -92,7 +92,7 @@ export default function HomeComponent() {
           moveBarTo={moveBarTo}
           widthPercent={widthPercent}
         />
-      </motion.div> */}
+      </motion.div>
 
       {/* SECTION PHOTO */}
       <PhotoComponent
@@ -102,7 +102,7 @@ export default function HomeComponent() {
       />
 
       {/* BARRE DRAGGABLE */}
-      {/* <motion.div
+      <motion.div
         drag="x"
         dragConstraints={{
           left: screenWidth ? screenWidth * 0.01 : 0,
@@ -132,7 +132,7 @@ export default function HomeComponent() {
           alt="arrow"
           className="absolute transform -translate-x-[29px] -translate-y-1/2 bottom-10 left-1/2 pointer-events-none"
         />
-      </motion.div> */}
+      </motion.div>
 
       {/* ✅ Debug affichage largeur */}
       {/* <div className="fixed bottom-4 left-4 bg-white text-black px-3 z-20 py-1 rounded shadow">

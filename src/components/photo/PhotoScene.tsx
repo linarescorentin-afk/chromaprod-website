@@ -12,6 +12,7 @@ import { TextureLoader } from "three";
 import PhotoPlane from "./PhotoPlane";
 import * as THREE from "three";
 import { IPhoto } from "../PhotoComponent";
+import { urlForTex } from "@/sanity/lib/image";
 interface IProps {
   photos: IPhoto[];
   selectedIndex: number | null;
@@ -28,6 +29,9 @@ function PhotoScene({
   // 📏 État pour la largeur de la fenêtre
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const scroll = useScroll();
+  const urls = photos.map((p) => urlForTex(p.image, { w: 1600, q: 70 }));
+
+  const textures = useLoader(TextureLoader, urls);
 
   const [clickOffset, setClickOffset] = useState<number | null>(null); // ✅ on mémorise la position du scroll
 
@@ -45,10 +49,6 @@ function PhotoScene({
 
   const isMobile = windowWidth < 728;
   const isTablet = windowWidth >= 728 && windowWidth < 1224;
-  // 🖼️ Charge tes images
-  const textures = useLoader(TextureLoader, [
-    ...photos.map((photo) => photo.image),
-  ]);
 
   // 📐 Infos sur les formats → tu peux adapter selon tes vraies images
   const formats: ("horizontal" | "vertical")[] = photos.map(

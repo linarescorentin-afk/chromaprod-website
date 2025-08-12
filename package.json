@@ -19,6 +19,7 @@
     "next": "15.4.3",
     "next-sanity": "^10.0.10",
     "prettier": "^3.6.2",
+    "r3f-perf": "^7.2.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "sanity": "^4.3.0",

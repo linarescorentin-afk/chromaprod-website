@@ -12,9 +12,11 @@ import { IVideo } from "../VideoComponent";
 function VideoScene({
   widthPercent,
   videos,
+  onClick,
 }: {
   widthPercent: number;
   videos: IVideo[];
+  onClick: (video: IVideo) => void;
 }) {
   // ✅ Référence pour le scroll
   const scroll = useScroll();
@@ -105,6 +107,9 @@ function VideoScene({
         }
         return (
           <FilmPlan
+            onClick={() => {
+              onClick(videos[i]);
+            }}
             key={i}
             position={[0, -i * spacing, 0]}
             registerMaterial={(ref) => {

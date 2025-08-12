@@ -41,7 +41,7 @@ class FilmEffectMaterial extends ShaderMaterial {
          vec2 uv = vUv;
 
            // ✅ Zoom léger dans la texture (ça crée une marge)
-          uv = uv * 0.8 + 0.1;  
+          uv = uv * 0.7 + 0.3;  
           // → 0.8 = on garde 80% du centre de l’image
           // → 0.1 = on recentre (évite que l’image se décale)
 

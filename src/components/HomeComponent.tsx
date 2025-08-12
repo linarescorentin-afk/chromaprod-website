@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PhotoComponent from "./PhotoComponent";
-import VideoComponent from "./VideoComponent";
+import VideoComponent, { IVideo } from "./VideoComponent";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
 
@@ -13,6 +13,15 @@ export default function HomeComponent() {
   const [isLocked, setIsLocked] = useState(true);
   const [isVideoVisible, setIsVideoVisible] = useState(true);
   const [isPhotoVisible, setIsPhotoVisible] = useState(true);
+  const [activeVideo, setActiveVideo] = useState<IVideo | null>(null);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (activeVideo && videoRef.current) {
+      videoRef.current.volume = 0.5; // 🔈 50% de volume
+    }
+  }, [activeVideo]);
 
   // ✅ Récupère la largeur de l’écran après le montage (côté client)
   useEffect(() => {
@@ -88,6 +97,7 @@ export default function HomeComponent() {
         style={{ width: clampedWidth }}
       >
         <VideoComponent
+          setActiveVideo={setActiveVideo}
           isVideoVisible={isVideoVisible}
           moveBarTo={moveBarTo}
           widthPercent={widthPercent}
@@ -115,7 +125,7 @@ export default function HomeComponent() {
           dragX.set(Math.min(Math.max(info.point.x, min), max));
         }}
         style={{ x: dragX }}
-        className="fixed top-0 h-screen w-[30px] cursor-ew-resize z-50 flex justify-start"
+        className="fixed top-0 h-screen w-[30px] cursor-ew-resize z-10 flex justify-start"
       >
         <div className="h-full w-[2px] bg-red-500 hover:bg-red-600 hover:scale-150 transform transition-all duration-300 ease-in-out" />
         <Image
@@ -133,6 +143,24 @@ export default function HomeComponent() {
           className="absolute transform -translate-x-[29px] -translate-y-1/2 bottom-10 left-1/2 pointer-events-none"
         />
       </motion.div>
+
+      {activeVideo && (
+        <div className="absolute z-50 top-0 left-0 flex items-center justify-center h-screen w-screen bg-black p-10">
+          <video
+            ref={videoRef}
+            src={activeVideo.video}
+            controls
+            autoPlay
+            className="w-full h-full object-contain"
+          />
+          <button
+            onClick={() => setActiveVideo(null)}
+            className="absolute top-10 right-10 text-white text-4xl z-50 cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {/* ✅ Debug affichage largeur */}
       {/* <div className="fixed bottom-4 left-4 bg-white text-black px-3 z-20 py-1 rounded shadow">

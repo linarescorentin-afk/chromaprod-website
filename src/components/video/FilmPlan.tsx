@@ -9,6 +9,7 @@ export default function FilmPlan({
   planeWidth,
   planeHeight,
   shiftRef,
+  onClick,
 }: {
   position: [number, number, number];
   registerMaterial: (
@@ -18,6 +19,7 @@ export default function FilmPlan({
   planeWidth: number;
   planeHeight: number;
   shiftRef: React.MutableRefObject<number>;
+  onClick: () => void;
 }) {
   const materialRef = useRef<{
     shift: number;
@@ -50,7 +52,16 @@ export default function FilmPlan({
     }
   });
   return (
-    <mesh position={position}>
+    <mesh
+      onClick={() => onClick()}
+      position={position}
+      onPointerOver={() => {
+        document.body.style.cursor = "pointer";
+      }}
+      onPointerOut={() => {
+        document.body.style.cursor = "default";
+      }}
+    >
       <planeGeometry args={[planeWidth, planeHeight, 64, 64]} />
       <filmEffectMaterial ref={materialRef} />
     </mesh>

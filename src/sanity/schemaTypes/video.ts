@@ -1,46 +1,40 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
-// studio/schemas/photo.ts
 export const videoType = defineType({
-  name: "photo",
-  title: "Photo",
+  name: "video",
+  title: "Vidéo",
   type: "document",
   fields: [
     defineField({
-      name: "image",
-      title: "Image",
+      name: "title",
+      title: "Titre",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "description",
+      title: "Description",
+      type: "text",
+    }),
+    defineField({
+      name: "video",
+      title: "Fichier Vidéo",
+      type: "file",
+      options: {
+        accept: "video/mp4",
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "thumbnail",
+      title: "Miniature",
       type: "image",
-      options: {
-        hotspot: true,
-      },
-      validation: (Rule) => Rule.required().error("Une image est requise."),
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "date",
-      title: "Date",
+      name: "clientName",
+      title: "Nom du client",
       type: "string",
-    }),
-    defineField({
-      name: "client",
-      title: "Client",
-      type: "string",
-    }),
-    defineField({
-      name: "name",
-      title: "Nom",
-      type: "string",
-    }),
-    defineField({
-      name: "formats",
-      title: "Format",
-      type: "string",
-      options: {
-        list: [
-          { title: "Horizontal", value: "horizontal" },
-          { title: "Vertical", value: "vertical" },
-        ],
-      },
-      validation: (Rule) => Rule.required().error("Le format est obligatoire."),
     }),
     defineField({
       name: "categories",

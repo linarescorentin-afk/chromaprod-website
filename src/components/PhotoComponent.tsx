@@ -64,7 +64,10 @@ function PhotoComponent({
         frameloop={isPhotoVisible ? "always" : "demand"}
       >
         <color attach="background" args={["#111"]} />
-        <ScrollControls pages={photos.length + 0.85} damping={0.5}>
+        <ScrollControls
+          pages={photos.length + photos.length * 0.1}
+          damping={0.5}
+        >
           <PhotoScene
             photos={photos}
             selectedIndex={selectedIndex}

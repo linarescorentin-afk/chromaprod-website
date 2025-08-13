@@ -168,8 +168,6 @@ function PhotoScene({
               }}
               shiftRef={shift} // ✅ passe le ref pour le shift
               isSelected={selectedIndex === i} // ✅ pour gérer la sélection
-              scroll={scroll} // ✅ pour gérer la position
-              spacingY={spacingY} // ✅ pour gérer l'espacement
               texturesLength={textures.length} // ✅ pour l'animation
               selectedIndex={selectedIndex} // ✅ pour gérer la sélection
             />

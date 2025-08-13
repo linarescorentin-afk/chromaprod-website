@@ -13,8 +13,6 @@ interface IProps {
   isSelected: boolean;
   isVertical: boolean;
   delta: number;
-  scroll: { offset: number };
-  spacingY: number;
   texturesLength: number;
   selectedIndex: number | null;
   baseImages: number;
@@ -30,8 +28,6 @@ function PhotoPlane({
   isSelected,
   isVertical,
   delta,
-  scroll,
-  spacingY,
   texturesLength,
   selectedIndex,
   baseImages,
@@ -49,6 +45,8 @@ function PhotoPlane({
     }
   }, [texture]);
 
+  console.log(baseImages, texturesLength);
+
   // ✅ met à jour `shift` à CHAQUE frame directement dans le shader
   useFrame(() => {
     if (materialRef.current) {
@@ -59,12 +57,10 @@ function PhotoPlane({
       materialRef.current.opacityOnClick = targetOpacity;
     }
 
-    const baseExtra = texturesLength >= baseImages ? 0.55 : 0.48;
-    const extraPage = baseExtra - (texturesLength - baseImages) * 0.05;
+    // const baseExtra = texturesLength >= baseImages ? 0.55 : 0.48;
+    // const extraPage = baseExtra - (texturesLength - baseImages) * 0.05;
 
-    const scrollY = scroll.offset * (texturesLength + extraPage - 1) * spacingY;
-
-    console.log(scrollY, position);
+    // const scrollY = scroll.offset * baseImages * spacingY;
 
     if (meshRef.current) {
       // 📏 calcule le scale en fonction du shift
@@ -81,7 +77,7 @@ function PhotoPlane({
 
       // 📍 position : si sélectionné → centrer
       const targetPos = isSelected
-        ? new THREE.Vector3(0, scrollY, isVertical ? 0.2 : 1)
+        ? new THREE.Vector3(0, position[1], isVertical ? 0.2 : 1)
         : new THREE.Vector3(...position);
       meshRef.current.position.lerp(targetPos, 0.1);
     }

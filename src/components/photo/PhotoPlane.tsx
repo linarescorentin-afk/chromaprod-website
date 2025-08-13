@@ -17,6 +17,7 @@ interface IProps {
   spacingY: number;
   texturesLength: number;
   selectedIndex: number | null;
+  baseImages: number;
 }
 
 function PhotoPlane({
@@ -33,6 +34,7 @@ function PhotoPlane({
   spacingY,
   texturesLength,
   selectedIndex,
+  baseImages,
 }: IProps) {
   const materialRef = useRef<{
     map: THREE.Texture | null;
@@ -57,11 +59,12 @@ function PhotoPlane({
       materialRef.current.opacityOnClick = targetOpacity;
     }
 
-    const baseImages = 7;
     const baseExtra = texturesLength >= baseImages ? 0.55 : 0.48;
     const extraPage = baseExtra - (texturesLength - baseImages) * 0.05;
 
     const scrollY = scroll.offset * (texturesLength + extraPage - 1) * spacingY;
+
+    console.log(scrollY, position);
 
     if (meshRef.current) {
       // 📏 calcule le scale en fonction du shift
@@ -78,7 +81,7 @@ function PhotoPlane({
 
       // 📍 position : si sélectionné → centrer
       const targetPos = isSelected
-        ? new THREE.Vector3(0, -scrollY, isVertical ? 0.2 : 1)
+        ? new THREE.Vector3(0, scrollY, isVertical ? 0.2 : 1)
         : new THREE.Vector3(...position);
       meshRef.current.position.lerp(targetPos, 0.1);
     }

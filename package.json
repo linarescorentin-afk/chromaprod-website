@@ -24,7 +24,8 @@
     "react-dom": "19.1.0",
     "sanity": "^4.3.0",
     "styled-components": "^6.1.19",
-    "three": "^0.178.0"
+    "three": "^0.178.0",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

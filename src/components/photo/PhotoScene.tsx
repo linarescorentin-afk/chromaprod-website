@@ -145,6 +145,7 @@ function PhotoScene({
           return (
             <PhotoPlane
               key={i}
+              baseImages={photos.length}
               position={[smoothPosX, posY, 0]}
               texture={tex}
               width={(isVertical ? baseWidth * 0.6 : baseWidth) * smoothScale}

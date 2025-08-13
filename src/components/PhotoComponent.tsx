@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import PhotoScene from "./photo/PhotoScene";
 import SwitchButton from "./ui/SwitchButton";
 import { getPhotos } from "@/sanity/lib/getPhotos";
+import { useFilterStore } from "@/store/useFilterStore";
 
 export interface IPhoto {
   image: string;
@@ -24,7 +25,7 @@ function PhotoComponent({
   widthPercent: number;
 }) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
+  const category = useFilterStore((state) => state.selectedFilter);
   const [photosFetched, setPhotos] = useState<IPhoto[]>([]);
 
   useEffect(() => {
@@ -35,9 +36,26 @@ function PhotoComponent({
     load();
   }, []);
 
-  if (!photosFetched.length) {
+  const photos = React.useMemo(() => {
+    if (category === "all") return photosFetched;
+
+    console.log(photosFetched);
+
+    const photos = photosFetched.filter((p) =>
+      p.categories.some((c) => c === category),
+    );
+
+    return photos;
+    // return photosFetched.filter((p) =>
+    //   (p.categories || []).some((c) => c.toUpperCase() === category),
+    // );
+  }, [photosFetched, category]);
+
+  if (!photos.length) {
     return <div className="text-white p-4">Chargement des photos...</div>;
   }
+
+  console.log(category);
 
   return (
     <div className="h-screen w-screen">
@@ -46,12 +64,9 @@ function PhotoComponent({
         frameloop={isPhotoVisible ? "always" : "demand"}
       >
         <color attach="background" args={["#111"]} />
-        <ScrollControls
-          pages={photosFetched.length + 0.85 + photosFetched.length * 0.025}
-          damping={0.5}
-        >
+        <ScrollControls pages={photos.length + 0.85} damping={0.5}>
           <PhotoScene
-            photos={photosFetched}
+            photos={photos}
             selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}
             widthPercent={widthPercent}

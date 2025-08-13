@@ -28,9 +28,6 @@ function NavBar() {
         >
           <Image src="/chromalogo2.png" alt="Logo" width={200} height={100} />
           <div className="text-2xl bg-white flex items-center justify-between text-black w-[40%] h-10 space-x-0 relative rounded-sm shadow-2xl">
-            {navItems.map((item) => (
-              <NavItem key={item.name} name={item.name} onClick={() => {}} />
-            ))}
             {filterButtons.map((item) => (
               <NavItem
                 key={item}
@@ -39,6 +36,9 @@ function NavBar() {
                   setSelectedFilter(item);
                 }}
               />
+            ))}
+            {navItems.map((item) => (
+              <NavItem key={item.name} name={item.name} onClick={() => {}} />
             ))}
           </div>
         </div>

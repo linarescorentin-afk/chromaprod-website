@@ -63,7 +63,7 @@ function VideoComponent({
         camera={{ position: [0, 0, 5], fov: 50 }}
         frameloop={isVideoVisible ? "always" : "demand"}
       >
-        <color attach="background" args={["#111"]} />
+        <color attach="background" args={["#121212"]} />
         <ScrollControls pages={videos.length + 0.5} damping={0.5}>
           <VideoScene
             onClick={onVideoClick}
@@ -76,9 +76,7 @@ function VideoComponent({
       <div className="fixed bottom-4 left-16 z-30">
         <SwitchButton
           onClick={() => moveBarTo("video")}
-          text="VIDEO"
           subtext="Switch to video"
-          isVisible={isVideoVisible}
           textposition="text-left"
         />
       </div>

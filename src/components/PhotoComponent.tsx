@@ -57,7 +57,6 @@ function PhotoComponent({
         camera={{ position: [0, 0, 8], fov: 50 }}
         frameloop={isPhotoVisible ? "always" : "demand"}
       >
-        <color attach="background" args={["#111"]} />
         <ScrollControls
           pages={photos.length + photos.length * 0.1}
           damping={0.5}
@@ -97,8 +96,6 @@ function PhotoComponent({
       <div className="fixed bottom-4 right-16 cursor-pointer z-10">
         <SwitchButton
           onClick={() => moveBarTo("photo")}
-          text="PHOTO"
-          isVisible={isPhotoVisible}
           subtext="Switch to photo"
           textposition="text-right"
         />

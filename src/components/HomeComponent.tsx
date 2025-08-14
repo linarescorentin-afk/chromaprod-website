@@ -3,7 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import PhotoComponent from "./PhotoComponent";
 import VideoComponent, { IVideo } from "./VideoComponent";
-import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import {
+  animate,
+  motion,
+  percent,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
 
 export default function HomeComponent() {
@@ -64,6 +70,8 @@ export default function HomeComponent() {
       unsubscribe();
     };
   }, [dragX, screenWidth]);
+
+  console.log(isPhotoVisible, isVideoVisible);
 
   // ✅ Fonction pour “auto-drag” la barre
   function moveBarTo(target: "video" | "photo") {

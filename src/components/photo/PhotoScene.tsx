@@ -29,7 +29,7 @@ function PhotoScene({
   // 📏 État pour la largeur de la fenêtre
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const scroll = useScroll();
-  const urls = photos.map((p) => urlForTex(p.image, { w: 1600, q: 70 }));
+  const urls = photos.map((p) => urlForTex(p.image, { w: 1700, q: 90 }));
 
   const textures = useLoader(TextureLoader, urls);
 
@@ -145,7 +145,6 @@ function PhotoScene({
           return (
             <PhotoPlane
               key={i}
-              baseImages={photos.length}
               position={[smoothPosX, posY, 0]}
               texture={tex}
               width={(isVertical ? baseWidth * 0.6 : baseWidth) * smoothScale}
@@ -168,7 +167,6 @@ function PhotoScene({
               }}
               shiftRef={shift} // ✅ passe le ref pour le shift
               isSelected={selectedIndex === i} // ✅ pour gérer la sélection
-              texturesLength={textures.length} // ✅ pour l'animation
               selectedIndex={selectedIndex} // ✅ pour gérer la sélection
             />
           );

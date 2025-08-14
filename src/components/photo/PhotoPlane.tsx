@@ -13,9 +13,7 @@ interface IProps {
   isSelected: boolean;
   isVertical: boolean;
   delta: number;
-  texturesLength: number;
   selectedIndex: number | null;
-  baseImages: number;
 }
 
 function PhotoPlane({
@@ -28,9 +26,7 @@ function PhotoPlane({
   isSelected,
   isVertical,
   delta,
-  texturesLength,
   selectedIndex,
-  baseImages,
 }: IProps) {
   const materialRef = useRef<{
     map: THREE.Texture | null;
@@ -44,8 +40,6 @@ function PhotoPlane({
       materialRef.current.map = texture;
     }
   }, [texture]);
-
-  console.log(baseImages, texturesLength);
 
   // ✅ met à jour `shift` à CHAQUE frame directement dans le shader
   useFrame(() => {

@@ -2,9 +2,10 @@ import { ScrollControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { useEffect, useState } from "react";
 import PhotoScene from "./photo/PhotoScene";
-import SwitchButton from "./ui/SwitchButton";
+
 import { getPhotos } from "@/sanity/lib/getPhotos";
 import { useFilterStore } from "@/store/useFilterStore";
+import SwitchButton from "./ui/SwitchButton";
 
 export interface IPhoto {
   image: string;
@@ -39,23 +40,16 @@ function PhotoComponent({
   const photos = React.useMemo(() => {
     if (category === "all") return photosFetched;
 
-    console.log(photosFetched);
-
     const photos = photosFetched.filter((p) =>
       p.categories.some((c) => c === category),
     );
 
     return photos;
-    // return photosFetched.filter((p) =>
-    //   (p.categories || []).some((c) => c.toUpperCase() === category),
-    // );
   }, [photosFetched, category]);
 
   if (!photos.length) {
     return <div className="text-white p-4">Chargement des photos...</div>;
   }
-
-  console.log(category);
 
   return (
     <div className="h-screen w-screen">
@@ -81,7 +75,7 @@ function PhotoComponent({
       {selectedIndex !== null && (
         <div className="fixed top-0 text-sm uppercase pointer-events-none left-0 flex flex-col items-start  justify-between z-50 transition-opacity duration-300 w-screen h-screen px-16 py-24 font-karla">
           <div
-            className={`text-white   w-full flex ${photosFetched[selectedIndex].name ? "justify-between" : "justify-end"}`}
+            className={`text-white w-full flex ${photosFetched[selectedIndex].name ? "justify-between" : "justify-end"}`}
           >
             {photosFetched[selectedIndex].name && (
               <h2 className=" font-karantina text-4xl mb-2">

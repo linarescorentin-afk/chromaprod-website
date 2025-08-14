@@ -1,4 +1,5 @@
 import React from "react";
+import ComeUpText from "./animated/ComeUpText";
 
 function SwitchButton({
   onClick,
@@ -15,11 +16,10 @@ function SwitchButton({
 }) {
   return (
     <button
-      className={`font-karantina uppercase cursor-pointer text-[3rem]  opacity-20 hover:opacity-100 hover:scale-100 scale-95 transition-all duration-500 ease-in-out ${isVisible ? "opacity-100" : "opacity-50"} ${textposition} `}
+      className={`font-karantina uppercase cursor-pointer text-2xl bg-white transition-all duration-500 ease-in-out  ${textposition} text-black  px-4 py-2 border-x border-dashed border-black hover:bg-black *:hover:text-white hover:border-white`}
       onClick={() => onClick()}
     >
-      <p className="leading-none">{text}</p>
-      <p className="text-sm font-karla">{subtext}</p>
+      <ComeUpText height="h-7" text={subtext} />
     </button>
   );
 }

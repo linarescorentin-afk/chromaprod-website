@@ -93,7 +93,7 @@ function PhotoComponent({
           </div>
         </div>
       )}
-      <div className="fixed bottom-4 right-16 cursor-pointer z-10">
+      <div className="fixed bottom-10 right-5 lg:right-16 cursor-pointer z-10">
         <SwitchButton
           onClick={() => moveBarTo("photo")}
           subtext="Switch to photo"

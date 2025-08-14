@@ -12,10 +12,10 @@ function SwitchButton({
 }) {
   return (
     <button
-      className={`font-karantina uppercase cursor-pointer text-xl bg-white transition-all duration-500 ease-in-out  ${textposition} text-black  px-4 py-2 border-x border-dashed border-black  hover:border-white`}
+      className={`font-karantina uppercase cursor-pointer text-xl transition-all duration-500 ease-in-out hover:scale-110  ${textposition}  text-red-500 underline`}
       onClick={() => onClick()}
     >
-      <ComeUpText height="h-7" text={subtext} />
+      <ComeUpText height="h-6" text={subtext} />
     </button>
   );
 }

@@ -73,7 +73,7 @@ function VideoComponent({
           <VideoOverlay videos={videos} widthPercent={widthPercent} />
         </ScrollControls>
       </Canvas>
-      <div className="fixed bottom-4 left-16 z-30">
+      <div className="fixed bottom-10 lg:left-16 left-5 z-30">
         <SwitchButton
           onClick={() => moveBarTo("video")}
           subtext="Switch to video"

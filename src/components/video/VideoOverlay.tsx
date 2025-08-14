@@ -19,7 +19,7 @@ export default function Overlay({
         {videos.map((video, index) => (
           <motion.div
             key={index}
-            className="px-10 w-full lg:px-64 h-screen flex flex-col py-20 lg:py-24 text-white font-karantina  mx-auto max-w-[1600px]"
+            className="px-10 w-full lg:px-64 h-screen flex flex-col py-20 lg:py-38 text-white font-karantina  mx-auto max-w-[1600px]"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -33,6 +33,7 @@ export default function Overlay({
                 {video.description}
               </p>
             </div>
+            <p className="text-2xl underline">WATCH THE VIDEO</p>
           </motion.div>
         ))}
       </div>

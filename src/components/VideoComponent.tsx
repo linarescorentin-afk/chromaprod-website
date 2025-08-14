@@ -5,6 +5,7 @@ import { ScrollControls } from "@react-three/drei";
 import SwitchButton from "./ui/SwitchButton";
 import { getVideos } from "@/sanity/lib/getVideo";
 import VideoOverlay from "@/components/video/VideoOverlay";
+import { useFilterStore } from "@/store/useFilterStore";
 
 export interface IVideo {
   title: string;
@@ -26,12 +27,13 @@ function VideoComponent({
   widthPercent: number;
   setActiveVideo: Dispatch<SetStateAction<IVideo | null>>;
 }) {
-  const [videos, setVideos] = useState<IVideo[]>([]);
+  const [videosFetched, setVideosFetched] = useState<IVideo[]>([]);
+  const category = useFilterStore((state) => state.selectedFilter);
 
   useEffect(() => {
     async function load() {
       const videos = await getVideos();
-      setVideos(videos);
+      setVideosFetched(videos);
     }
     load();
   }, []);
@@ -40,6 +42,16 @@ function VideoComponent({
     moveBarTo("video");
     setActiveVideo(video);
   };
+
+  const videos = React.useMemo(() => {
+    if (category === "all") return videosFetched;
+
+    const filteredVideos = videosFetched.filter((v) =>
+      v.categories.some((c) => c === category),
+    );
+
+    return filteredVideos;
+  }, [videosFetched, category]);
 
   if (!videos.length) {
     return <div className="text-white p-4">Chargement des vidéos...</div>;
@@ -51,8 +63,8 @@ function VideoComponent({
         camera={{ position: [0, 0, 5], fov: 50 }}
         frameloop={isVideoVisible ? "always" : "demand"}
       >
-        <color attach="background" args={["#111"]} />
-        <ScrollControls pages={videos.length} damping={0.8}>
+        <color attach="background" args={["#121212"]} />
+        <ScrollControls pages={videos.length + 0.5} damping={0.5}>
           <VideoScene
             onClick={onVideoClick}
             videos={videos}
@@ -64,9 +76,7 @@ function VideoComponent({
       <div className="fixed bottom-4 left-16 z-30">
         <SwitchButton
           onClick={() => moveBarTo("video")}
-          text="VIDEO"
           subtext="Switch to video"
-          isVisible={isVideoVisible}
           textposition="text-left"
         />
       </div>

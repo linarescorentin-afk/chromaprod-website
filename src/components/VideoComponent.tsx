@@ -57,13 +57,16 @@ function VideoComponent({
     return <div className="text-white p-4">Chargement des vidéos...</div>;
   }
 
+  console.log(isVideoVisible);
+
   return (
     <div className="w-screen h-screen">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         frameloop={isVideoVisible ? "always" : "demand"}
+        className={`canvas ${isVideoVisible ? "visible" : "hidden"}`}
       >
-        <color attach="background" args={["#121212"]} />
+        <color attach="background" args={["#070707"]} />
         <ScrollControls pages={videos.length + 0.5} damping={0.5}>
           <VideoScene
             onClick={onVideoClick}
@@ -73,13 +76,12 @@ function VideoComponent({
           <VideoOverlay videos={videos} widthPercent={widthPercent} />
         </ScrollControls>
       </Canvas>
-      <div className="fixed bottom-10 lg:left-16 left-5 z-30">
-        <SwitchButton
-          onClick={() => moveBarTo("video")}
-          subtext="Switch to video"
-          textposition="text-left"
-        />
-      </div>
+
+      <SwitchButton
+        onClick={() => moveBarTo("video")}
+        subtext="Switch to video"
+        textposition="text-left"
+      />
     </div>
   );
 }

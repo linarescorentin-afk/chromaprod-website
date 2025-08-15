@@ -93,7 +93,7 @@ function VideoScene({
   return (
     <Scroll>
       {textures.map((texture, i) => {
-        const scaleMax = 1.02;
+        const scaleMax = 1;
 
         // ✅ valeur par défaut : scale au max
         let smoothScale = scaleMax;

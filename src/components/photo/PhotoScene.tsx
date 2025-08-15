@@ -13,6 +13,7 @@ import PhotoPlane from "./PhotoPlane";
 import * as THREE from "three";
 import { IPhoto } from "../PhotoComponent";
 import { urlForTex } from "@/sanity/lib/image";
+import { useWindowsWidth } from "@/store/useWindowsWidth";
 interface IProps {
   photos: IPhoto[];
   selectedIndex: number | null;
@@ -27,7 +28,7 @@ function PhotoScene({
   widthPercent,
 }: IProps) {
   // 📏 État pour la largeur de la fenêtre
-  const [windowWidth, setWindowWidth] = useState<number>(0);
+  const { windowWidth } = useWindowsWidth();
   const scroll = useScroll();
   const urls = photos.map((p) => urlForTex(p.image, { w: 1700, q: 90 }));
 
@@ -37,15 +38,6 @@ function PhotoScene({
 
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
-  // 🔄 écoute le resize
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
-    }
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const isMobile = windowWidth < 728;
   const isTablet = windowWidth >= 728 && windowWidth < 1224;
@@ -139,8 +131,8 @@ function PhotoScene({
           // 🔥 Scale interpolé :
           //  - Quand widthPercent = 50 ou + → scale max (par ex. 1.2)
           //  - Quand widthPercent < 50 → revient progressivement à 1.0
-          const scaleMax = isMobile ? 1 : 1.2;
-          const smoothScale = THREE.MathUtils.lerp(scaleMax, 1.0, t);
+          const scaleMax = isMobile ? 1 : 1.05;
+          const smoothScale = THREE.MathUtils.lerp(scaleMax, 1, t);
 
           return (
             <PhotoPlane

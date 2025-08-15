@@ -15,7 +15,6 @@ function MobileNavItems({
   delay: number;
 }) {
   const selectedFilter = useFilterStore((state) => state.selectedFilter);
-  console.log(delay);
 
   const listVariants = {
     open: {

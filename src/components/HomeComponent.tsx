@@ -3,25 +3,29 @@
 import { useEffect, useRef, useState } from "react";
 import PhotoComponent from "./PhotoComponent";
 import VideoComponent, { IVideo } from "./VideoComponent";
-import {
-  animate,
-  motion,
-  percent,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useWindowsWidth } from "@/store/useWindowsWidth";
 
 export default function HomeComponent() {
   const dragX = useMotionValue(0);
   const [widthPercent, setWidthPercent] = useState(50);
   const [screenWidth, setScreenWidth] = useState<number | null>(null);
-  const [isLocked, setIsLocked] = useState(true);
   const [isVideoVisible, setIsVideoVisible] = useState(true);
   const [isPhotoVisible, setIsPhotoVisible] = useState(true);
   const [activeVideo, setActiveVideo] = useState<IVideo | null>(null);
-
+  const { setWindowWidth } = useWindowsWidth();
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // 🔄 écoute le resize
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setWindowWidth]);
 
   useEffect(() => {
     if (activeVideo && videoRef.current) {
@@ -38,26 +42,19 @@ export default function HomeComponent() {
 
     // On centre la barre au montage
     dragX.set(window.innerWidth / 2);
-
     // Écoute dragX pour calculer le % en direct
     const unsubscribe = dragX.on("change", (latest) => {
       if (screenWidth) {
         const percent = (latest / screenWidth) * 100;
         setWidthPercent(Math.round(percent));
 
-        // ✅ lock tant qu’on est entre 1% et 98%
-        if (percent > 1 && percent < 98) {
-          setIsLocked(true);
-        } else {
-          setIsLocked(false);
-        }
-        if (percent >= 98) {
+        if (percent >= (screenWidth < 728 ? 97 : 98)) {
           setIsPhotoVisible(false);
         } else {
           setIsPhotoVisible(true);
         }
 
-        if (percent <= 1) {
+        if (percent <= (screenWidth < 728 ? 3 : 1)) {
           setIsVideoVisible(false);
         } else {
           setIsVideoVisible(true);
@@ -71,13 +68,11 @@ export default function HomeComponent() {
     };
   }, [dragX, screenWidth]);
 
-  console.log(isPhotoVisible, isVideoVisible);
-
   // ✅ Fonction pour “auto-drag” la barre
   function moveBarTo(target: "video" | "photo") {
     if (!screenWidth) return;
-    const min = screenWidth * 0.01;
-    const max = screenWidth * 0.98;
+    const min = screenWidth * (screenWidth < 728 ? 0.03 : 0.01);
+    const max = screenWidth * (screenWidth < 728 ? 0.97 : 0.98);
 
     const targetX = target === "video" ? max : min;
 
@@ -92,8 +87,10 @@ export default function HomeComponent() {
   // ✅ Clamp la largeur SEULEMENT si screenWidth est défini
   const clampedWidth = useTransform(dragX, (x) => {
     if (!screenWidth) return x; // le temps que le SSR soit hydraté
-    const min = screenWidth * 0.01;
-    const max = screenWidth * 0.98;
+
+    const min = screenWidth * (screenWidth < 728 ? 0.03 : 0.01);
+    const max = screenWidth * (screenWidth < 728 ? 0.97 : 0.98);
+    console.log("clampedWidth", x, min, max);
     return Math.min(Math.max(x, min), max);
   });
 
@@ -170,10 +167,17 @@ export default function HomeComponent() {
         </div>
       )}
 
-      {/* ✅ Debug affichage largeur */}
-      {/* <div className="fixed bottom-4 left-4 bg-white text-black px-3 z-20 py-1 rounded shadow">
-        Largeur section vidéo: {widthPercent}%
-      </div> */}
+      {/* <p className="fixed bottom-16 left-10 z-30 font-karla text-sm">
+        Based in Montréal
+      </p>
+      <p className="fixed bottom-16 right-10 z-30 font-karla text-sm">
+        Local Time : {new Date().toLocaleTimeString()}
+      </p> */}
+      <p
+        className={`fixed bottom-20 left-1/2 -translate-x-1/2 text-red-500 z-30 mix-blend-difference text-sm  ${widthPercent !== 50 ? "opacity-0" : "opacity-50"} transform transition-opacity duration-300 ease-in-out `}
+      >
+        Drag the bar to reveal the content
+      </p>
     </div>
   );
 }

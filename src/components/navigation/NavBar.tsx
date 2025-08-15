@@ -3,15 +3,12 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import NavItem from "./NavItem";
 import { Category, useFilterStore } from "@/store/useFilterStore";
-import path from "path";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import MobileNavItems from "./MobileNavItems";
 
 function NavBar() {
   const navItems = [{ name: "ABOUT", href: "/about" }];
-
-  console.log(path);
 
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -88,6 +85,16 @@ function NavBar() {
                 }}
               />
             ))}
+
+            <MobileNavItems
+              delay={0.6}
+              isMenuOpen={isMenuOpen}
+              pathname={pathname}
+              name={"CONTACT"}
+              onClick={() => {
+                setIsMenuOpen(false);
+              }}
+            />
           </div>
 
           <div
@@ -101,7 +108,7 @@ function NavBar() {
                 height={100}
               />
             </Link>
-            <div className="flex items-center justify-between  w-[40%] h-10 space-x-0 relative rounded-sm shadow-2xl text-lg">
+            <div className="flex items-center justify-between  w-[30%] h-9 space-x-0 relative rounded-sm shadow-2xl text-[20px]">
               {filterButtons.map((item) => {
                 const value = item.toLowerCase() as Category;
                 return (
@@ -130,10 +137,25 @@ function NavBar() {
                   }}
                 />
               ))}
+
+              <NavItem
+                pathname={pathname}
+                name={"CONTACT"}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                }}
+              />
             </div>
           </div>
         </>
       )}
+
+      <div className="flex  flex-col items-end space-y-2 fixed font-bold top-25 right-10 font-karla text-[12px] mix-blend-difference z-30 underline">
+        <p>Youtube</p>
+        <p>Instagram</p>
+        <p>Facebook</p>
+        <p>Tiktok</p>
+      </div>
     </>
   );
 }

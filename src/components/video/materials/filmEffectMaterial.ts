@@ -78,10 +78,10 @@ class FilmEffectMaterial extends ShaderMaterial {
           float fadeMask = fadeTop * fadeBottom;             // combine les deux
 
           // ✅ Couleur de fond (la même que ton <Canvas background>)
-          vec3 bgColor = vec3(0.09, 0.09, 0.09); // #111 en RGB 0-1
+          vec3 bgColor = vec3(0.04, 0.04, 0.04); // #111 en RGB 0-1
 
                 // 🖤 Ajoute fond noir pour les coins
-          noisyColor = mix(vec3(0.09), noisyColor, alpha); 
+          noisyColor = mix(vec3(0.04), noisyColor, alpha);
 
           // ✅ Mix entre la texture et la couleur de fond
           vec3 finalColor = mix(bgColor, noisyColor, fadeMask);

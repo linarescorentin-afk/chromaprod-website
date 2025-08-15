@@ -52,10 +52,11 @@ function PhotoComponent({
   }
 
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen bg-red-600">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         frameloop={isPhotoVisible ? "always" : "demand"}
+        className={`canvas ${isPhotoVisible ? "visible" : "hidden"}`}
       >
         <ScrollControls
           pages={photos.length + photos.length * 0.1}
@@ -93,13 +94,12 @@ function PhotoComponent({
           </div>
         </div>
       )}
-      <div className="fixed bottom-10 right-5 lg:right-16 cursor-pointer z-10">
-        <SwitchButton
-          onClick={() => moveBarTo("photo")}
-          subtext="Switch to photo"
-          textposition="text-right"
-        />
-      </div>
+
+      <SwitchButton
+        onClick={() => moveBarTo("photo")}
+        subtext="Switch to photo"
+        textposition="text-right"
+      />
     </div>
   );
 }

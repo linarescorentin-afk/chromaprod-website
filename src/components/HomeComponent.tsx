@@ -61,14 +61,12 @@ export default function HomeComponent() {
 
         if (percent >= (screenWidth < 728 ? 97 : 98)) {
           setIsPhotoVisible(false);
-          setSelectedFilter("Switch to video");
         } else {
           setIsPhotoVisible(true);
         }
 
         if (percent <= (screenWidth < 728 ? 3 : 1)) {
           setIsVideoVisible(false);
-          setSelectedFilter("Switch to photo");
         } else {
           setIsVideoVisible(true);
         }

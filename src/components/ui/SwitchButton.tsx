@@ -10,13 +10,12 @@ function SwitchButton({
   subtext: string;
   textposition: string;
 }) {
-  console.log(subtext);
   return (
     <button
-      className={`font-karantina fixed bottom-10 ${subtext === "Switch to video" ? "lg:left-12 left-5" : "lg:right-12 right-5"} z-30 uppercase cursor-pointer text-xl transition-all duration-500 ease-in-out hover:scale-110  ${textposition}  text-red-500 underline`}
+      className={`font-karantina fixed bottom-12 ${subtext === "Switch to video" ? "lg:left-15 left-5" : "lg:right-15 right-5"} z-30 uppercase cursor-pointer text-xl transition-all duration-500 ease-in-out hover:scale-110  ${textposition}  lg:text-red-500 lg:bg-transparent lg:p-0 underline bg-white px-5 py-2 text-black`}
       onClick={() => onClick()}
     >
-      <ComeUpText height="h-6" text={subtext} />
+      <ComeUpText height="lg:h-6 h-7" text={subtext} />
     </button>
   );
 }

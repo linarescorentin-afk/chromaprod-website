@@ -30,8 +30,16 @@ function NavBar() {
       {!isStudio && (
         <>
           <div
-            className={`w-full z-50 fixed top-0 p-5 flex justify-end lg:hidden text-black font-karantina text-xl `}
+            className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-karantina text-xl `}
           >
+            <Link href="/">
+              <Image
+                src="/chromalogo2.png"
+                alt="Logo"
+                width={170}
+                height={100}
+              />
+            </Link>
             <button
               onClick={() => setIsMenuOpen(true)}
               className=" bg-white px-5 py-[0.2rem] border-x border-black border-dashed text-2xl"
@@ -40,7 +48,7 @@ function NavBar() {
             </button>
           </div>
           <div
-            className={`w-screen h-screen fixed top-0 left-0 flex lg:hidden z-50 flex-col font-karantina text-5xl transform duration-1000 ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+            className={`w-screen h-screen fixed top-0 left-0 flex lg:hidden z-50 flex-col font-karantina text-5xl transform duration-1000 ${isMenuOpen ? "translate-x-0" : "translate-x-full"} pb-32 bg-white`}
           >
             <button
               onClick={() => {
@@ -149,13 +157,6 @@ function NavBar() {
           </div>
         </>
       )}
-
-      <div className="flex  flex-col items-end space-y-2 fixed font-bold top-25 right-10 font-karla text-[12px] mix-blend-difference z-30 underline">
-        <p>Youtube</p>
-        <p>Instagram</p>
-        <p>Facebook</p>
-        <p>Tiktok</p>
-      </div>
     </>
   );
 }

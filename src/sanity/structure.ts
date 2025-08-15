@@ -7,8 +7,12 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("photo").title("Photos"),
       S.documentTypeListItem("category").title("Catégories"),
       S.documentTypeListItem("video").title("Vidéos"),
+      S.documentTypeListItem("socialMedia").title("Réseaux sociaux"),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (item) => !["photo", "category", "video"].includes(item.getId()!),
+        (item) =>
+          !["photo", "category", "video", "socialMedia"].includes(
+            item.getId()!,
+          ),
       ),
     ]);

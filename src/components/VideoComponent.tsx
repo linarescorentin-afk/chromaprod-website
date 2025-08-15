@@ -2,7 +2,6 @@ import { Canvas } from "@react-three/fiber";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import VideoScene from "./video/VideoScene";
 import { ScrollControls } from "@react-three/drei";
-import SwitchButton from "./ui/SwitchButton";
 import { getVideos } from "@/sanity/lib/getVideo";
 import VideoOverlay from "@/components/video/VideoOverlay";
 import { useFilterStore } from "@/store/useFilterStore";
@@ -56,8 +55,6 @@ function VideoComponent({
   if (!videos.length) {
     return <div className="text-white p-4">Chargement des vidéos...</div>;
   }
-
-  console.log(isVideoVisible);
 
   return (
     <div className="w-[100svw] h-screen">

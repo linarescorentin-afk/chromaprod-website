@@ -42,3 +42,15 @@ body::-webkit-scrollbar {
 canvas + div::-webkit-scrollbar {
   display: none;
 }
+
+/* Sur le conteneur vidéo (et ses enfants) */
+.video-pane,
+.video-pane * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Évite aussi la sélection visuelle pendant le drag */
+.video-pane {
+  user-select: none;
+  -webkit-user-select: none;
+}

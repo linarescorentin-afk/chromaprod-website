@@ -3,9 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import PhotoComponent from "./PhotoComponent";
 import VideoComponent, { IVideo } from "./VideoComponent";
-import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import {
+  animate,
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
 import { useWindowsWidth } from "@/store/useWindowsWidth";
+import SwitchButton from "./ui/SwitchButton";
 
 export default function HomeComponent() {
   const dragX = useMotionValue(0);
@@ -94,12 +101,16 @@ export default function HomeComponent() {
     return Math.min(Math.max(x, min), max);
   });
 
+  const clip = useMotionTemplate`inset(0 calc(100% - ${clampedWidth}px) 0 0)`;
+
+  console.log(activeVideo?.video);
+
   return (
     <div>
       {/* SECTION VIDEO */}
       <motion.div
-        className="absolute top-0 bg-black z-10 overflow-x-hidden"
-        style={{ width: clampedWidth }}
+        className="absolute top-0 bg-black z-10 will-change-[clip-path] video-pane"
+        style={{ clipPath: clip }}
       >
         <VideoComponent
           setActiveVideo={setActiveVideo}
@@ -150,10 +161,10 @@ export default function HomeComponent() {
       </motion.div>
 
       {activeVideo && (
-        <div className="absolute z-50 top-0 left-0 flex items-center justify-center h-screen w-screen bg-black p-10">
+        <div className="absolute z-50 top-0 left-0 flex items-center justify-center h-screen w-screen bg-black lg:p-10 p-2">
           <video
+            src={`${activeVideo.video}#t=0.001`}
             ref={videoRef}
-            src={activeVideo.video}
             controls
             autoPlay
             className="w-full h-full object-contain"
@@ -166,6 +177,12 @@ export default function HomeComponent() {
           </button>
         </div>
       )}
+
+      <SwitchButton
+        onClick={() => moveBarTo("video")}
+        subtext="Switch to video"
+        textposition="text-left"
+      />
 
       {/* <p className="fixed bottom-16 left-10 z-30 font-karla text-sm">
         Based in Montréal

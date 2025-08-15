@@ -60,7 +60,7 @@ function VideoComponent({
   console.log(isVideoVisible);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-[100svw] h-screen">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         frameloop={isVideoVisible ? "always" : "demand"}
@@ -76,12 +76,6 @@ function VideoComponent({
           <VideoOverlay videos={videos} widthPercent={widthPercent} />
         </ScrollControls>
       </Canvas>
-
-      <SwitchButton
-        onClick={() => moveBarTo("video")}
-        subtext="Switch to video"
-        textposition="text-left"
-      />
     </div>
   );
 }

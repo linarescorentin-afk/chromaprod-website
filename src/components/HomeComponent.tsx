@@ -24,6 +24,8 @@ export default function HomeComponent() {
   const [activeVideo, setActiveVideo] = useState<IVideo | null>(null);
   const { setWindowWidth } = useWindowsWidth();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
   // 🔄 écoute le resize
   useEffect(() => {
@@ -52,35 +54,43 @@ export default function HomeComponent() {
     dragX.set(window.innerWidth / 2);
     // Écoute dragX pour calculer le % en direct
     const unsubscribe = dragX.on("change", (latest) => {
+      setIsDragging(true);
       if (screenWidth) {
         const percent = (latest / screenWidth) * 100;
         setWidthPercent(Math.round(percent));
 
         if (percent >= (screenWidth < 728 ? 97 : 98)) {
           setIsPhotoVisible(false);
+          setSelectedFilter("Switch to video");
         } else {
           setIsPhotoVisible(true);
         }
 
         if (percent <= (screenWidth < 728 ? 3 : 1)) {
           setIsVideoVisible(false);
+          setSelectedFilter("Switch to photo");
         } else {
           setIsVideoVisible(true);
         }
       }
     });
 
+    const destroy = dragX.on("animationComplete", () => {
+      setIsDragging(false);
+    });
+
     return () => {
       window.removeEventListener("resize", handleResize);
       unsubscribe();
+      destroy();
     };
   }, [dragX, screenWidth]);
 
   // ✅ Fonction pour “auto-drag” la barre
   function moveBarTo(target: "video" | "photo") {
     if (!screenWidth) return;
-    const min = screenWidth * (screenWidth < 728 ? 0.05 : 0.01);
-    const max = screenWidth * (screenWidth < 728 ? 0.95 : 0.98);
+    const min = screenWidth * 0.01;
+    const max = screenWidth * 0.98;
 
     const targetX = target === "video" ? max : min;
 
@@ -98,14 +108,14 @@ export default function HomeComponent() {
   const clampedWidth = useTransform(dragX, (x) => {
     if (!screenWidth) return x; // le temps que le SSR soit hydraté
 
-    const min = screenWidth * (screenWidth < 728 ? 0.05 : 0.01);
-    const max = screenWidth * (screenWidth < 728 ? 0.95 : 0.98);
+    const min = screenWidth * 0.01;
+    const max = screenWidth * 0.98;
     return Math.min(Math.max(x, min), max);
   });
 
   const clip = useMotionTemplate`inset(0 calc(100% - ${clampedWidth}px) 0 0)`;
 
-  console.log(widthPercent * 0.01 >= 0.95, widthPercent * 0.01);
+  console.log(selectedFilter);
 
   return (
     <div>
@@ -114,9 +124,9 @@ export default function HomeComponent() {
         className="absolute top-0 bg-black z-20 will-change-[clip-path] video-pane"
         style={{ clipPath: clip }}
       >
-        {screenWidth && widthPercent * 0.01 <= 0.92 && (
+        {widthPercent * 0.01 <= 0.92 && (
           <button
-            className="bg-transparent hover:bg-white/10 transform transition-all ease-in-out duration-300 fixed top-0 w-full h-full z-30 cursor-pointer"
+            className={`bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 fixed top-0 w-full h-full z-30 cursor-pointer`}
             onClick={() => moveBarTo("video")}
           />
         )}
@@ -129,15 +139,17 @@ export default function HomeComponent() {
         />
       </motion.div>
       <div className="relative">
-        {screenWidth && widthPercent * 0.01 >= 0.05 && (
+        {widthPercent * 0.01 >= 0.05 && (
           <button
-            className="fixed top-0 w-full bg-transparent hover:bg-white/10 transform transition-all ease-in-out duration-300 h-full z-10 cursor-pointer"
+            className={`fixed top-0 w-full bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 h-full z-10 cursor-pointer`}
             onClick={() => moveBarTo("photo")}
           />
         )}
 
         {/* SECTION PHOTO */}
         <PhotoComponent
+          setSelectedFilter={setSelectedFilter}
+          selectedFilter={selectedFilter}
           isPhotoVisible={isPhotoVisible}
           moveBarTo={moveBarTo}
           widthPercent={widthPercent}
@@ -196,7 +208,11 @@ export default function HomeComponent() {
       )}
 
       <SwitchButton
-        onClick={() => moveBarTo("video")}
+        selectedFilter={selectedFilter}
+        onClick={() => {
+          moveBarTo("video");
+          setSelectedFilter("Switch to video");
+        }}
         subtext="Switch to video"
         textposition="text-left"
       />
@@ -208,13 +224,13 @@ export default function HomeComponent() {
       </p>
 
       <p
-        className={`hidden lg:flex fixed bottom-10 left-2/6  z-30 mix-blend-difference text-xs font-karla text-center `}
+        className={`hidden lg:flex fixed bottom-10 left-2/8  z-30 mix-blend-difference text-xs font-karla text-center `}
       >
         BASED IN MONTRÉAL
       </p>
 
       <p
-        className={`hidden lg:flex fixed bottom-10 right-2/6  z-30 mix-blend-difference text-xs font-karla text-center `}
+        className={`hidden lg:flex fixed bottom-10 right-2/8  z-30 mix-blend-difference text-xs font-karla text-center `}
       >
         CORENTIN LINARES
       </p>

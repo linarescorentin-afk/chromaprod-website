@@ -16,7 +16,7 @@ function SocialMediaComponent() {
   return (
     <>
       {socialMedia && (
-        <div className="flex  flex-col items-end space-y-2 fixed font-bold top-1/2 -translate-y-1/2 right-5 lg:right-10 font-karla text-[12px] mix-blend-difference z-30 underline">
+        <div className="flex  flex-col items-end space-y-2 fixed font-bold top-1/2  -translate-y-1/2 right-5 lg:right-10 font-karla text-[12px] mix-blend-difference z-30 underline">
           {socialMedia.map((item) => (
             <a
               key={item.platform}

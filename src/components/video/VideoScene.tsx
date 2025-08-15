@@ -45,7 +45,7 @@ function VideoScene({
   const spacing = isMobile ? 4.7 : isTablet ? 4.7 : 4.65;
 
   // 📐 Taille des plans : horizontaux sur desktop, verticaux sur mobile
-  const planeWidth = isMobile ? 4.2 : isTablet ? 5.7 : 7;
+  const planeWidth = isMobile ? 4 : isTablet ? 5.7 : 7;
   const planeHeight = isMobile ? 3 : isTablet ? 4.1 : 4.1;
 
   // ✅ Textures

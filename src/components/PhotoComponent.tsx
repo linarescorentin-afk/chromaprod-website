@@ -20,10 +20,14 @@ function PhotoComponent({
   isPhotoVisible,
   moveBarTo,
   widthPercent,
+  selectedFilter,
+  setSelectedFilter,
 }: {
   isPhotoVisible: boolean;
   moveBarTo: (target: "video" | "photo") => void;
   widthPercent: number;
+  selectedFilter: string | null;
+  setSelectedFilter: (filter: string | null) => void;
 }) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const category = useFilterStore((state) => state.selectedFilter);
@@ -96,7 +100,11 @@ function PhotoComponent({
       )}
 
       <SwitchButton
-        onClick={() => moveBarTo("photo")}
+        selectedFilter={selectedFilter}
+        onClick={() => {
+          moveBarTo("photo");
+          setSelectedFilter("Switch to photo");
+        }}
         subtext="Switch to photo"
         textposition="text-right"
       />

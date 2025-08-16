@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 import ComeUpText from "../ui/animated/ComeUpText";
 import AnimUp from "../ui/animated/AnimUp";
+import { usePathname } from "next/navigation";
 
 function IntroWebsite() {
   const { getAllReady } = useIsLoading();
@@ -11,9 +12,14 @@ function IntroWebsite() {
 
   const [inView, setInView] = React.useState(false);
 
+  const path = usePathname();
+
   useEffect(() => {
     setInView(true);
-  }, []);
+    if (path === "/studio") {
+      setIsEnter(true);
+    }
+  }, [path]);
 
   return (
     <div

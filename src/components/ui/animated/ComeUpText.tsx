@@ -9,7 +9,7 @@ interface IProps {
 function ComeUpText({ text, className, height = "h-6" }: IProps) {
   return (
     <div
-      className={`group flex flex-col overflow-hidden ${className} ${height}`}
+      className={`group cursor-pointer flex flex-col overflow-hidden ${className} ${height}`}
     >
       <p className="transform transition duration-500 group-hover:-translate-y-8 ">
         {text}

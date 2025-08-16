@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useWindowsWidth } from "@/store/useWindowsWidth";
 import SwitchButton from "./ui/SwitchButton";
 import SocialMediaComponent from "./SocialMediaComponent";
+import AnimUp from "./ui/animated/AnimUp";
 
 export default function HomeComponent() {
   const dragX = useMotionValue(0);
@@ -84,6 +85,8 @@ export default function HomeComponent() {
     };
   }, [dragX, screenWidth]);
 
+  console.log("Width percent:", widthPercent);
+
   // ✅ Fonction pour “auto-drag” la barre
   function moveBarTo(target: "video" | "photo") {
     if (!screenWidth) return;
@@ -100,7 +103,7 @@ export default function HomeComponent() {
     });
   }
 
-  const splitedSentence = "X VIDEO MAKING X PHOTOGRAPHY X".split("");
+  const splitedSentence = "_ VIDEO _ PHOTOGRAPHY _".split("");
 
   // ✅ Clamp la largeur SEULEMENT si screenWidth est défini
   const clampedWidth = useTransform(dragX, (x) => {
@@ -113,8 +116,6 @@ export default function HomeComponent() {
 
   const clip = useMotionTemplate`inset(0 calc(100% - ${clampedWidth}px) 0 0)`;
 
-  console.log(selectedFilter);
-
   return (
     <div>
       {/* SECTION VIDEO */}
@@ -122,12 +123,12 @@ export default function HomeComponent() {
         className="absolute top-0 bg-black z-20 will-change-[clip-path] video-pane"
         style={{ clipPath: clip }}
       >
-        {widthPercent * 0.01 <= 0.92 && (
+        {/* {widthPercent * 0.01 <= 0.92 && (
           <button
-            className={`bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 fixed top-0 w-full h-full z-30 cursor-pointer`}
+            className={`bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 absolute top-0 w-full h-full z-30 cursor-pointer`}
             onClick={() => moveBarTo("video")}
           />
-        )}
+        )} */}
 
         <VideoComponent
           setActiveVideo={setActiveVideo}
@@ -137,12 +138,12 @@ export default function HomeComponent() {
         />
       </motion.div>
       <div className="relative">
-        {widthPercent * 0.01 >= 0.05 && (
+        {/* {widthPercent * 0.01 >= 0.05 && (
           <button
             className={`fixed top-0 w-full bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 h-full z-10 cursor-pointer`}
             onClick={() => moveBarTo("photo")}
           />
-        )}
+        )} */}
 
         {/* SECTION PHOTO */}
         <PhotoComponent
@@ -168,7 +169,7 @@ export default function HomeComponent() {
           dragX.set(Math.min(Math.max(info.point.x, min), max));
         }}
         style={{ x: dragX }}
-        className="fixed top-0 h-screen w-[30px] cursor-ew-resize z-10 flex justify-start"
+        className="fixed top-0 h-screen w-[30px] cursor-ew-resize z-30 flex justify-start"
       >
         <div className="h-full w-[2px] bg-red-500 hover:bg-red-600 hover:scale-150 transform transition-all duration-300 ease-in-out" />
         <Image
@@ -222,20 +223,20 @@ export default function HomeComponent() {
       </p>
 
       <p
-        className={`hidden lg:flex fixed bottom-10 left-2/8  z-30 mix-blend-difference text-xs font-karla text-center `}
+        className={`hidden lg:flex fixed bottom-10 left-1/6  z-30 mix-blend-difference text-xs font-karla text-center `}
       >
-        BASED IN MONTRÉAL
+        - BASED IN MONTRÉAL
       </p>
 
       <p
-        className={`hidden lg:flex fixed bottom-10 right-2/8  z-30 mix-blend-difference text-xs font-karla text-center `}
+        className={`hidden lg:flex fixed bottom-10 right-1/6  z-30 mix-blend-difference text-xs font-karla text-center `}
       >
-        CORENTIN LINARES
+        CORENTIN LINARES -
       </p>
 
       <SocialMediaComponent />
 
-      <div className="fixed left-10 top-1/2 font-karla -translate-y-1/2 z-20 hidden lg:flex flex-col text-[12px]">
+      <div className="fixed left-10 top-1/2 font-karla -translate-y-1/2 z-20 hidden lg:flex flex-col items-center text-[12px]">
         {splitedSentence.map((w, i) => {
           return (
             <span key={i} className="text-white">
@@ -244,6 +245,13 @@ export default function HomeComponent() {
           );
         })}
       </div>
+
+      {(2 >= widthPercent || widthPercent >= 95) && (
+        <div className="fixed bottom-5 space-y-2 z-30 left-1/2 -translate-x-1/2  animate-fadeIn font-karla text-[12px] flex flex-col items-center">
+          <p>scroll down to Explore</p>
+          <Image src="/downArrow.svg" alt="scroll down" width={5} height={5} />
+        </div>
+      )}
     </div>
   );
 }

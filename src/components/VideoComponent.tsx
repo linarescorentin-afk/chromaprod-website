@@ -1,10 +1,18 @@
 import { Canvas } from "@react-three/fiber";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  Suspense,
+  useEffect,
+  useState,
+} from "react";
 import VideoScene from "./video/VideoScene";
 import { ScrollControls } from "@react-three/drei";
 import { getVideos } from "@/sanity/lib/getVideo";
 import VideoOverlay from "@/components/video/VideoOverlay";
 import { useFilterStore } from "@/store/useFilterStore";
+import { useIsLoading } from "@/store/useIsLoading";
+import { R3FLoadingBridge } from "./loader/R3FLoadingBridge";
 
 export interface IVideo {
   title: string;
@@ -28,14 +36,16 @@ function VideoComponent({
 }) {
   const [videosFetched, setVideosFetched] = useState<IVideo[]>([]);
   const category = useFilterStore((state) => state.selectedFilter);
+  const { setIsVideoLoading, setIsVideoCanvasLoading } = useIsLoading();
 
   useEffect(() => {
     async function load() {
       const videos = await getVideos();
       setVideosFetched(videos);
+      setIsVideoLoading(false);
     }
     load();
-  }, []);
+  }, [setIsVideoLoading]);
 
   const onVideoClick = (video: IVideo) => {
     moveBarTo("video");
@@ -63,15 +73,19 @@ function VideoComponent({
         frameloop={isVideoVisible ? "always" : "demand"}
         className={`canvas ${isVideoVisible ? "visible" : "hidden"}`}
       >
-        <color attach="background" args={["#070707"]} />
-        <ScrollControls pages={videos.length + 0.5} damping={0.5}>
-          <VideoScene
-            onClick={onVideoClick}
-            videos={videos}
-            widthPercent={widthPercent}
-          />
-          <VideoOverlay videos={videos} widthPercent={widthPercent} />
-        </ScrollControls>
+        <Suspense fallback={null}>
+          <color attach="background" args={["#070707"]} />
+          <ScrollControls pages={videos.length + 0.5} damping={0.5}>
+            <VideoScene
+              onClick={onVideoClick}
+              videos={videos}
+              widthPercent={widthPercent}
+            />
+            <VideoOverlay videos={videos} widthPercent={widthPercent} />
+          </ScrollControls>
+        </Suspense>
+
+        <R3FLoadingBridge onDone={() => setIsVideoCanvasLoading(false)} />
       </Canvas>
     </div>
   );

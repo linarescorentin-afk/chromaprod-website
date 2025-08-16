@@ -1,11 +1,13 @@
 import { ScrollControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import PhotoScene from "./photo/PhotoScene";
 
 import { getPhotos } from "@/sanity/lib/getPhotos";
 import { useFilterStore } from "@/store/useFilterStore";
 import SwitchButton from "./ui/SwitchButton";
+import { useIsLoading } from "@/store/useIsLoading";
+import { R3FLoadingBridge } from "./loader/R3FLoadingBridge";
 
 export interface IPhoto {
   image: string;
@@ -32,14 +34,16 @@ function PhotoComponent({
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const category = useFilterStore((state) => state.selectedFilter);
   const [photosFetched, setPhotos] = useState<IPhoto[]>([]);
+  const { setIsPhotoLoading, setIsPhotoCanvasLoading } = useIsLoading();
 
   useEffect(() => {
     async function load() {
       const data = await getPhotos();
       setPhotos(data);
+      setIsPhotoLoading(false);
     }
     load();
-  }, []);
+  }, [setIsPhotoLoading]);
 
   const photos = React.useMemo(() => {
     if (category === "all") return photosFetched;
@@ -62,17 +66,21 @@ function PhotoComponent({
         frameloop={isPhotoVisible ? "always" : "demand"}
         className={`canvas ${isPhotoVisible ? "visible" : "hidden"}`}
       >
-        <ScrollControls
-          pages={photos.length + photos.length * 0.1}
-          damping={0.5}
-        >
-          <PhotoScene
-            photos={photos}
-            selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
-            widthPercent={widthPercent}
-          />
-        </ScrollControls>
+        <Suspense fallback={null}>
+          <ScrollControls
+            pages={photos.length + photos.length * 0.1}
+            damping={0.5}
+          >
+            <PhotoScene
+              photos={photos}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex}
+              widthPercent={widthPercent}
+            />
+          </ScrollControls>
+        </Suspense>
+
+        <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
       </Canvas>
 
       {/* ✅ Overlay HTML */}

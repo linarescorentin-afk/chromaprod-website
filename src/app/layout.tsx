@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Karantina, Karla } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/navigation/NavBar";
+import IntroWebsite from "@/components/loader/IntroWebsite";
 
 const karantina = Karantina({
   variable: "--font-karantina",
@@ -31,6 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${karla.variable} ${karantina.variable} antialiased`}>
         <NavBar />
+        <IntroWebsite />
         {children}
       </body>
     </html>

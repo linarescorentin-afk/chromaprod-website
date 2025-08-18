@@ -61,6 +61,8 @@ function PhotoComponent({
     return <div className="text-white p-4">Chargement des photos...</div>;
   }
 
+  console.log(selectedIndex);
+
   return (
     <div
       className={`h-screen w-screen ${isEnter ? "translate-x-0" : "-translate-x-[50%]"} transition-all transform ease-in-out duration-[3000ms]`}
@@ -98,7 +100,7 @@ function PhotoComponent({
                 {photosFetched[selectedIndex].name}
               </h2>
             )}
-            <p className="text-sm">Scroll or click to close</p>
+            <p className="text-sm font-karla">Scroll or click to close</p>
           </div>
           <div className="w-full  flex justify-between items-center">
             {photosFetched[selectedIndex].date && (

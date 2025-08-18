@@ -157,7 +157,7 @@ export default function HomeComponent() {
       {/* </div> */}
 
       {/* BARRE DRAGGABLE */}
-      <motion.div
+      {/* <motion.div
         drag="x"
         dragConstraints={{
           left: screenWidth ? screenWidth * 0.015 : 0,
@@ -219,7 +219,7 @@ export default function HomeComponent() {
             textposition="text-left"
           />
         </AnimUp>
-      </motion.div>
+      </motion.div> */}
       {activeVideo && (
         <ActiveVideo
           activeVideo={activeVideo}

@@ -14,26 +14,29 @@ export default function Overlay({
     <Scroll html>
       <div
         className="w-screen mx-auto "
-        style={{ opacity: widthPercent / 100 }}
+        // style={{ opacity: widthPercent / 100 }}
       >
         {videos.map((video, index) => (
           <motion.div
             key={index}
-            className="px-10 w-full lg:px-64 h-screen flex flex-col py-20 lg:py-38 text-white font-karantina  mx-auto max-w-[1600px]"
+            className="px-10 w-full lg:px-32 h-screen flex flex-col py-32 lg:py-14 text-white font-karantina justify-between  mx-auto "
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ amount: 0.3 }} // déclenche quand 30% de l'élément est visible
           >
-            <div>
-              <h1 className="text-5xl font-bold mb-2 uppercase">
+            <div className="space-y-5">
+              <p className="text-2xl underline">WATCH THE VIDEO</p>
+              <h1 className="text-[200px] font-bold uppercase leading-[160px] w-[200px]">
                 {video.title}
               </h1>
-              <p className="text-lg text-gray-300 font-karla">
+            </div>
+            <div className="w-full flex items-center justify-between">
+              <p className="text-sm text-gray-100 font-karla ">
                 {video.description}
               </p>
+              {video.clientName && <p>{video.clientName.toUpperCase()}</p>}
             </div>
-            <p className="text-2xl underline">WATCH THE VIDEO</p>
           </motion.div>
         ))}
       </div>

@@ -122,7 +122,7 @@ export default function HomeComponent() {
       {/* SECTION VIDEO */}
       <motion.div
         className={`absolute top-0 bg-black z-20 will-change-[clip-path] video-pane animate-left`}
-        style={{ clipPath: clip }}
+        // style={{ clipPath: clip }}
       >
         {/* {widthPercent * 0.01 <= 0.92 && (
           <button
@@ -138,23 +138,23 @@ export default function HomeComponent() {
           widthPercent={widthPercent}
         />
       </motion.div>
-      <div className="relative">
-        {/* {widthPercent * 0.01 >= 0.015 && (
+      {/* <div className="relative"> */}
+      {/* {widthPercent * 0.01 >= 0.015 && (
           <button
             className={`fixed top-0 w-full bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 h-full z-10 cursor-pointer`}
             onClick={() => moveBarTo("photo")}
           />
         )} */}
 
-        {/* SECTION PHOTO */}
-        <PhotoComponent
+      {/* SECTION PHOTO */}
+      {/* <PhotoComponent
           setSelectedFilter={setSelectedFilter}
           selectedFilter={selectedFilter}
           isPhotoVisible={isPhotoVisible}
           moveBarTo={moveBarTo}
           widthPercent={widthPercent}
-        />
-      </div>
+        /> */}
+      {/* </div> */}
 
       {/* BARRE DRAGGABLE */}
       <motion.div

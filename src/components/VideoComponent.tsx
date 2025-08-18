@@ -69,9 +69,7 @@ function VideoComponent({
   }
 
   return (
-    <div
-      className={`bg-black w-[100svw] h-screen ${isEnter ? "translate-x-0 opacity-100" : "translate-x-[50%] opacity-0"} transition-all transform ease-in-out duration-[3000ms] `}
-    >
+    <div className={`bg-black w-[100svw] h-screen `}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         frameloop={isVideoVisible ? "always" : "demand"}

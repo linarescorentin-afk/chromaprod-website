@@ -33,8 +33,8 @@ export default function RootLayout({
       <body
         className={`${karla.variable} ${karantina.variable} antialiased bg-black`}
       >
-        <NavBar />
-        <IntroWebsite />
+        {/* <NavBar />
+        <IntroWebsite /> */}
         {children}
       </body>
     </html>

@@ -20,7 +20,7 @@ export default function Overlay({
           <motion.div
             key={index}
             className="px-10 w-full lg:px-32 h-screen flex flex-col py-32 lg:lg:py-32 text-white font-karantina justify-between  mx-auto"
-            initial={{ opacity: 0, y: 100 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: -50 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
             viewport={{ amount: 0.3 }} // déclenche quand 30% de l'élément est visible

@@ -82,7 +82,7 @@ function VideoComponent({
               videos={videos}
               widthPercent={widthPercent}
             />
-            <VideoOverlay videos={videos} widthPercent={widthPercent} />
+            {/* <VideoOverlay videos={videos} widthPercent={widthPercent} /> */}
           </ScrollControls>
         </Suspense>
 

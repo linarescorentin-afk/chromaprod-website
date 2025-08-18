@@ -45,7 +45,7 @@ export default function FilmPlan({
       // ✅ plus on scroll, plus la neige est intense (jusqu’à 0.4)
       materialRef.current.noiseStrength = Math.max(
         0.2,
-        Math.min(0.6, shiftRef.current * 1.5),
+        Math.min(0.9, shiftRef.current * 1.7),
       );
       // ✅ envoie aussi shift pour le reste (si besoin)
       materialRef.current.shift = shiftRef.current;

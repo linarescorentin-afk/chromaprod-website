@@ -28,7 +28,7 @@ function ActiveVideo({ activeVideo, videoRef, setActiveVideo }: IProps) {
         ref={videoRef}
         // controls
         autoPlay={!isClose}
-        className="w-full h-full object-contain"
+        className="w-full h-full object-cover rounded-2xl"
       />
       <button
         onClick={onClose}

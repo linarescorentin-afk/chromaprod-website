@@ -8,6 +8,7 @@ import { useFilterStore } from "@/store/useFilterStore";
 import SwitchButton from "./ui/SwitchButton";
 import { useIsLoading } from "@/store/useIsLoading";
 import { R3FLoadingBridge } from "./loader/R3FLoadingBridge";
+import { useIsEnterState } from "@/store/useIsEnter";
 
 export interface IPhoto {
   image: string;
@@ -31,6 +32,7 @@ function PhotoComponent({
   selectedFilter: string | null;
   setSelectedFilter: (filter: string | null) => void;
 }) {
+  const { isEnter } = useIsEnterState();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const category = useFilterStore((state) => state.selectedFilter);
   const [photosFetched, setPhotos] = useState<IPhoto[]>([]);
@@ -60,7 +62,9 @@ function PhotoComponent({
   }
 
   return (
-    <div className="h-screen w-screen">
+    <div
+      className={`h-screen w-screen ${isEnter ? "translate-x-0" : "-translate-x-[50%]"} transition-all transform ease-in-out duration-[3000ms]`}
+    >
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         frameloop={isPhotoVisible ? "always" : "demand"}
@@ -106,16 +110,6 @@ function PhotoComponent({
           </div>
         </div>
       )}
-
-      <SwitchButton
-        selectedFilter={selectedFilter}
-        onClick={() => {
-          moveBarTo("photo");
-          setSelectedFilter("Switch to photo");
-        }}
-        subtext="Switch to photo"
-        textposition="text-right"
-      />
     </div>
   );
 }

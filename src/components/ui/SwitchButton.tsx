@@ -1,3 +1,4 @@
+import Image from "next/image";
 import ComeUpText from "./animated/ComeUpText";
 
 function SwitchButton({
@@ -13,12 +14,19 @@ function SwitchButton({
 }) {
   return (
     <button
-      className={`font-karantina fixed bottom-10 lg:bottom-12 ${subtext === "Switch to video" ? "lg:left-15 left-5" : "lg:right-15 right-5"} z-30 uppercase cursor-pointer text-xl transition-all duration-500 ease-in-out hover:scale-110  ${textposition}  lg:text-red-500 lg:bg-transparent lg:p-0 underline px-5 py-2  ${selectedFilter && selectedFilter === subtext ? "bg-black text-white border-white opacity-50" : "bg-white text-black"}`}
       onClick={() => {
         onClick();
       }}
+      className={`flex items-end ${subtext !== "Switch to video" ? "flex-row-reverse" : ""} uppercase`}
     >
       <ComeUpText height="lg:h-6 h-7" text={subtext} />
+      <Image
+        className={`mx-2 ${subtext === "Switch to video" ? "rotate-180" : ""} group-hover:-translate-y-[2px] transition-all duration-700 ease-in-out`}
+        src={"/arrowChr.svg"}
+        alt="Arrow"
+        height={10}
+        width={10}
+      />
     </button>
   );
 }

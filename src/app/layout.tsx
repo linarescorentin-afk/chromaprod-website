@@ -30,7 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${karla.variable} ${karantina.variable} antialiased`}>
+      <body
+        className={`${karla.variable} ${karantina.variable} antialiased bg-black`}
+      >
         <NavBar />
         <IntroWebsite />
         {children}

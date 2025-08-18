@@ -50,7 +50,7 @@ function PhotoScene({
   // 📏 Dimensions de base
   const baseWidth = isMobile ? 4.2 : isTablet ? 6 : 7;
   const baseHeight = isMobile ? 3 : isTablet ? 4 : 5;
-  const baseHeightVertical = isMobile ? 4.5 : isTablet ? 5 : 6.5;
+  const baseHeightVertical = isMobile ? 4.5 : isTablet ? 5 : 6;
 
   // 📍 Spacing vertical
   const spacingY = isMobile ? 4 : 8; // espace entre les images

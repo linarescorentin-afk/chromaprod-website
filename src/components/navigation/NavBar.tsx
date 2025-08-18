@@ -6,6 +6,7 @@ import { Category, useFilterStore } from "@/store/useFilterStore";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import MobileNavItems from "./MobileNavItems";
+import { useIsEnterState } from "@/store/useIsEnter";
 
 function NavBar() {
   const navItems = [{ name: "ABOUT", href: "/about" }];
@@ -14,7 +15,7 @@ function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const setSelectedFilter = useFilterStore((state) => state.setSelectedFilter);
   const filterButtons = ["All", "Corporate", "Events", "SocialMedia"];
-
+  const { isEnter } = useIsEnterState();
   const pathname = usePathname();
 
   const isStudio = pathname.includes("/studio"); // ou pathname.startsWith("/studio");
@@ -30,7 +31,7 @@ function NavBar() {
       {!isStudio && (
         <>
           <div
-            className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-karantina text-xl `}
+            className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-karantina text-xl ${isEnter ? "translate-y-0" : "-translate-y-[50%]"} transition-all transform ease-in-out duration-[3000ms] `}
           >
             <Link href="/">
               <Image
@@ -106,7 +107,7 @@ function NavBar() {
           </div>
 
           <div
-            className={`${isStudio ? "z-0" : "z-50"}  text-white p-8 w-full fixed top-0  items-center justify-between font-karantina hidden lg:flex`}
+            className={`${isStudio ? "z-0" : "z-50"} ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[2000ms]  text-white p-8 w-full fixed top-0  items-center justify-between font-karantina hidden lg:flex`}
           >
             <Link href="/">
               <Image

@@ -148,10 +148,7 @@ export default function HomeComponent() {
 
         {/* SECTION PHOTO */}
         <PhotoComponent
-          setSelectedFilter={setSelectedFilter}
-          selectedFilter={selectedFilter}
           isPhotoVisible={isPhotoVisible}
-          moveBarTo={moveBarTo}
           widthPercent={widthPercent}
         />
       </div>

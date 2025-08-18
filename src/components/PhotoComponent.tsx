@@ -5,7 +5,6 @@ import PhotoScene from "./photo/PhotoScene";
 
 import { getPhotos } from "@/sanity/lib/getPhotos";
 import { useFilterStore } from "@/store/useFilterStore";
-import SwitchButton from "./ui/SwitchButton";
 import { useIsLoading } from "@/store/useIsLoading";
 import { R3FLoadingBridge } from "./loader/R3FLoadingBridge";
 import { useIsEnterState } from "@/store/useIsEnter";
@@ -21,16 +20,10 @@ export interface IPhoto {
 
 function PhotoComponent({
   isPhotoVisible,
-  moveBarTo,
   widthPercent,
-  selectedFilter,
-  setSelectedFilter,
 }: {
   isPhotoVisible: boolean;
-  moveBarTo: (target: "video" | "photo") => void;
   widthPercent: number;
-  selectedFilter: string | null;
-  setSelectedFilter: (filter: string | null) => void;
 }) {
   const { isEnter } = useIsEnterState();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -60,8 +53,6 @@ function PhotoComponent({
   if (!photos.length) {
     return <div className="text-white p-4">Chargement des photos...</div>;
   }
-
-  console.log(selectedIndex);
 
   return (
     <div

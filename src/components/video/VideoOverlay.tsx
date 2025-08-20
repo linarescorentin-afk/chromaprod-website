@@ -31,8 +31,7 @@ export default function Overlay({
               </p>
             </div>
             <div className="space-y-5 ">
-              <p className="text-2xl underline">WATCH THE VIDEO</p>
-              <h1 className="text-[150px] font-bold uppercase leading-[120px] w-[200px]">
+              <h1 className="text-[120px] font-bold uppercase leading-[100px] w-[200px]">
                 {video.title}
               </h1>
             </div>

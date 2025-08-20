@@ -189,7 +189,7 @@ export default function HomeComponent() {
         <AnimUp
           duration={2}
           inView={isEnter}
-          className={`font-anton min-w-[130px]  lg:min-w-[170px] group fixed bottom-10 lg:bottom-23  lg:right-1/2 -translate-x-[15px] right-5  z-30 uppercase cursor-pointer text-base  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-3 lg:px-5 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
+          className={`font-anton min-w-[130px]  lg:min-w-[170px] group fixed bottom-10 lg:bottom-23  lg:right-1/2 -translate-x-[15px] right-5 test z-30 uppercase cursor-pointer text-base  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-3 lg:px-5 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
         >
           <SwitchButton
             selectedFilter={selectedFilter}

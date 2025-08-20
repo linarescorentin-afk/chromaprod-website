@@ -56,7 +56,7 @@ function PhotoComponent({
 
   return (
     <div
-      className={`h-screen w-screen ${isEnter ? "translate-x-0" : "-translate-x-[50%]"} transition-all transform ease-in-out duration-[3000ms]`}
+      className={`h-screen w-screen ${isEnter ? "translate-x-0" : "-translate-x-[60%]"} transition-all transform ease-in-out duration-[3000ms]`}
     >
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
@@ -82,7 +82,7 @@ function PhotoComponent({
 
       {/* ✅ Overlay HTML */}
       {selectedIndex !== null && (
-        <div className="fixed top-0 text-sm uppercase pointer-events-none left-0 flex flex-col items-start  justify-between z-50 transition-opacity duration-300 w-screen h-screen px-16 py-24 font-karla">
+        <div className="fixed top-0 text-sm uppercase pointer-events-none left-0 flex flex-col items-start  justify-between z-50 transition-opacity duration-300 w-full h-full px-16 py-24 font-karla">
           <div
             className={`text-white w-full flex ${photosFetched[selectedIndex].name ? "justify-between" : "justify-end"}`}
           >

@@ -33,7 +33,7 @@ function IntroWebsite() {
       className={`w-screen h-screen flex flex-col items-center justify-center bg-black fixed top-0 left-0 z-50 ${isEnter && "hidden"} ${!inView && "animate-translateTop"}`}
     >
       <div
-        className={`absolute z-50 top-0 animate-fadeIn left-0 flex items-center justify-center h-screen w-screen bg-black lg:p-10 p-2 ${inView && "fadeIn"}`}
+        className={`absolute z-50 top-0 animate-fadeIn left-0 flex items-center justify-center h-full w-full bg-black lg:p-10 p-2 ${inView && "fadeIn"}`}
       >
         <video
           src={`/nuitMontreal.mov`}
@@ -42,10 +42,10 @@ function IntroWebsite() {
           muted
           loop
           playsInline
-          className="w-full h-full object-fill rounded-3xl"
+          className="w-screen h-full object-fill rounded-3xl"
         />
       </div>
-      <div className="z-[100] flex flex-col items-center justify-center font-karla font-bold space-y-10 pt-32">
+      <div className="z-[100] flex flex-col items-center justify-center font-karla font-bold space-y-10 pt-32 w-10/12">
         <AnimUp inView={inView} duration={2.5}>
           <Image
             src="/chomaLogoCenter.webp"

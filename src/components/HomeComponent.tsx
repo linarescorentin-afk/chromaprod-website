@@ -121,7 +121,7 @@ export default function HomeComponent() {
     <div>
       {/* SECTION VIDEO */}
       <motion.div
-        className={`absolute top-0 bg-black z-20 will-change-[clip-path] video-pane animate-left`}
+        className={`absolute top-0 bg-black z-20 will-change-[clip-path] video-pane animate-left overflow-hidden`}
         style={{ clipPath: clip }}
       >
         {/* {widthPercent * 0.01 <= 0.92 && (
@@ -189,7 +189,7 @@ export default function HomeComponent() {
         <AnimUp
           duration={2}
           inView={isEnter}
-          className={`font-karantina  lg:w-[110px] group fixed bottom-10 lg:bottom-24 $ lg:right-1/2 -translate-x-[25px] right-5  z-30 uppercase cursor-pointer text-lg  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-5 py-2 lg:bg-transparent ${selectedFilter && selectedFilter === "Switch to photo" ? "bg-black text-white border-white opacity-50 lg:opacity-100" : "bg-white text-black"}`}
+          className={`font-anton min-w-[130px]  lg:w-[150px] group fixed bottom-10 lg:bottom-23  lg:right-1/2 -translate-x-[15px] right-5  z-30 uppercase cursor-pointer text-base  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-3 lg:px-5 py-2 lg:bg-transparent bg-white text-black border-x border-dashed`}
         >
           <SwitchButton
             selectedFilter={selectedFilter}
@@ -204,7 +204,7 @@ export default function HomeComponent() {
         <AnimUp
           duration={2}
           inView={isEnter}
-          className={`font-karantina  lg:w-[110px] group fixed bottom-10 lg:bottom-24 lg:left-1/2 translate-x-[35px] left-5" z-30 uppercase cursor-pointer text-lg  text-left lg:text-red-500 lg:transparent  lg:p-0 underline px-5 py-2 lg:bg-transparent ${selectedFilter && selectedFilter === "Switch to video" ? "bg-black text-white border-white opacity-50 lg:opacity-100" : "bg-white text-black"}`}
+          className={`font-anton min-w-[142px]  lg:w-[150px] group fixed bottom-10 lg:bottom-23 lg:left-1/2 translate-x-[12px] lg:translate-x-[35px] left-5" z-30 uppercase cursor-pointer text-base  text-left lg:text-red-500 lg:transparent  lg:p-0 underline px-5 py-2 lg:bg-transparent bg-white text-black border-x border-dashed`}
         >
           <SwitchButton
             selectedFilter={selectedFilter}
@@ -262,7 +262,7 @@ export default function HomeComponent() {
       </div>
 
       {(2 >= widthPercent || widthPercent >= 95) && (
-        <div className="fixed bottom-8 space-y-2 z-30 left-1/2 -translate-x-1/2  animate-fadeIn font-karla text-[12px] flex flex-col items-center mix-blend-difference">
+        <div className="fixed bottom-8 space-y-2 z-30 left-1/2 -translate-x-1/2  animate-fadeIn font-karla text-[12px]  flex-col items-center mix-blend-difference hidden lg:flex">
           <p>scroll down to Explore</p>
           <Image src="/downArrow.svg" alt="scroll down" width={5} height={5} />
         </div>

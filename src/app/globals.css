@@ -12,6 +12,9 @@
   --color-white: #e2e2e2;
   --font-karantina: var(--font-karantina);
   --font-karla: var(--font-karla);
+  --font-boldonse: var(--font-boldonse);
+  --font-oswald: var(--font-oswald);
+  --font-anton: var(--font-anton);
 
   --animate-fadeIn: fade-in 2500ms ease-in-out both;
   --animate-translateTop: translate-top 1500ms ease-in-out both;

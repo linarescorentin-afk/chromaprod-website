@@ -31,7 +31,7 @@ function NavBar() {
       {!isStudio && (
         <>
           <div
-            className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-karantina text-xl ${isEnter ? "translate-y-0" : "-translate-y-[50%]"} transition-all transform ease-in-out duration-[3000ms] `}
+            className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-oswald text-xl ${isEnter ? "translate-y-0" : "-translate-y-[50%]"} transition-all transform ease-in-out duration-[3000ms] `}
           >
             <Link href="/">
               <Image
@@ -43,13 +43,13 @@ function NavBar() {
             </Link>
             <button
               onClick={() => setIsMenuOpen(true)}
-              className=" bg-white px-5 py-[0.2rem] border-x border-black border-dashed text-2xl"
+              className=" bg-white px-5 py-[0.2rem] font-bold border-x border-black border-dashed text-xl"
             >
               <p>MENU</p>
             </button>
           </div>
           <div
-            className={`w-screen h-screen fixed top-0 left-0 flex lg:hidden z-50 flex-col font-karantina text-5xl transform duration-1000 ${isMenuOpen ? "translate-x-0" : "translate-x-full"} pb-32 bg-white`}
+            className={`w-full h-full fixed top-0 left-0 flex lg:hidden z-50 flex-col font-karantina text-5xl transform duration-1000 ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
           >
             <button
               onClick={() => {
@@ -107,7 +107,7 @@ function NavBar() {
           </div>
 
           <div
-            className={`${isStudio ? "z-0" : "z-50"} ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[2000ms]  text-white p-8 w-full fixed top-0  items-center justify-between font-karantina hidden lg:flex`}
+            className={`${isStudio ? "z-0" : "z-50"} ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[2000ms]  text-white p-8 w-full fixed top-0  items-center justify-between font-anton hidden lg:flex`}
           >
             <Link href="/">
               <Image
@@ -117,7 +117,7 @@ function NavBar() {
                 height={100}
               />
             </Link>
-            <div className="flex items-center justify-between  w-[30%] h-9 space-x-0 relative rounded-sm shadow-2xl text-[20px]">
+            <div className="flex items-center justify-between  w-[35%] h-9 space-x-0 relative rounded-sm text-[14px] font-light">
               {filterButtons.map((item) => {
                 const value = item.toLowerCase() as Category;
                 return (

@@ -21,7 +21,7 @@ function ActiveVideo({ activeVideo, videoRef, setActiveVideo }: IProps) {
   console.log(isClose);
   return (
     <div
-      className={`absolute z-50 top-0 left-0 flex items-center justify-center h-screen w-screen bg-black lg:p-10 p-2 animate-translateBottom ${isClose && "animate-translateTop"}`}
+      className={`absolute z-50 top-0 left-0 flex items-center justify-center h-full w-full bg-black lg:p-10 p-2 animate-translateBottom ${isClose && "animate-translateTop"}`}
     >
       <video
         src={`${activeVideo.video}#t=0.001`}

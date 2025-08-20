@@ -19,9 +19,9 @@ function SwitchButton({
       }}
       className={`flex items-end ${subtext !== "Switch to video" ? "flex-row-reverse" : ""} uppercase`}
     >
-      <ComeUpText height="lg:h-6 h-7" text={subtext} />
+      <ComeUpText height="h-6" text={subtext} />
       <Image
-        className={`mx-2 ${subtext === "Switch to video" ? "rotate-180" : ""} group-hover:-translate-y-[2px] transition-all duration-700 ease-in-out`}
+        className={`mx-2 ${subtext === "Switch to video" ? "rotate-180" : ""} -translate-y-0.5 group-hover:-translate-y-[2px] transition-all duration-700 ease-in-out hidden lg:flex`}
         src={"/arrowChr.svg"}
         alt="Arrow"
         height={10}

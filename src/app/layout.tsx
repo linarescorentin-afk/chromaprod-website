@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Karantina, Karla, Boldonse, Oswald, Anton } from "next/font/google";
+import { Karantina, Karla, Oswald, Anton } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/navigation/NavBar";
 import IntroWebsite from "@/components/loader/IntroWebsite";
@@ -15,13 +15,6 @@ const karla = Karla({
   variable: "--font-karla",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const boldonse = Boldonse({
-  variable: "--font-boldonse",
-  subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
 });
 
@@ -52,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${karla.variable} ${karantina.variable} ${boldonse.variable} ${oswald.variable} ${anton.variable} antialiased bg-black`}
+        className={`${karla.variable} ${karantina.variable} ${oswald.variable} ${anton.variable} antialiased bg-black`}
       >
         <NavBar />
         <IntroWebsite />

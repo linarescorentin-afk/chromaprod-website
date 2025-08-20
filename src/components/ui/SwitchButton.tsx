@@ -21,7 +21,7 @@ function SwitchButton({
     >
       <ComeUpText height="h-6" text={subtext} />
       <Image
-        className={`mx-2 ${subtext === "Switch to video" ? "rotate-180" : ""} -translate-y-0.5 group-hover:-translate-y-[2px] transition-all duration-700 ease-in-out hidden lg:flex`}
+        className={`mx-2 ${subtext === "Switch to video" ? "rotate-180" : ""}  group-hover:-translate-y-[2px] transition-all duration-700 ease-in-out hidden lg:flex`}
         src={"/arrowChr.svg"}
         alt="Arrow"
         height={10}

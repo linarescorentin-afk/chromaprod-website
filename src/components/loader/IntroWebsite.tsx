@@ -42,7 +42,7 @@ function IntroWebsite() {
           muted
           loop
           playsInline
-          className="w-screen h-full object-fill rounded-3xl"
+          className="w-screen h-full object-cover rounded-3xl"
         />
       </div>
       <div className="z-[100] flex flex-col items-center justify-center font-karla font-bold space-y-10 pt-32 w-10/12">

@@ -31,7 +31,7 @@ function NavBar() {
       {!isStudio && (
         <>
           <div
-            className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-oswald text-xl ${isEnter ? "translate-y-0" : "-translate-y-[50%]"} transition-all transform ease-in-out duration-[3000ms] `}
+            className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-karantina text-xl ${isEnter ? "translate-y-0" : "-translate-y-[50%]"} transition-all transform ease-in-out duration-[3000ms] `}
           >
             <Link href="/">
               <Image
@@ -43,7 +43,7 @@ function NavBar() {
             </Link>
             <button
               onClick={() => setIsMenuOpen(true)}
-              className=" bg-white px-5 py-[0.2rem] font-bold border-x border-black border-dashed text-xl"
+              className=" bg-white px-5 py-[0.2rem] font-bold border-x border-black border-dashed text-2xl tracking-wider"
             >
               <p>MENU</p>
             </button>
@@ -107,7 +107,7 @@ function NavBar() {
           </div>
 
           <div
-            className={`${isStudio ? "z-0" : "z-50"} ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[2000ms]  text-white p-8 w-full fixed top-0  items-center justify-between font-anton hidden lg:flex`}
+            className={`${isStudio ? "z-0" : "z-50"} ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[2000ms]  text-white p-8 w-full fixed top-0  items-center justify-between font-karantina hidden lg:flex`}
           >
             <Link href="/">
               <Image

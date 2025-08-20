@@ -189,7 +189,7 @@ export default function HomeComponent() {
         <AnimUp
           duration={2}
           inView={isEnter}
-          className={`font-anton min-w-[130px]  lg:min-w-[170px] group fixed bottom-10 lg:bottom-23  lg:right-1/2 -translate-x-[15px] right-5 test z-30 uppercase cursor-pointer text-base  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-3 lg:px-5 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
+          className={`font-karantina min-w-[126px]  lg:min-w-[110px] group fixed bottom-21 lg:bottom-23  lg:right-1/2 -translate-x-[25px]  lg:-translate-x-[32px] right-5 test z-30 uppercase cursor-pointer text-xl  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-5 lg:px-0 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
         >
           <SwitchButton
             selectedFilter={selectedFilter}
@@ -204,7 +204,7 @@ export default function HomeComponent() {
         <AnimUp
           duration={2}
           inView={isEnter}
-          className={`font-anton min-w-[142px]  lg:w-[150px] group fixed bottom-10 lg:bottom-23 lg:left-1/2 translate-x-[12px] lg:translate-x-[35px] left-5" z-30 uppercase cursor-pointer text-base  text-left lg:text-red-500 lg:transparent  lg:p-0 underline px-5 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
+          className={`font-karantina min-w-[123px] lg:min-w-[110px] group fixed bottom-21 lg:bottom-23 lg:left-1/2 translate-x-[25px] lg:translate-x-[35px] left-5" z-30 uppercase cursor-pointer text-xl  text-left lg:text-red-500 lg:p-0 underline px-5 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
         >
           <SwitchButton
             selectedFilter={selectedFilter}

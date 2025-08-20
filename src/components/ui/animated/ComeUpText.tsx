@@ -15,7 +15,7 @@ function ComeUpText({ text, className, height = "h-6" }: IProps) {
         {text}
       </p>
       <p
-        className={`-translate-y-0 transform ease-in-out transition duration-700 group-hover:-translate-y-[22px]`}
+        className={`-translate-y-0 transform ease-in-out transition duration-700 group-hover:-translate-y-[30px]`}
       >
         {text}
       </p>

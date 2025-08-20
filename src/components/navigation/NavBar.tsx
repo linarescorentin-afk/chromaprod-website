@@ -117,7 +117,7 @@ function NavBar() {
                 height={100}
               />
             </Link>
-            <div className="flex items-center justify-between  w-[35%] h-9 space-x-0 relative rounded-sm text-[14px] font-light">
+            <div className="flex items-center justify-between  w-[35%] h-9 space-x-0 relative rounded-sm text-[20px] font-light">
               {filterButtons.map((item) => {
                 const value = item.toLowerCase() as Category;
                 return (

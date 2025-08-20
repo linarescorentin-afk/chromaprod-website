@@ -5,11 +5,11 @@ import React, { useEffect } from "react";
 import ComeUpText from "../ui/animated/ComeUpText";
 import AnimUp from "../ui/animated/AnimUp";
 import { usePathname } from "next/navigation";
+import { useIsEnterState } from "@/store/useIsEnter";
 
 function IntroWebsite() {
   const { getAllReady } = useIsLoading();
-  const [isEnter, setIsEnter] = React.useState(false);
-
+  const { isEnter, setIsEnter } = useIsEnterState();
   const [inView, setInView] = React.useState(false);
 
   const path = usePathname();
@@ -19,13 +19,22 @@ function IntroWebsite() {
     if (path === "/studio") {
       setIsEnter(true);
     }
-  }, [path]);
+  }, [path, setIsEnter]);
+
+  const onClose = () => {
+    setInView(false);
+    setTimeout(() => {
+      setIsEnter(true);
+    }, 1100);
+  };
 
   return (
     <div
-      className={`w-screen h-screen flex flex-col items-center justify-center bg-black fixed top-0 left-0 z-50 ${isEnter ? "hidden" : ""}`}
+      className={`w-screen h-screen flex flex-col items-center justify-center bg-black fixed top-0 left-0 z-50 ${isEnter && "hidden"} ${!inView && "animate-translateTop"}`}
     >
-      <div className="absolute z-50 top-0 animate-fadeIn left-0 flex items-center justify-center h-screen w-screen bg-black lg:p-10 p-2 ">
+      <div
+        className={`absolute z-50 top-0 animate-fadeIn left-0 flex items-center justify-center h-screen w-screen bg-black lg:p-10 p-2 ${inView && "fadeIn"}`}
+      >
         <video
           src={`/nuitMontreal.mov`}
           controls={false}
@@ -58,7 +67,7 @@ function IntroWebsite() {
             {getAllReady() ? (
               <button
                 className="w-full h-full cursor-pointer group-hover:scale-110 transition-all transform ease-in-out duration-500"
-                onClick={() => setIsEnter(true)}
+                onClick={() => onClose()}
               >
                 <ComeUpText height="h-8" text="START THE EXPERIENCE" />
               </button>

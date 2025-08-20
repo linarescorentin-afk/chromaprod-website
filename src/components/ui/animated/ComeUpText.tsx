@@ -11,11 +11,11 @@ function ComeUpText({ text, className, height = "h-6" }: IProps) {
     <div
       className={`group cursor-pointer flex flex-col overflow-hidden ${className} ${height}`}
     >
-      <p className="transform transition duration-500 group-hover:-translate-y-8 ">
+      <p className="transform transition duration-500 group-hover:-translate-y-10 ">
         {text}
       </p>
       <p
-        className={`-translate-y-0 transform transition duration-500 group-hover:-translate-y-[30px]`}
+        className={`-translate-y-0 transform ease-in-out transition duration-700 group-hover:-translate-y-[30px]`}
       >
         {text}
       </p>

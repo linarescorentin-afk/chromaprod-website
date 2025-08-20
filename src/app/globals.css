@@ -1,18 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #e2e2e2;
   --foreground: #070707;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-black: #0a0a0a;
+  --color-black: #070707;
+  --color-white: #e2e2e2;
   --font-karantina: var(--font-karantina);
   --font-karla: var(--font-karla);
 
   --animate-fadeIn: fade-in 2500ms ease-in-out both;
+  --animate-translateTop: translate-top 1500ms ease-in-out both;
+  --animate-translateBottom: translate-bottom 1500ms ease-in-out both;
+  --animate-translateLeft: translate-left 2500ms ease-in-out both;
+  --animate-translateRight: translate-right 2500ms ease-in-out both;
   /* === Fade In (avec légère translation) === */
   @keyframes fade-in {
     from {
@@ -22,6 +27,42 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes translate-top {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-100%);
+    }
+  }
+
+  @keyframes translate-bottom {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes translate-left {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes translate-right {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
     }
   }
 }

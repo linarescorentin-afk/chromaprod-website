@@ -50,7 +50,7 @@ function PhotoScene({
   // 📏 Dimensions de base
   const baseWidth = isMobile ? 4.2 : isTablet ? 6 : 7;
   const baseHeight = isMobile ? 3 : isTablet ? 4 : 5;
-  const baseHeightVertical = isMobile ? 4.5 : isTablet ? 5 : 6.5;
+  const baseHeightVertical = isMobile ? 4.5 : isTablet ? 5 : 6;
 
   // 📍 Spacing vertical
   const spacingY = isMobile ? 4 : 8; // espace entre les images
@@ -134,6 +134,8 @@ function PhotoScene({
           const scaleMax = isMobile ? 1 : 1.05;
           const smoothScale = THREE.MathUtils.lerp(scaleMax, 1, t);
 
+          console.log(isScrolling);
+
           return (
             <PhotoPlane
               key={i}
@@ -148,11 +150,12 @@ function PhotoScene({
               onClick={() => {
                 if (isScrolling) return;
 
+                console.log("click", widthPercent);
                 if (selectedIndex === i) {
                   // si on reclique → on ferme
                   setSelectedIndex(null);
                   setClickOffset(null);
-                } else if (widthPercent <= 1) {
+                } else if (widthPercent <= 2) {
                   setSelectedIndex(i);
                   setClickOffset(scroll.offset); // ✅ mémorise la position du scroll au clic
                 }

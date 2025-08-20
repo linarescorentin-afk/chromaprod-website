@@ -14,9 +14,12 @@ import Image from "next/image";
 import { useWindowsWidth } from "@/store/useWindowsWidth";
 import SwitchButton from "./ui/SwitchButton";
 import SocialMediaComponent from "./SocialMediaComponent";
+import { useIsEnterState } from "@/store/useIsEnter";
+import ActiveVideo from "./ActiveVideo";
 import AnimUp from "./ui/animated/AnimUp";
 
 export default function HomeComponent() {
+  const { isEnter } = useIsEnterState();
   const dragX = useMotionValue(0);
   const [widthPercent, setWidthPercent] = useState(50);
   const [screenWidth, setScreenWidth] = useState<number | null>(null);
@@ -85,13 +88,11 @@ export default function HomeComponent() {
     };
   }, [dragX, screenWidth]);
 
-  console.log("Width percent:", widthPercent);
-
   // ✅ Fonction pour “auto-drag” la barre
   function moveBarTo(target: "video" | "photo") {
     if (!screenWidth) return;
-    const min = screenWidth * 0.01;
-    const max = screenWidth * 0.98;
+    const min = screenWidth * 0.015;
+    const max = screenWidth * 0.985;
 
     const targetX = target === "video" ? max : min;
 
@@ -109,8 +110,8 @@ export default function HomeComponent() {
   const clampedWidth = useTransform(dragX, (x) => {
     if (!screenWidth) return x; // le temps que le SSR soit hydraté
 
-    const min = screenWidth * 0.01;
-    const max = screenWidth * 0.98;
+    const min = screenWidth * 0.015;
+    const max = screenWidth * 0.985;
     return Math.min(Math.max(x, min), max);
   });
 
@@ -120,7 +121,7 @@ export default function HomeComponent() {
     <div>
       {/* SECTION VIDEO */}
       <motion.div
-        className="absolute top-0 bg-black z-20 will-change-[clip-path] video-pane"
+        className={`absolute top-0 bg-black z-20 will-change-[clip-path] video-pane animate-left`}
         style={{ clipPath: clip }}
       >
         {/* {widthPercent * 0.01 <= 0.92 && (
@@ -138,7 +139,7 @@ export default function HomeComponent() {
         />
       </motion.div>
       <div className="relative">
-        {/* {widthPercent * 0.01 >= 0.05 && (
+        {/* {widthPercent * 0.01 >= 0.015 && (
           <button
             className={`fixed top-0 w-full bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 h-full z-10 cursor-pointer`}
             onClick={() => moveBarTo("photo")}
@@ -147,10 +148,7 @@ export default function HomeComponent() {
 
         {/* SECTION PHOTO */}
         <PhotoComponent
-          setSelectedFilter={setSelectedFilter}
-          selectedFilter={selectedFilter}
           isPhotoVisible={isPhotoVisible}
-          moveBarTo={moveBarTo}
           widthPercent={widthPercent}
         />
       </div>
@@ -159,54 +157,75 @@ export default function HomeComponent() {
       <motion.div
         drag="x"
         dragConstraints={{
-          left: screenWidth ? screenWidth * 0.01 : 0,
-          right: screenWidth ? screenWidth * 0.99 : 1000,
+          left: screenWidth ? screenWidth * 0.015 : 0,
+          right: screenWidth ? screenWidth * 0.985 : 1000,
         }}
         onDrag={(e, info) => {
           if (!screenWidth) return;
-          const min = screenWidth * 0.01;
-          const max = screenWidth * 0.98;
+          const min = screenWidth * 0.015;
+          const max = screenWidth * 0.985;
           dragX.set(Math.min(Math.max(info.point.x, min), max));
         }}
         style={{ x: dragX }}
-        className="fixed top-0 h-screen w-[30px] cursor-ew-resize z-30 flex justify-start"
+        className={`fixed top-0 h-screen w-[40px] cursor-ew-resize z-30 flex justify-center -translate-x-5 `}
       >
-        <div className="h-full w-[2px] bg-red-500 hover:bg-red-600 hover:scale-150 transform transition-all duration-300 ease-in-out" />
-        <Image
-          src="/doublearrow.svg"
-          height={100}
-          width={100}
-          alt="arrow"
-          className="absolute transform -translate-x-[29px] -translate-y-1/2 top-10 left-1/2 pointer-events-none"
+        <div
+          className={`w-[2px] bg-red-900 hover:bg-red-600 hover:scale-150 transform transition-all duration-300 ease-in-out ${isEnter ? "h-full" : "h-1"} transition-all ease-in-out duration-[2000ms]`}
         />
         <Image
           src="/doublearrow.svg"
           height={100}
           width={100}
           alt="arrow"
-          className="absolute transform -translate-x-[29px] -translate-y-1/2 bottom-10 left-1/2 pointer-events-none"
+          className={`absolute transform -translate-x-[21px] -translate-y-1/2 top-21 left-1/2 pointer-events-none ${isEnter ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[3500ms]`}
         />
-      </motion.div>
-
-      {activeVideo && (
-        <div className="absolute z-50 top-0 left-0 flex items-center justify-center h-screen w-screen bg-black lg:p-10 p-2">
-          <video
-            src={`${activeVideo.video}#t=0.001`}
-            ref={videoRef}
-            controls
-            autoPlay
-            className="w-full h-full object-contain"
+        <Image
+          src="/doublearrow.svg"
+          height={100}
+          width={100}
+          alt="arrow"
+          className={`absolute transform -translate-x-[21px] -translate-y-1/2 bottom-21 left-1/2 pointer-events-none ${isEnter ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[3500ms]`}
+        />
+        <AnimUp
+          duration={2}
+          inView={isEnter}
+          className={`font-karantina  lg:w-[110px] group fixed bottom-10 lg:bottom-24 $ lg:right-1/2 -translate-x-[25px] right-5  z-30 uppercase cursor-pointer text-lg  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-5 py-2 lg:bg-transparent ${selectedFilter && selectedFilter === "Switch to photo" ? "bg-black text-white border-white opacity-50 lg:opacity-100" : "bg-white text-black"}`}
+        >
+          <SwitchButton
+            selectedFilter={selectedFilter}
+            onClick={() => {
+              moveBarTo("photo");
+              setSelectedFilter("Switch to photo");
+            }}
+            subtext="Switch to photo"
+            textposition="text-right"
           />
-          <button
-            onClick={() => setActiveVideo(null)}
-            className="absolute top-10 right-10 text-white text-4xl z-50 cursor-pointer"
-          >
-            ✕
-          </button>
-        </div>
+        </AnimUp>
+        <AnimUp
+          duration={2}
+          inView={isEnter}
+          className={`font-karantina  lg:w-[110px] group fixed bottom-10 lg:bottom-24 lg:left-1/2 translate-x-[35px] left-5" z-30 uppercase cursor-pointer text-lg  text-left lg:text-red-500 lg:transparent  lg:p-0 underline px-5 py-2 lg:bg-transparent ${selectedFilter && selectedFilter === "Switch to video" ? "bg-black text-white border-white opacity-50 lg:opacity-100" : "bg-white text-black"}`}
+        >
+          <SwitchButton
+            selectedFilter={selectedFilter}
+            onClick={() => {
+              moveBarTo("video");
+              setSelectedFilter("Switch to video");
+            }}
+            subtext="Switch to video"
+            textposition="text-left"
+          />
+        </AnimUp>
+      </motion.div>
+      {activeVideo && (
+        <ActiveVideo
+          activeVideo={activeVideo}
+          videoRef={videoRef}
+          setActiveVideo={setActiveVideo}
+        />
       )}
 
-      <SwitchButton
+      {/* <SwitchButton
         selectedFilter={selectedFilter}
         onClick={() => {
           moveBarTo("video");
@@ -214,29 +233,25 @@ export default function HomeComponent() {
         }}
         subtext="Switch to video"
         textposition="text-left"
-      />
+      /> */}
 
       <p
-        className={`fixed bottom-20 left-1/2 -translate-x-1/2 text-red-500 z-30 mix-blend-difference text-sm  ${widthPercent !== 50 ? "opacity-0" : "opacity-50"} transform transition-opacity duration-300 ease-in-out text-center `}
-      >
-        Drag the bar to reveal the content
-      </p>
-
-      <p
-        className={`hidden lg:flex fixed bottom-10 left-1/6  z-30 mix-blend-difference text-xs font-karla text-center `}
+        className={`hidden lg:flex fixed bottom-12 left-10  z-30 mix-blend-difference text-xs font-karla text-center ${isEnter ? "translate-y-0" : "translate-y-[500%]"} transition-all transform ease-in-out duration-[3000ms] `}
       >
         - BASED IN MONTRÉAL
       </p>
 
       <p
-        className={`hidden lg:flex fixed bottom-10 right-1/6  z-30 mix-blend-difference text-xs font-karla text-center `}
+        className={`hidden lg:flex fixed bottom-12 right-10  z-30 mix-blend-difference text-xs font-karla text-center ${isEnter ? "translate-y-0" : "translate-y-[500%]"} transition-all transform ease-in-out duration-[3000ms]`}
       >
-        CORENTIN LINARES -
+        CORENTIN LINARES
       </p>
 
       <SocialMediaComponent />
 
-      <div className="fixed left-10 top-1/2 font-karla -translate-y-1/2 z-20 hidden lg:flex flex-col items-center text-[12px]">
+      <div
+        className={`fixed left-10 top-1/2 font-karla -translate-y-1/2 z-20 hidden lg:flex flex-col items-center text-[12px] ${isEnter ? "translate-x-0" : "-translate-x-[900%]"} transition-all transform ease-in-out duration-[3000ms]`}
+      >
         {splitedSentence.map((w, i) => {
           return (
             <span key={i} className="text-white">
@@ -247,7 +262,7 @@ export default function HomeComponent() {
       </div>
 
       {(2 >= widthPercent || widthPercent >= 95) && (
-        <div className="fixed bottom-5 space-y-2 z-30 left-1/2 -translate-x-1/2  animate-fadeIn font-karla text-[12px] flex flex-col items-center">
+        <div className="fixed bottom-8 space-y-2 z-30 left-1/2 -translate-x-1/2  animate-fadeIn font-karla text-[12px] flex flex-col items-center mix-blend-difference">
           <p>scroll down to Explore</p>
           <Image src="/downArrow.svg" alt="scroll down" width={5} height={5} />
         </div>

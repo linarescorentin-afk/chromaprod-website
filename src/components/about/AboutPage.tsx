@@ -98,47 +98,38 @@ function AboutPage() {
   }, []);
 
   return (
-    <div className="lg:py-0 py-20 font-karla uppercase flex flex-col items-center space-y-20">
+    <div className="lg:pt-32 lg:pb-0 py-20 font-karla uppercase flex flex-col items-center space-y-20">
       {/* SECTION 1 */}
-      <div className="-translate-y-10 lg:translate-y-0 relative lg:pt-28 lg:min-h-screen">
-        <div className="flex flex-col lg:flex-row lg:items-start  h-[82vh]">
+      <div className="-translate-y-10 lg:translate-y-0">
+        <div className="flex flex-col lg:flex-row lg:items-start">
           <div className="flex flex-col justify-between h-full  lg:min-h-[80vh] lg:w-12/12 lg:pl-5">
-            <div className="w-full flex justify-between pr-10">
-              <h1 className="font-karantina text-[100px] lg:text-[150px] leading-[80px] lg:leading-[120px]   px-5 translate-y-20 lg:translate-y-0 lg:max-w-[700px] lg:w-6/12">
-                {selectedLanguage === "fr"
-                  ? content.h1.fr.toUpperCase()
-                  : content.h1.en.toUpperCase()}
-              </h1>
-              <div className="text-right text-sm">
-                <p>CORENTIN LIENARS</p>
-              </div>
-            </div>
-            <div className="mt-10 w-full hidden lg:flex  justify-between items-end px-10">
-              <h3 className="w-2/12  italic text-sm">
-                {selectedLanguage === "fr" ? content.h3.fr : content.h3.en}
-              </h3>
-              <h2 className="lg:w-3/12 border-b pb-10">
-                {selectedLanguage === "fr" ? content.h2.fr : content.h2.en}
-              </h2>
-            </div>
+            <h1 className="font-karantina text-[100px] lg:text-[150px] leading-[80px] lg:leading-[120px]   px-5 translate-y-20 lg:translate-y-0 lg:min-w-[800px]">
+              {selectedLanguage === "fr"
+                ? content.h1.fr.toUpperCase()
+                : content.h1.en.toUpperCase()}
+            </h1>
+            <h2 className="mt-10 w-8/12 border-b pb-10  px-5 hidden lg:flex">
+              {selectedLanguage === "fr" ? content.h2.fr : content.h2.en}
+            </h2>
           </div>
-          <div className="flex relative flex-col items-end space-y-2  lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-1/2 lg:-translate-x-1/2 -z-10  lg:h-11/12 lg:w-4/12 h-[80vh]">
-            <Image
-              src="/corentinlinares.webp"
-              alt="corentinlinares"
-              layout="fill"
-              objectFit="cover"
-            />
+          <div className="flex flex-col items-end space-y-2 w-full h-[90vh] ">
+            <div className="relative w-full h-full">
+              <Image
+                layout="fill"
+                objectFit="cover"
+                className="mt-10 lg:mt-0"
+                src="/corentinlinares.webp"
+                alt="corentinlinares"
+              />
+            </div>
+            <h3 className="w-10/12  italic text-sm  px-5 lg:w-full">
+              {selectedLanguage === "fr" ? content.h3.fr : content.h3.en}
+            </h3>
           </div>
         </div>
-        <h3 className="w-10/12 mt-5  italic text-sm  px-5 lg:hidden text-left">
-          {selectedLanguage === "fr" ? content.h3.fr : content.h3.en}
-        </h3>
-        <div className="mt-20 w-full   px-5 lg:hidde flex justify-end lg:hidden">
-          <h2 className="border-b pb-10 w-8/12">
-            {selectedLanguage === "fr" ? content.h2.fr : content.h2.en}
-          </h2>
-        </div>
+        <h2 className="mt-10 w-8/12 border-b pb-10  px-5 lg:hidden">
+          {selectedLanguage === "fr" ? content.h2.fr : content.h2.en}
+        </h2>
       </div>
 
       <div>

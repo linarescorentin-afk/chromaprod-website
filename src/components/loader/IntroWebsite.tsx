@@ -16,7 +16,7 @@ function IntroWebsite() {
 
   useEffect(() => {
     setInView(true);
-    if (path === "/studio") {
+    if (path === "/studio" || path !== "/") {
       setIsEnter(true);
     }
   }, [path, setIsEnter]);

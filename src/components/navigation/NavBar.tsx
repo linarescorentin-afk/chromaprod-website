@@ -9,7 +9,10 @@ import MobileNavItems from "./MobileNavItems";
 import { useIsEnterState } from "@/store/useIsEnter";
 
 function NavBar() {
-  const navItems = [{ name: "ABOUT", href: "/about" }];
+  const navItems = [
+    { name: "ABOUT", href: "/about" },
+    { name: "CONTACT", href: "/contact" },
+  ];
 
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -146,14 +149,6 @@ function NavBar() {
                   }}
                 />
               ))}
-
-              <NavItem
-                pathname={pathname}
-                name={"CONTACT"}
-                onClick={() => {
-                  setIsMenuOpen(false);
-                }}
-              />
             </div>
           </div>
         </>

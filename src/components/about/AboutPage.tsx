@@ -1,101 +1,33 @@
 "use client";
+import { getAboutSettings } from "@/sanity/lib/getAboutSettings";
 import { getSocialMedia, SocialMedia } from "@/sanity/lib/getSocialMedia";
+import { AboutSettings } from "@/sanity/types/about";
 import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
-import { h2 } from "framer-motion/client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function AboutPage() {
   const { selectedLanguage } = useIsSelectedLanguage();
   const [socialMedia, setSocialMedia] = useState<SocialMedia[] | null>(null);
+  const [about, setAbout] = useState<AboutSettings | null>(null);
+
   useEffect(() => {
     const fetchSocialMedia = async () => {
       const data = await getSocialMedia();
       setSocialMedia(data);
     };
 
-    fetchSocialMedia();
-  }, []);
-  const content = useMemo(() => {
-    return {
-      h1: {
-        fr: "Les passionnés me passionnent",
-        en: "Passionate people inspire me",
-      },
-      h2: {
-        fr: "“Chroma Production est une entreprise de production audiovisuelle passionnée par la création de contenus visuels exceptionnels. Notre équipe talentueuse travaille avec engagement pour donner vie à des projets uniques et innovants. Nous sommes fiers de raconter des histoires captivantes à travers la puissance de l'audiovisuel.“",
-        en: "“Chroma Production is a passionate audiovisual production company dedicated to creating exceptional visual content. Our talented team works diligently to bring unique and innovative projects to life. We take pride in telling captivating stories through the power of audiovisual media.“",
-      },
-      h3: {
-        fr: "“Pendant plus de 10 ans, j’ai affiné mon savoir-faire à travers des projets variés, des collaborations enrichissantes et des défis relevés avec passion.“",
-        en: "“For over 10 years, I have refined my expertise through diverse projects, enriching collaborations, and challenges met with passion.“",
-      },
-
-      services: [
-        {
-          titleFr: "CORPORATE",
-          titleEn: "CORPORATE",
-          image: "/services/corporate.webp",
-          textFr:
-            "Nous mettons en valeur votre entreprise avec des vidéos et photos corporate de haute qualité. Interviews, films d’entreprise, portraits professionnels ou contenu institutionnel, nous créons des visuels impactants qui reflètent votre image de marque. Grâce aux dernières technologies, nous vous offrons un rendu cinématographique pour vos communications internes et externes.",
-          textEn:
-            "We showcase your company with high-quality corporate videos and photos. Interviews, corporate films, professional portraits, or institutional content, we create impactful visuals that reflect your brand image. With the latest technologies, we offer you a cinematic rendering for your internal and external communications.",
-        },
-        {
-          titleFr: "ÉVÉNEMENTIEL",
-          titleEn: "EVENT",
-          image: "/services/event.webp",
-          textFr:
-            "Boostez votre présence en ligne avec du contenu visuel percutant et optimisé pour Instagram, TikTok, YouTube et LinkedIn.  Nous créons des vidéos et photos adaptées aux tendances digitales, captivant votre audience avec un storytelling efficace. Formats courts, reels, publicités ou brand content, notre expertise garantit un rendu professionnel et engageant.",
-          textEn:
-            "Boost your online presence with impactful visual content optimized for Instagram, TikTok, YouTube, and LinkedIn. We create videos and photos tailored to digital trends, captivating your audience with effective storytelling. Short formats, reels, ads, or brand content, our expertise ensures a professional and engaging result.",
-        },
-        {
-          titleFr: "RÉSEAUX SOCIAUX",
-          titleEn: "SOCIAL MEDIA",
-          image: "/services/social.webp",
-          textFr:
-            "Immortalisez vos événements avec des vidéos et photos dynamiques capturant chaque moment clé. Que ce soit pour des conférences, concerts, mariages ou lancements de produits, nous assurons une couverture professionnelle, au sol et par drone, avec un rendu cinématographique. Offrez à votre public une immersion unique et prolongez l’impact de vos événements.",
-          textEn:
-            "Capture your events with dynamic videos and photos that capture every key moment. Whether for conferences, concerts, weddings, or product launches, we ensure professional coverage, both on the ground and by drone, with a cinematic rendering. Give your audience a unique immersion and extend the impact of your events.",
-        },
-      ],
-      logoPartners: [
-        "/logos/GLlogo.webp",
-        "/logos/googlelogo.webp",
-        "/logos/Huawei-Logo.webp",
-        "/logos/Logo-Elwing.webp",
-        "/logos/Logo-Panajou.webp",
-        "/logos/piscine-france.webp",
-        "/logos/Logo-Bordeaux-Metropole.webp",
-        "/logos/LOGO-CITADIUM.webp",
-      ],
-      clientComments: [
-        {
-          name: "Yann G.",
-          commentFr:
-            "Merci Corentin pour les vidéos d'une qualité absolument incroyable. L'œil, le timing, la dynamique, la qualité d'image, tout y est !",
-          commentEn:
-            "Thank you Corentin for the absolutely incredible quality videos. The eye, the timing, the dynamics, the image quality, it's all there!",
-        },
-        {
-          name: "Louis O.",
-          commentFr:
-            "Production exceptionnelle avec Chroma. Le sentiment d'avoir été écouté dès le début du projet pour un résultat incroyable qui reflète clairement ma vision et mes attentes du projet que je voulais amener.",
-          commentEn:
-            "Exceptional production with Chroma. I felt heard from the very beginning of the project, resulting in an incredible outcome that clearly reflects my vision and expectations for the project I wanted to bring to life.",
-        },
-        {
-          name: "Kevin B.",
-          commentFr:
-            "Une expérience de collaboration incroyable avec Chroma. Leur équipe a su comprendre mes besoins et les traduire en un produit final qui a dépassé mes attentes.",
-          commentEn:
-            "An amazing collaboration experience with Chroma. Their team understood my needs and translated them into a final product that exceeded my expectations.",
-        },
-      ],
+    const fetchAbout = async () => {
+      const data = await getAboutSettings();
+      setAbout(data);
     };
+
+    fetchSocialMedia();
+    fetchAbout();
   }, []);
+
+  if (!about || !socialMedia) return null;
 
   return (
     <div className="lg:pt-32 lg:pb-0 py-20 font-karla uppercase flex flex-col items-center space-y-20">
@@ -105,11 +37,11 @@ function AboutPage() {
           <div className="flex flex-col justify-between h-full  lg:min-h-[80vh] lg:w-12/12 lg:pl-5">
             <h1 className="font-karantina text-[100px] lg:text-[150px] leading-[80px] lg:leading-[120px]   px-5 translate-y-20 lg:translate-y-0 lg:min-w-[800px]">
               {selectedLanguage === "fr"
-                ? content.h1.fr.toUpperCase()
-                : content.h1.en.toUpperCase()}
+                ? about.h1.fr?.toUpperCase()
+                : about.h1.en?.toUpperCase()}
             </h1>
             <h2 className="mt-10 w-8/12 border-b pb-10  px-5 hidden lg:flex">
-              {selectedLanguage === "fr" ? content.h2.fr : content.h2.en}
+              {selectedLanguage === "fr" ? about.h2.fr : about.h2.en}
             </h2>
           </div>
           <div className="flex flex-col items-end space-y-2 w-full h-[90vh] ">
@@ -118,64 +50,73 @@ function AboutPage() {
                 layout="fill"
                 objectFit="cover"
                 className="mt-10 lg:mt-0"
-                src="/corentinlinares.webp"
+                src={
+                  about.heroPortrait
+                    ? (about.heroPortrait.url as string)
+                    : "/corentinlinares.webp"
+                }
                 alt="corentinlinares"
               />
             </div>
             <h3 className="w-10/12  italic text-sm  px-5 lg:w-full">
-              {selectedLanguage === "fr" ? content.h3.fr : content.h3.en}
+              {selectedLanguage === "fr" ? about.h3.fr : about.h3.en}
             </h3>
           </div>
         </div>
         <h2 className="mt-10 w-8/12 border-b pb-10  px-5 lg:hidden">
-          {selectedLanguage === "fr" ? content.h2.fr : content.h2.en}
+          {selectedLanguage === "fr" ? about.h2.fr : about.h2.en}
         </h2>
       </div>
 
       <div>
-        {content.services.map((service) => (
+        {about.services.map((service, index) => (
           <div
             className="border-y border-dashed py-10 space-y-5 flex flex-col px-5 lg:flex-row justify-between"
-            key={service.titleFr}
+            key={index}
           >
-            <h3 className="font-bold text-xl">{service.titleFr}</h3>
-            <Image
-              src={service.image}
-              alt={service.titleFr}
-              width={500}
-              height={500}
-            />
-            <p className="lg:w-4/12">{service.textFr}</p>
+            <h3 className="font-bold text-xl">
+              {selectedLanguage === "fr" ? service.title.fr : service.title.en}
+            </h3>
+            {service.image && (
+              <Image
+                src={service.image.url as string}
+                alt={service.title.fr ? service.title.fr : ""}
+                width={500}
+                height={500}
+              />
+            )}
+            <p className="lg:w-4/12">{service.text.fr}</p>
           </div>
         ))}
       </div>
       <div className="flex flex-wrap gap-10 items-center justify-center px-5 lg:px-10">
-        {content.logoPartners.map((logo) => (
+        {about.logoPartners.map((logo, index) => (
           <Image
-            key={logo}
-            src={logo}
+            key={index}
+            src={logo.url as string}
             alt="Partenaire"
             width={120}
             height={100}
           />
         ))}
       </div>
-
-      <div className="space-y-10 lg:flex lg:flex-wrap lg:items-start lg:w-6/12">
-        {content.clientComments.map((comment, index) => (
-          <div
-            key={index}
-            className="border-b lg:border-b-0 lg:border-l border-dashed  py-5 px-5 flex flex-col space-y-5 lg:h-[200px] "
-          >
-            <p className="font-bold text-lg">{comment.name}</p>
-            <p>
-              {selectedLanguage === "fr"
-                ? comment.commentFr
-                : comment.commentEn}
-            </p>
-          </div>
-        ))}
-      </div>
+      {about.clientComments && (
+        <div className="space-y-10 lg:flex lg:flex-wrap lg:items-start lg:w-6/12">
+          {about.clientComments.map((comment, index) => (
+            <div
+              key={index}
+              className="border-b lg:border-b-0 lg:border-l border-dashed  py-5 px-5 flex flex-col space-y-5 lg:h-[200px] "
+            >
+              <p className="font-bold text-lg">{comment.name}</p>
+              <p>
+                {selectedLanguage === "fr"
+                  ? (comment.comment.fr as string)
+                  : (comment.comment.en as string)}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="flex flex-col lg:flex-row  w-full ">
         <div className="px-5 lg:px-10 space-y-10 w-full lg:w-6/12 lg:py-20">
@@ -219,7 +160,7 @@ function AboutPage() {
         </div>
         <div className="lg:w-6/12 hidden lg:flex bg-red-600 relative">
           <Image
-            src={"/mtlcontact.webp"}
+            src={about.contactSideImage?.url || "/mtlcontact.webp"}
             alt="Contact"
             layout="fill"
             objectFit="cover"

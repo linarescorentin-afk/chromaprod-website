@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import MobileNavItems from "./MobileNavItems";
 import { useIsEnterState } from "@/store/useIsEnter";
+import { useIsHomeAnimated } from "@/store/isHomeAnimated";
 
 function NavBar() {
   const navItems = [
@@ -20,7 +21,7 @@ function NavBar() {
   const filterButtons = ["All", "Corporate", "Events", "SocialMedia"];
   const { isEnter } = useIsEnterState();
   const pathname = usePathname();
-
+  const { isHomeAnimated } = useIsHomeAnimated();
   const isStudio = pathname.includes("/studio"); // ou pathname.startsWith("/studio");
 
   useEffect(() => {
@@ -28,6 +29,8 @@ function NavBar() {
       setSelectedFilter(null);
     }
   }, [pathname, setSelectedFilter]);
+
+  console.log(isHomeAnimated);
 
   return (
     <>

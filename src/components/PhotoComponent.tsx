@@ -7,7 +7,6 @@ import { getPhotos } from "@/sanity/lib/getPhotos";
 import { useFilterStore } from "@/store/useFilterStore";
 import { useIsLoading } from "@/store/useIsLoading";
 import { R3FLoadingBridge } from "./loader/R3FLoadingBridge";
-import { useIsEnterState } from "@/store/useIsEnter";
 
 export interface IPhoto {
   image: string;
@@ -25,7 +24,6 @@ function PhotoComponent({
   isPhotoVisible: boolean;
   widthPercent: number;
 }) {
-  const { isEnter } = useIsEnterState();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const category = useFilterStore((state) => state.selectedFilter);
   const [photosFetched, setPhotos] = useState<IPhoto[]>([]);
@@ -55,9 +53,7 @@ function PhotoComponent({
   }
 
   return (
-    <div
-      className={`h-screen w-screen ${isEnter ? "translate-x-0" : "-translate-x-[60%]"} transition-all transform ease-in-out duration-[3000ms]`}
-    >
+    <div className={`h-screen w-screen`}>
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         frameloop={isPhotoVisible ? "always" : "demand"}

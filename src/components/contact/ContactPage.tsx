@@ -31,9 +31,9 @@ function ContactPage() {
   return (
     <div className="py-20 font-karla flex flex-col lg:flex-row">
       <div className="px-5 lg:w-6/12 lg:px-10 lg:py-10 space-y-10">
-        <h1 className="font-karantina text-[100px] lg:text-[150px] leading-[80px] uppercase">
+        {/* <h1 className="font-karantina text-[100px] lg:text-[150px] leading-[80px] uppercase">
           {selectedLanguage === "fr" ? content.h1.fr : content.h1.en}
-        </h1>
+        </h1> */}
 
         <div className="space-y-5  lg:text-base">
           <h2 className="font-bold border-b pb-2 border-dashed">

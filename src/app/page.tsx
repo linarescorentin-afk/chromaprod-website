@@ -1,5 +1,10 @@
 import HomeComponent from "@/components/HomeComponent";
+import PageTransition from "@/components/ui/animated/PageTransition";
 
 export default function Home() {
-  return <HomeComponent />;
+  return (
+    <PageTransition>
+      <HomeComponent />
+    </PageTransition>
+  );
 }

@@ -1,8 +1,12 @@
 import ContactPage from "@/components/contact/ContactPage";
-import React from "react";
+import PageTransition from "@/components/ui/animated/PageTransition";
 
 function page() {
-  return <ContactPage />;
+  return (
+    <PageTransition>
+      <ContactPage />
+    </PageTransition>
+  );
 }
 
 export default page;

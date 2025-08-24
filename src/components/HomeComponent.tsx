@@ -121,7 +121,7 @@ export default function HomeComponent() {
     <div>
       {/* SECTION VIDEO */}
       <motion.div
-        className={`absolute top-0 bg-black z-20 will-change-[clip-path] video-pane animate-left overflow-hidden`}
+        className={`absolute top-0 bg-black z-10 will-change-[clip-path] video-pane animate-left overflow-hidden`}
         style={{ clipPath: clip }}
       >
         {/* {widthPercent * 0.01 <= 0.92 && (

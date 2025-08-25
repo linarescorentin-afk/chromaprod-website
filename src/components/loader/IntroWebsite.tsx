@@ -6,11 +6,13 @@ import ComeUpText from "../ui/animated/ComeUpText";
 import AnimUp from "../ui/animated/AnimUp";
 import { usePathname } from "next/navigation";
 import { useIsEnterState } from "@/store/useIsEnter";
+import { useIsHomeAnimated } from "@/store/isHomeAnimated";
 
 function IntroWebsite() {
   const { getAllReady } = useIsLoading();
   const { isEnter, setIsEnter } = useIsEnterState();
   const [inView, setInView] = React.useState(false);
+  const { setIsHomeAnimated } = useIsHomeAnimated();
 
   const path = usePathname();
 
@@ -25,6 +27,7 @@ function IntroWebsite() {
     setInView(false);
     setTimeout(() => {
       setIsEnter(true);
+      setIsHomeAnimated(true);
     }, 1100);
   };
 

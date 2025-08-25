@@ -14,14 +14,12 @@ import Image from "next/image";
 import { useWindowsWidth } from "@/store/useWindowsWidth";
 import SwitchButton from "./ui/SwitchButton";
 import SocialMediaComponent from "./SocialMediaComponent";
-import { useIsEnterState } from "@/store/useIsEnter";
 import ActiveVideo from "./ActiveVideo";
 import AnimUp from "./ui/animated/AnimUp";
 import { useIsHomeAnimated } from "@/store/isHomeAnimated";
 
 export default function HomeComponent() {
-  const { isEnter } = useIsEnterState();
-  const { isHomeAnimated, setIsHomeAnimated } = useIsHomeAnimated();
+  const { isHomeAnimated } = useIsHomeAnimated();
   const dragX = useMotionValue(0);
   const [widthPercent, setWidthPercent] = useState(50);
   const [screenWidth, setScreenWidth] = useState<number | null>(null);
@@ -31,12 +29,6 @@ export default function HomeComponent() {
   const { setWindowWidth } = useWindowsWidth();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-
-  useEffect(() => {
-    if (isEnter) {
-      setIsHomeAnimated(true);
-    }
-  }, [isEnter, setIsHomeAnimated]);
 
   // 🔄 écoute le resize
   useEffect(() => {
@@ -191,7 +183,7 @@ export default function HomeComponent() {
         className={`fixed top-0 h-screen w-[40px] cursor-ew-resize z-30 flex justify-center -translate-x-5 `}
       >
         <div
-          className={`w-[2px] bg-red-900 hover:bg-red-600 hover:scale-150 transform transition-all duration-300 ease-in-out ${isHomeAnimated ? "h-full" : "h-1"} transition-all ease-in-out duration-[2000ms]`}
+          className={`w-[2px] bg-red-900 hover:bg-red-600 hover:scale-150 transform transition-all duration-300 ease-in-out ${isHomeAnimated ? "h-full" : "h-1 -translate-y-10"} transition-all ease-in-out duration-[2000ms]`}
         />
         <Image
           src="/doublearrow.svg"

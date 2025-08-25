@@ -61,11 +61,13 @@ function NavBarDesktop({
                     setIsFilterClick(null);
                   }, 3500);
                 } else {
+                  setIsHomeAnimated(false);
                   router.push("/");
                   setSelectedFilter(value);
                   setIsFilterClick(value);
                   setTimeout(() => {
                     setIsFilterClick(null);
+                    setIsHomeAnimated(true);
                   }, 3500);
                 }
               }}
@@ -79,7 +81,15 @@ function NavBarDesktop({
             key={item.name}
             name={item.name}
             onClick={() => {
-              router.push(item.href);
+              if (pathname === "/") {
+                setIsHomeAnimated(false);
+
+                setTimeout(() => {
+                  router.push(item.href);
+                }, 2000);
+              } else {
+                router.push(item.href);
+              }
             }}
           />
         ))}

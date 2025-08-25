@@ -21,7 +21,7 @@ function NavBar() {
   const filterButtons = ["All", "Corporate", "Events", "SocialMedia"];
   const { isEnter } = useIsEnterState();
   const pathname = usePathname();
-  const { isHomeAnimated } = useIsHomeAnimated();
+  const { isHomeAnimated, setIsHomeAnimated } = useIsHomeAnimated();
   const isStudio = pathname.includes("/studio"); // ou pathname.startsWith("/studio");
 
   useEffect(() => {
@@ -133,7 +133,11 @@ function NavBar() {
                     name={item.toUpperCase()}
                     onClick={() => {
                       if (pathname === "/") {
-                        setSelectedFilter(value);
+                        setIsHomeAnimated(false);
+                        setTimeout(() => {
+                          setIsHomeAnimated(true);
+                          setSelectedFilter(value);
+                        }, 2000);
                       } else {
                         router.push("/");
                         setSelectedFilter(value);

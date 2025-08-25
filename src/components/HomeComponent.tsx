@@ -199,14 +199,14 @@ export default function HomeComponent() {
           height={100}
           width={100}
           alt="arrow"
-          className={`absolute transform -translate-x-[21px] -translate-y-1/2 top-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[3500ms]`}
+          className={`absolute transform -translate-x-[21px] -translate-y-1/2 top-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[2000ms]`}
         />
         <Image
           src="/doublearrow.svg"
           height={100}
           width={100}
           alt="arrow"
-          className={`absolute transform -translate-x-[21px] -translate-y-1/2 bottom-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[3500ms]`}
+          className={`absolute transform -translate-x-[21px] -translate-y-1/2 bottom-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[2000ms]`}
         />
         <AnimUp
           duration={2}

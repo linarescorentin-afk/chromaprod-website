@@ -8,6 +8,8 @@ import Link from "next/link";
 import MobileNavItems from "./MobileNavItems";
 import { useIsEnterState } from "@/store/useIsEnter";
 import { useIsHomeAnimated } from "@/store/isHomeAnimated";
+import AnimUp from "../ui/animated/AnimUp";
+import { set } from "sanity";
 
 function NavBar() {
   const navItems = [
@@ -17,11 +19,12 @@ function NavBar() {
 
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const setSelectedFilter = useFilterStore((state) => state.setSelectedFilter);
+  const [isFilterClick, setIsFilterClick] = useState<string | null>(null);
+  const { setSelectedFilter, selectedFilter } = useFilterStore();
   const filterButtons = ["All", "Corporate", "Events", "SocialMedia"];
   const { isEnter } = useIsEnterState();
   const pathname = usePathname();
-  const { isHomeAnimated, setIsHomeAnimated } = useIsHomeAnimated();
+  const { setIsHomeAnimated } = useIsHomeAnimated();
   const isStudio = pathname.includes("/studio"); // ou pathname.startsWith("/studio");
 
   useEffect(() => {
@@ -30,7 +33,7 @@ function NavBar() {
     }
   }, [pathname, setSelectedFilter]);
 
-  console.log(isHomeAnimated);
+  console.log(isFilterClick);
 
   return (
     <>
@@ -128,19 +131,26 @@ function NavBar() {
                 const value = item.toLowerCase() as Category;
                 return (
                   <NavItem
+                    selectedFilter={isFilterClick}
                     pathname={pathname}
                     key={item}
                     name={item.toUpperCase()}
                     onClick={() => {
                       if (pathname === "/") {
                         setIsHomeAnimated(false);
+                        setIsFilterClick(value);
                         setTimeout(() => {
                           setIsHomeAnimated(true);
                           setSelectedFilter(value);
-                        }, 2000);
+                          setIsFilterClick(null);
+                        }, 3500);
                       } else {
                         router.push("/");
                         setSelectedFilter(value);
+                        setIsFilterClick(value);
+                        setTimeout(() => {
+                          setIsFilterClick(null);
+                        }, 3500);
                       }
                     }}
                   />
@@ -148,6 +158,7 @@ function NavBar() {
               })}
               {navItems.map((item) => (
                 <NavItem
+                  selectedFilter={isFilterClick}
                   pathname={pathname}
                   key={item.name}
                   name={item.name}
@@ -156,6 +167,11 @@ function NavBar() {
                   }}
                 />
               ))}
+            </div>
+            <div className="fixed top-1/2 translate-y-full right-1/2 translate-x-1/2 text-[200px] z-20 uppercase h-[150px] leading-[150px] overflow-hidden">
+              <p className={`${isFilterClick ? "animate-filter" : ""}`}>
+                {isFilterClick}
+              </p>
             </div>
           </div>
         </>

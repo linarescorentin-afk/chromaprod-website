@@ -20,7 +20,23 @@
   --animate-translateBottom: translate-bottom 1500ms ease-in-out both;
   --animate-translateLeft: translate-left 2500ms ease-in-out both;
   --animate-translateRight: translate-right 2500ms ease-in-out both;
+  --animate-filter: filterAnim 3500ms ease-in-out both;
+
   /* === Fade In (avec légère translation) === */
+
+  @keyframes filterAnim {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    75% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+    }
+  }
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -147,6 +163,21 @@ canvas + div::-webkit-scrollbar {
     transform: translateY(0%);
   }
   100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes filterAnim {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
     transform: translateY(-100%);
   }
 }

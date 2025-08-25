@@ -1,17 +1,16 @@
-import { useFilterStore } from "@/store/useFilterStore";
 import ComeUpText from "../ui/animated/ComeUpText";
 
 function NavItem({
   name,
   onClick,
   pathname,
+  selectedFilter,
 }: {
   name: string;
   onClick: () => void;
   pathname: string;
+  selectedFilter: string | null;
 }) {
-  const selectedFilter = useFilterStore((state) => state.selectedFilter);
-
   return (
     <button
       key={name}

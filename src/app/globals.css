@@ -110,3 +110,43 @@ canvas + div::-webkit-scrollbar {
   user-select: none;
   -webkit-user-select: none;
 }
+
+.page-transition {
+  animation: moveAnimation 2.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes moveAnimation {
+  0% {
+    transform: translateY(100%);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.underpage-transition {
+  animation: underPageTransition 2.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes underPageTransition {
+  0% {
+    transform: translateY(100%);
+  }
+  25% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(0%);
+  }
+  75% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}

@@ -7,9 +7,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import MobileNavItems from "./MobileNavItems";
 import { useIsEnterState } from "@/store/useIsEnter";
+import { useIsHomeAnimated } from "@/store/isHomeAnimated";
 
 function NavBar() {
-  const navItems = [{ name: "ABOUT", href: "/about" }];
+  const navItems = [
+    { name: "ABOUT", href: "/about" },
+    { name: "CONTACT", href: "/contact" },
+  ];
 
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,7 +21,7 @@ function NavBar() {
   const filterButtons = ["All", "Corporate", "Events", "SocialMedia"];
   const { isEnter } = useIsEnterState();
   const pathname = usePathname();
-
+  const { isHomeAnimated, setIsHomeAnimated } = useIsHomeAnimated();
   const isStudio = pathname.includes("/studio"); // ou pathname.startsWith("/studio");
 
   useEffect(() => {
@@ -25,6 +29,8 @@ function NavBar() {
       setSelectedFilter(null);
     }
   }, [pathname, setSelectedFilter]);
+
+  console.log(isHomeAnimated);
 
   return (
     <>
@@ -107,7 +113,7 @@ function NavBar() {
           </div>
 
           <div
-            className={`${isStudio ? "z-0" : "z-50"} ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[2000ms]  text-white p-8 w-full fixed top-0  items-center justify-between font-karantina hidden lg:flex`}
+            className={`${isStudio ? "z-0" : "z-20"} ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[2000ms]  text-white p-8 w-full fixed top-0  items-center justify-between font-karantina hidden lg:flex`}
           >
             <Link href="/">
               <Image
@@ -127,7 +133,11 @@ function NavBar() {
                     name={item.toUpperCase()}
                     onClick={() => {
                       if (pathname === "/") {
-                        setSelectedFilter(value);
+                        setIsHomeAnimated(false);
+                        setTimeout(() => {
+                          setIsHomeAnimated(true);
+                          setSelectedFilter(value);
+                        }, 2000);
                       } else {
                         router.push("/");
                         setSelectedFilter(value);
@@ -146,14 +156,6 @@ function NavBar() {
                   }}
                 />
               ))}
-
-              <NavItem
-                pathname={pathname}
-                name={"CONTACT"}
-                onClick={() => {
-                  setIsMenuOpen(false);
-                }}
-              />
             </div>
           </div>
         </>

@@ -13,7 +13,6 @@ import VideoOverlay from "@/components/video/VideoOverlay";
 import { useFilterStore } from "@/store/useFilterStore";
 import { useIsLoading } from "@/store/useIsLoading";
 import { R3FLoadingBridge } from "./loader/R3FLoadingBridge";
-import { useIsEnterState } from "@/store/useIsEnter";
 
 export interface IVideo {
   title: string;
@@ -35,7 +34,6 @@ function VideoComponent({
   widthPercent: number;
   setActiveVideo: Dispatch<SetStateAction<IVideo | null>>;
 }) {
-  const { isEnter } = useIsEnterState();
   const [videosFetched, setVideosFetched] = useState<IVideo[]>([]);
   const category = useFilterStore((state) => state.selectedFilter);
   const { setIsVideoLoading, setIsVideoCanvasLoading } = useIsLoading();
@@ -69,9 +67,7 @@ function VideoComponent({
   }
 
   return (
-    <div
-      className={`bg-black w-[100vw] h-screen ${isEnter ? "translate-x-0 opacity-100" : "translate-x-[60%] opacity-0"} transition-all transform ease-in-out duration-[3000ms]`}
-    >
+    <div className={`bg-black w-[100vw] h-screen`}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         frameloop={isVideoVisible ? "always" : "demand"}

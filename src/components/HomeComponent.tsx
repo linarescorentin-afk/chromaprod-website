@@ -17,9 +17,11 @@ import SocialMediaComponent from "./SocialMediaComponent";
 import { useIsEnterState } from "@/store/useIsEnter";
 import ActiveVideo from "./ActiveVideo";
 import AnimUp from "./ui/animated/AnimUp";
+import { useIsHomeAnimated } from "@/store/isHomeAnimated";
 
 export default function HomeComponent() {
   const { isEnter } = useIsEnterState();
+  const { isHomeAnimated, setIsHomeAnimated } = useIsHomeAnimated();
   const dragX = useMotionValue(0);
   const [widthPercent, setWidthPercent] = useState(50);
   const [screenWidth, setScreenWidth] = useState<number | null>(null);
@@ -30,6 +32,12 @@ export default function HomeComponent() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isEnter) {
+      setIsHomeAnimated(true);
+    }
+  }, [isEnter, setIsHomeAnimated]);
 
   // 🔄 écoute le resize
   useEffect(() => {
@@ -121,7 +129,7 @@ export default function HomeComponent() {
     <div>
       {/* SECTION VIDEO */}
       <motion.div
-        className={`absolute top-0 bg-black z-20 will-change-[clip-path] video-pane animate-left overflow-hidden`}
+        className={`absolute top-0 bg-black z-10 will-change-[clip-path] video-pane animate-left overflow-hidden`}
         style={{ clipPath: clip }}
       >
         {/* {widthPercent * 0.01 <= 0.92 && (
@@ -137,6 +145,13 @@ export default function HomeComponent() {
           moveBarTo={moveBarTo}
           widthPercent={widthPercent}
         />
+        <div
+          className={`
+        absolute inset-0 z-10 bg-black
+        ${isHomeAnimated ? "-translate-x-[100%] pointer-events-none" : "translate-x-[0%]"}
+        transition-all ease-in-out duration-[3000ms]
+      `}
+        />
       </motion.div>
       <div className="relative">
         {/* {widthPercent * 0.01 >= 0.015 && (
@@ -150,6 +165,13 @@ export default function HomeComponent() {
         <PhotoComponent
           isPhotoVisible={isPhotoVisible}
           widthPercent={widthPercent}
+        />
+        <div
+          className={`
+        absolute inset-0 z-10 bg-black
+        ${isHomeAnimated ? "translate-x-[100%] pointer-events-none" : "translate-x-[0%]"}
+        transition-all ease-in-out duration-[3000ms]
+      `}
         />
       </div>
 
@@ -170,25 +192,25 @@ export default function HomeComponent() {
         className={`fixed top-0 h-screen w-[40px] cursor-ew-resize z-30 flex justify-center -translate-x-5 `}
       >
         <div
-          className={`w-[2px] bg-red-900 hover:bg-red-600 hover:scale-150 transform transition-all duration-300 ease-in-out ${isEnter ? "h-full" : "h-1"} transition-all ease-in-out duration-[2000ms]`}
+          className={`w-[2px] bg-red-900 hover:bg-red-600 hover:scale-150 transform transition-all duration-300 ease-in-out ${isHomeAnimated ? "h-full" : "h-1"} transition-all ease-in-out duration-[2000ms]`}
         />
         <Image
           src="/doublearrow.svg"
           height={100}
           width={100}
           alt="arrow"
-          className={`absolute transform -translate-x-[21px] -translate-y-1/2 top-21 left-1/2 pointer-events-none ${isEnter ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[3500ms]`}
+          className={`absolute transform -translate-x-[21px] -translate-y-1/2 top-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[2000ms]`}
         />
         <Image
           src="/doublearrow.svg"
           height={100}
           width={100}
           alt="arrow"
-          className={`absolute transform -translate-x-[21px] -translate-y-1/2 bottom-21 left-1/2 pointer-events-none ${isEnter ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[3500ms]`}
+          className={`absolute transform -translate-x-[21px] -translate-y-1/2 bottom-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[2000ms]`}
         />
         <AnimUp
           duration={2}
-          inView={isEnter}
+          inView={isHomeAnimated}
           className={`font-karantina min-w-[126px]  lg:min-w-[110px] group fixed bottom-21 lg:bottom-23  lg:right-1/2 -translate-x-[25px]  lg:-translate-x-[32px] right-5 test z-30 uppercase cursor-pointer text-xl  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-5 lg:px-0 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
         >
           <SwitchButton
@@ -203,7 +225,7 @@ export default function HomeComponent() {
         </AnimUp>
         <AnimUp
           duration={2}
-          inView={isEnter}
+          inView={isHomeAnimated}
           className={`font-karantina min-w-[123px] lg:min-w-[110px] group fixed bottom-21 lg:bottom-23 lg:left-1/2 translate-x-[25px] lg:translate-x-[35px] left-5" z-30 uppercase cursor-pointer text-xl  text-left lg:text-red-500 lg:p-0 underline px-5 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
         >
           <SwitchButton
@@ -236,13 +258,13 @@ export default function HomeComponent() {
       /> */}
 
       <p
-        className={`hidden lg:flex fixed bottom-12 left-10  z-30 mix-blend-difference text-xs font-karla text-center ${isEnter ? "translate-y-0" : "translate-y-[500%]"} transition-all transform ease-in-out duration-[3000ms] `}
+        className={`hidden lg:flex fixed bottom-12 left-10  z-30 mix-blend-difference text-xs font-karla text-center ${isHomeAnimated ? "translate-y-0" : "translate-y-[500%]"} transition-all transform ease-in-out duration-[3000ms] `}
       >
         - BASED IN MONTRÉAL
       </p>
 
       <p
-        className={`hidden lg:flex fixed bottom-12 right-10  z-30 mix-blend-difference text-xs font-karla text-center ${isEnter ? "translate-y-0" : "translate-y-[500%]"} transition-all transform ease-in-out duration-[3000ms]`}
+        className={`hidden lg:flex fixed bottom-12 right-10  z-30 mix-blend-difference text-xs font-karla text-center ${isHomeAnimated ? "translate-y-0" : "translate-y-[500%]"} transition-all transform ease-in-out duration-[3000ms]`}
       >
         CORENTIN LINARES
       </p>
@@ -250,7 +272,7 @@ export default function HomeComponent() {
       <SocialMediaComponent />
 
       <div
-        className={`fixed left-10 top-1/2 font-karla -translate-y-1/2 z-20 hidden lg:flex flex-col items-center text-[12px] ${isEnter ? "translate-x-0" : "-translate-x-[900%]"} transition-all transform ease-in-out duration-[3000ms]`}
+        className={`fixed left-10 top-1/2 font-karla -translate-y-1/2 z-20 hidden lg:flex flex-col items-center text-[12px] ${isHomeAnimated ? "translate-x-0" : "-translate-x-[900%]"} transition-all transform ease-in-out duration-[3000ms]`}
       >
         {splitedSentence.map((w, i) => {
           return (

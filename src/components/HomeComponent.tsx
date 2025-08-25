@@ -31,7 +31,6 @@ export default function HomeComponent() {
   const { setWindowWidth } = useWindowsWidth();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
   useEffect(() => {
     if (isEnter) {
@@ -199,7 +198,7 @@ export default function HomeComponent() {
           height={100}
           width={100}
           alt="arrow"
-          className={`absolute transform -translate-x-[21px] -translate-y-1/2 top-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[2000ms]`}
+          className={`absolute transform -translate-x-[21px] translate-y-full top-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[2000ms]`}
         />
         <Image
           src="/doublearrow.svg"
@@ -214,13 +213,10 @@ export default function HomeComponent() {
           className={`font-karantina min-w-[126px]  lg:min-w-[110px] group fixed bottom-21 lg:bottom-23  lg:right-1/2 -translate-x-[25px]  lg:-translate-x-[32px] right-5 test z-30 uppercase cursor-pointer text-xl  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-5 lg:px-0 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
         >
           <SwitchButton
-            selectedFilter={selectedFilter}
             onClick={() => {
               moveBarTo("photo");
-              setSelectedFilter("Switch to photo");
             }}
             subtext="Switch to photo"
-            textposition="text-right"
           />
         </AnimUp>
         <AnimUp
@@ -229,13 +225,10 @@ export default function HomeComponent() {
           className={`font-karantina min-w-[123px] lg:min-w-[110px] group fixed bottom-21 lg:bottom-23 lg:left-1/2 translate-x-[25px] lg:translate-x-[35px] left-5" z-30 uppercase cursor-pointer text-xl  text-left lg:text-red-500 lg:p-0 underline px-5 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
         >
           <SwitchButton
-            selectedFilter={selectedFilter}
             onClick={() => {
               moveBarTo("video");
-              setSelectedFilter("Switch to video");
             }}
             subtext="Switch to video"
-            textposition="text-left"
           />
         </AnimUp>
       </motion.div>

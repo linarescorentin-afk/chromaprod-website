@@ -6,8 +6,8 @@ import { useIsHomeAnimated } from "@/store/isHomeAnimated";
 import React, { useEffect, useState } from "react";
 import LenisProvider from "../LenisProvider";
 import Section1 from "./Section1";
-import Section2 from "./Section4";
-import Section4 from "./Section";
+import Section2 from "./Section2";
+import Section4 from "./Section4";
 import Section5 from "./Section5";
 import Section3 from "./Section3";
 

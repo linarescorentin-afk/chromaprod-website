@@ -111,7 +111,7 @@ function ContactPage() {
           </AnimUp>
         </div>
         <div
-          className={`h-[500px] lg:h-full bg-red-200 lg:w-6/12 flex relative lg:fixed lg:right-0 lg:top-0 ${inView ? "translate-x-0" : "translate-x-full"} transition-all ease-in-out duration-[2500ms]`}
+          className={`h-[500px] lg:h-full lg:w-6/12 flex relative lg:fixed lg:right-0 lg:top-0 ${inView ? "translate-x-0" : "translate-x-full"} transition-all ease-in-out duration-[2500ms]`}
         >
           <Image
             src={content.image ? (content.image.url as string) : "/contact.jpg"}

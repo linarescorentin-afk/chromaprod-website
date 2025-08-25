@@ -40,7 +40,7 @@ function MobileNavItems({
         key={name}
         variants={itemVariants}
         transition={{ duration: 0.5 + delay, delay }}
-        className={`${selectedFilter === name.toLowerCase() || pathname === `/${name.toLowerCase()}` ? "bg-black text-white border border-black" : "text-black bg-white"} border border-black w-full h-full border-dashed cursor-pointer`}
+        className={`${selectedFilter === name.toLowerCase() || pathname === `/${name.toLowerCase()}` ? "bg-black border-white text-white border" : "text-black bg-white"} border border-black w-full h-full border-dashed cursor-pointer`}
         onClick={onClick}
       >
         {name}

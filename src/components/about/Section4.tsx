@@ -1,36 +1,29 @@
 import { AboutSettings } from "@/sanity/types/about";
 import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
-import Image from "next/image";
-import React from "react";
 
-function Section2({ about }: { about: AboutSettings }) {
+function Section4({ about }: { about: AboutSettings }) {
   const { selectedLanguage } = useIsSelectedLanguage();
-
   return (
-    <div>
-      {about.services.map((service, index) => (
-        <div
-          className={`border-y border-dashed space-y-5 flex flex-col px-5 lg:flex-row justify-between overflow-hidden sticky top-0 bg-black py-32`}
-          key={index}
-        >
-          <h3 className="font-bold text-xl">
-            {selectedLanguage === "fr" ? service.title.fr : service.title.en}
-          </h3>
-
-          {service.image && (
-            <Image
-              src={service.image.url as string}
-              alt={service.title.fr ? service.title.fr : ""}
-              width={500}
-              height={500}
-            />
-          )}
-
-          <p className="lg:w-4/12">{service.text.fr}</p>
+    <>
+      {about.clientComments && (
+        <div className="space-y-10 lg:flex lg:flex-wrap lg:items-start lg:w-6/12">
+          {about.clientComments.map((comment, index) => (
+            <div
+              key={index}
+              className="border-b lg:border-b-0 lg:border-l border-dashed  py-5 px-5 flex flex-col space-y-5 lg:h-[200px] "
+            >
+              <p className="font-bold text-lg">{comment.name}</p>
+              <p>
+                {selectedLanguage === "fr"
+                  ? (comment.comment.fr as string)
+                  : (comment.comment.en as string)}
+              </p>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      )}
+    </>
   );
 }
 
-export default Section2;
+export default Section4;

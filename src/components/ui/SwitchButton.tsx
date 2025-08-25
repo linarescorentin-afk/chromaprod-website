@@ -4,13 +4,9 @@ import ComeUpText from "./animated/ComeUpText";
 function SwitchButton({
   onClick,
   subtext,
-  textposition,
-  selectedFilter,
 }: {
   onClick: () => void;
   subtext: string;
-  textposition: string;
-  selectedFilter: string | null;
 }) {
   return (
     <button

@@ -15,8 +15,13 @@ function Section1({ about }: { about: AboutSettings }) {
     <div ref={ref} className="-translate-y-10 lg:translate-y-0">
       <div className="flex flex-col lg:flex-row lg:items-start">
         <div className="flex flex-col justify-between h-full  lg:min-h-[80vh] lg:w-12/12 lg:pl-5">
-          <AnimUp inView={inView} duration={2.5} y={250}>
-            <h1 className="font-karantina text-[100px] lg:text-[150px] leading-[80px] lg:leading-[120px]   px-5 translate-y-20 lg:translate-y-0 lg:min-w-[800px]">
+          <AnimUp
+            inView={inView}
+            duration={2.5}
+            y={250}
+            className="h-[250px] md:h-fit"
+          >
+            <h1 className="font-karantina text-[100px] md:text-[150px] leading-[80px] md:leading-[120px]   px-5 translate-y-20 md:translate-y-0 md:min-w-[800px]">
               {selectedLanguage === "fr"
                 ? about.h1.fr?.toUpperCase()
                 : about.h1.en?.toUpperCase()}
@@ -44,7 +49,7 @@ function Section1({ about }: { about: AboutSettings }) {
               alt="corentinlinares"
             />
           </div>
-          <h3 className="w-10/12  italic text-sm  px-5 lg:w-full">
+          <h3 className="w-10/12  italic text-sm  px-5 lg:w-full  pt-10">
             {selectedLanguage === "fr" ? about.h3.fr : about.h3.en}
           </h3>
         </div>

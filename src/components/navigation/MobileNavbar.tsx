@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import MobileNavItems from "./MobileNavItems";
 import { Category, useFilterStore } from "@/store/useFilterStore";
-import { useIsHomeAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/isHomeAnimated";
 import { useRouter } from "next/navigation";
 import { useIsEnterState } from "@/store/useIsEnter";
 import MobileHeader from "./MobileHeader";
@@ -22,7 +22,7 @@ function MobileNavbar({
   const { isEnter } = useIsEnterState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { setSelectedFilter } = useFilterStore();
-  const { setIsHomeAnimated } = useIsHomeAnimated();
+  const { setIsHomeAnimated } = useIsAnimated();
   const router = useRouter();
   return (
     <>

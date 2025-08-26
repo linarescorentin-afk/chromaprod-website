@@ -44,7 +44,6 @@ function NavBar() {
             pathname={pathname}
             filterButtons={filterButtons}
             navItems={navItems}
-            isFilterClick={isFilterClick}
             setIsFilterClick={setIsFilterClick}
           />
           <div className="fixed top-1/2 font-karantina -translate-y-1/2 right-1/2 translate-x-1/2 text-[100px] leading-[80px] lg:text-[200px] z-20 uppercase h-[150px] lg:leading-[150px] overflow-hidden">

@@ -16,10 +16,10 @@ import SwitchButton from "./ui/SwitchButton";
 import SocialMediaComponent from "./SocialMediaComponent";
 import ActiveVideo from "./ActiveVideo";
 import AnimUp from "./ui/animated/AnimUp";
-import { useIsHomeAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/isHomeAnimated";
 
 export default function HomeComponent() {
-  const { isHomeAnimated } = useIsHomeAnimated();
+  const { isHomeAnimated } = useIsAnimated();
   const dragX = useMotionValue(0);
   const [widthPercent, setWidthPercent] = useState(50);
   const [screenWidth, setScreenWidth] = useState<number | null>(null);
@@ -29,6 +29,8 @@ export default function HomeComponent() {
   const { setWindowWidth } = useWindowsWidth();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+
+  // 🔄 gère l’animation au chargement de la page
 
   // 🔄 écoute le resize
   useEffect(() => {
@@ -231,16 +233,6 @@ export default function HomeComponent() {
           setActiveVideo={setActiveVideo}
         />
       )}
-
-      {/* <SwitchButton
-        selectedFilter={selectedFilter}
-        onClick={() => {
-          moveBarTo("video");
-          setSelectedFilter("Switch to video");
-        }}
-        subtext="Switch to video"
-        textposition="text-left"
-      /> */}
 
       <p
         className={`hidden lg:flex fixed bottom-12 left-10  z-30 mix-blend-difference text-xs font-karla text-center ${isHomeAnimated ? "translate-y-0" : "translate-y-[500%]"} transition-all transform ease-in-out duration-[3000ms] `}

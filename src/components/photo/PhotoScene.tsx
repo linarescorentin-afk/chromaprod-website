@@ -134,8 +134,6 @@ function PhotoScene({
           const scaleMax = isMobile ? 1 : 1.05;
           const smoothScale = THREE.MathUtils.lerp(scaleMax, 1, t);
 
-          console.log(isScrolling);
-
           return (
             <PhotoPlane
               key={i}
@@ -150,7 +148,6 @@ function PhotoScene({
               onClick={() => {
                 if (isScrolling) return;
 
-                console.log("click", widthPercent);
                 if (selectedIndex === i) {
                   // si on reclique → on ferme
                   setSelectedIndex(null);

@@ -20,7 +20,7 @@
   --animate-translateBottom: translate-bottom 1500ms ease-in-out both;
   --animate-translateLeft: translate-left 2500ms ease-in-out both;
   --animate-translateRight: translate-right 2500ms ease-in-out both;
-  --animate-filter: filterAnim 3500ms ease-in-out both;
+  --animate-filter: filterAnim 2500ms ease-in-out both;
 
   /* === Fade In (avec légère translation) === */
 

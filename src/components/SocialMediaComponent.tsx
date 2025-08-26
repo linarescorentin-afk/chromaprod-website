@@ -1,11 +1,11 @@
 import { getSocialMedia, SocialMedia } from "@/sanity/lib/getSocialMedia";
-import { useIsHomeAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/isHomeAnimated";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 function SocialMediaComponent() {
   const [socialMedia, setSocialMedia] = useState<SocialMedia[] | null>(null);
-  const { isHomeAnimated } = useIsHomeAnimated();
+  const { isHomeAnimated } = useIsAnimated();
 
   useEffect(() => {
     const fetchSocialMedia = async () => {

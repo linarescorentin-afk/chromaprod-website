@@ -1,10 +1,10 @@
 import { Category, useFilterStore } from "@/store/useFilterStore";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import NavItem from "./NavItem";
 import { useRouter } from "next/navigation";
-import { useIsHomeAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/isHomeAnimated";
 import SwitchLangButton from "./SwitchLangButton";
 
 interface IProps {
@@ -13,7 +13,6 @@ interface IProps {
   pathname: string;
   filterButtons: string[];
   navItems: { name: string; href: string }[];
-  isFilterClick: string | null;
   setIsFilterClick: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
@@ -23,12 +22,111 @@ function NavBarDesktop({
   pathname,
   filterButtons,
   navItems,
-  isFilterClick,
   setIsFilterClick,
 }: IProps) {
   const router = useRouter();
-  const { setIsHomeAnimated } = useIsHomeAnimated();
-  const { setSelectedFilter } = useFilterStore();
+  const { setIsHomeAnimated, setIsAboutAnimated, setIsContactAnimated } =
+    useIsAnimated();
+  const { selectedFilter, setSelectedFilter } = useFilterStore();
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const onFilteredButtonClick = (item: string) => {
+    const value = item.toLowerCase() as Category;
+    setIsDisabled(true);
+
+    switch (pathname) {
+      case "/about":
+        setIsAboutAnimated(false);
+        setTimeout(() => {
+          setIsFilterClick(value);
+          setSelectedFilter(value);
+          setIsHomeAnimated(false);
+          router.push("/");
+        }, 2000);
+
+        setTimeout(() => {
+          setIsHomeAnimated(true);
+          setIsFilterClick(null);
+          setIsDisabled(false);
+        }, 4500);
+        break;
+
+      case "/contact":
+        setIsContactAnimated(false);
+        setTimeout(() => {
+          setIsFilterClick(value);
+          setSelectedFilter(value);
+          setIsHomeAnimated(false);
+          router.push("/");
+        }, 2000);
+
+        setTimeout(() => {
+          setIsHomeAnimated(true);
+          setIsFilterClick(null);
+          setIsDisabled(false);
+        }, 4500);
+        break;
+
+      case "/":
+        setIsHomeAnimated(false);
+        setIsFilterClick(value);
+        setTimeout(() => {
+          setSelectedFilter(value);
+          setIsHomeAnimated(true);
+          setIsFilterClick(null);
+          setIsDisabled(false);
+        }, 2500);
+
+        break;
+
+      default:
+        router.push("/");
+        setIsHomeAnimated(false);
+        setIsFilterClick(value);
+        setSelectedFilter(value);
+        setTimeout(() => {
+          setIsHomeAnimated(true);
+          setIsDisabled(false);
+        }, 3500);
+    }
+  };
+
+  const onNavItemClick = (item: { name: string; href: string }) => {
+    setIsDisabled(true);
+    setSelectedFilter(null);
+    setIsFilterClick(null);
+
+    switch (pathname) {
+      case "/":
+        setIsHomeAnimated(false);
+        setTimeout(() => {
+          router.push(item.href);
+          setIsDisabled(false);
+        }, 2000);
+        break;
+
+      case "/about":
+        setIsAboutAnimated(false);
+        setTimeout(() => {
+          router.push(item.href);
+          setIsDisabled(false);
+        }, 2000);
+        break;
+
+      case "/contact":
+        setIsContactAnimated(false);
+        setTimeout(() => {
+          router.push(item.href);
+          setIsDisabled(false);
+        }, 2000);
+        break;
+
+      default:
+        router.push(item.href);
+        setIsDisabled(false);
+    }
+  };
+
   return (
     <div
       className={`${isStudio ? "z-0" : "z-50"} ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[2000ms]  text-white p-8 w-full fixed top-0  items-center justify-between font-karantina hidden lg:flex`}
@@ -44,53 +142,25 @@ function NavBarDesktop({
         }}
       >
         {filterButtons.map((item) => {
-          const value = item.toLowerCase() as Category;
           return (
             <NavItem
-              selectedFilter={isFilterClick}
+              disabled={isDisabled}
+              selectedFilter={selectedFilter}
               pathname={pathname}
               key={item}
               name={item.toUpperCase()}
-              onClick={() => {
-                if (pathname === "/") {
-                  setIsHomeAnimated(false);
-                  setIsFilterClick(value);
-                  setTimeout(() => {
-                    setIsHomeAnimated(true);
-                    setSelectedFilter(value);
-                    setIsFilterClick(null);
-                  }, 3500);
-                } else {
-                  setIsHomeAnimated(false);
-                  router.push("/");
-                  setSelectedFilter(value);
-                  setIsFilterClick(value);
-                  setTimeout(() => {
-                    setIsFilterClick(null);
-                    setIsHomeAnimated(true);
-                  }, 3500);
-                }
-              }}
+              onClick={() => onFilteredButtonClick(item)}
             />
           );
         })}
         {navItems.map((item) => (
           <NavItem
-            selectedFilter={isFilterClick}
+            disabled={isDisabled}
+            selectedFilter={selectedFilter}
             pathname={pathname}
             key={item.name}
             name={item.name}
-            onClick={() => {
-              if (pathname === "/") {
-                setIsHomeAnimated(false);
-
-                setTimeout(() => {
-                  router.push(item.href);
-                }, 2000);
-              } else {
-                router.push(item.href);
-              }
-            }}
+            onClick={() => onNavItemClick(item)}
           />
         ))}
       </div>

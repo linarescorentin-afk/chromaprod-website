@@ -6,13 +6,13 @@ import ComeUpText from "../ui/animated/ComeUpText";
 import AnimUp from "../ui/animated/AnimUp";
 import { usePathname } from "next/navigation";
 import { useIsEnterState } from "@/store/useIsEnter";
-import { useIsAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/useIsAnimated";
 
 function IntroWebsite() {
   const { getAllReady } = useIsLoading();
   const { isEnter, setIsEnter } = useIsEnterState();
   const [inView, setInView] = React.useState(false);
-  const { setIsHomeAnimated } = useIsAnimated();
+  const { setIsHomeAnimated, setIsNavBarAnimated } = useIsAnimated();
 
   const path = usePathname();
 
@@ -28,6 +28,7 @@ function IntroWebsite() {
     setTimeout(() => {
       setIsEnter(true);
       setIsHomeAnimated(true);
+      setIsNavBarAnimated(true);
     }, 1100);
   };
 

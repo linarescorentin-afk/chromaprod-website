@@ -16,6 +16,7 @@
   --font-anton: var(--font-anton);
 
   --animate-fadeIn: fade-in 2500ms ease-in-out both;
+  --animate-fadeOut: fade-out 2500ms ease-in-out both;
   --animate-translateTop: translate-top 1500ms ease-in-out both;
   --animate-translateBottom: translate-bottom 1500ms ease-in-out both;
   --animate-translateLeft: translate-left 2500ms ease-in-out both;
@@ -44,6 +45,17 @@
     }
     to {
       opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 0;
       transform: translateY(0);
     }
   }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Karantina, Karla, Oswald, Anton } from "next/font/google";
+import { Karantina, Karla } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/navigation/NavBar";
 import IntroWebsite from "@/components/loader/IntroWebsite";

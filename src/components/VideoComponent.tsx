@@ -13,6 +13,7 @@ import VideoOverlay from "@/components/video/VideoOverlay";
 import { useFilterStore } from "@/store/useFilterStore";
 import { useIsLoading } from "@/store/useIsLoading";
 import { R3FLoadingBridge } from "./loader/R3FLoadingBridge";
+import { useIsAnimated } from "@/store/useIsAnimated";
 
 export interface IVideo {
   title: string;
@@ -38,6 +39,8 @@ function VideoComponent({
   const category = useFilterStore((state) => state.selectedFilter);
   const { setIsVideoLoading, setIsVideoCanvasLoading } = useIsLoading();
 
+  const { setIsHomeAnimated, setIsNavBarAnimated } = useIsAnimated();
+
   useEffect(() => {
     async function load() {
       const videos = await getVideos();
@@ -48,8 +51,12 @@ function VideoComponent({
   }, [setIsVideoLoading]);
 
   const onVideoClick = (video: IVideo) => {
+    setIsHomeAnimated(false);
+    setIsNavBarAnimated(false);
     moveBarTo("video");
-    setActiveVideo(video);
+    setTimeout(() => {
+      setActiveVideo(video);
+    }, 1500);
   };
 
   const videos = React.useMemo(() => {
@@ -61,10 +68,6 @@ function VideoComponent({
 
     return filteredVideos;
   }, [videosFetched, category]);
-
-  if (!videos.length) {
-    return <div className="text-white p-4">Chargement des vidéos...</div>;
-  }
 
   return (
     <div className={`bg-black w-[100vw] h-screen`}>
@@ -80,7 +83,7 @@ function VideoComponent({
               videos={videos}
               widthPercent={widthPercent}
             />
-            <VideoOverlay videos={videos} widthPercent={widthPercent} />
+            <VideoOverlay videos={videos} />
           </ScrollControls>
         </Suspense>
 

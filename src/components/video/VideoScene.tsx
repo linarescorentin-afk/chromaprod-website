@@ -116,7 +116,6 @@ function VideoScene({
               if (ref && ref.parallax == null) ref.parallax = 0;
               materials.current[i] = ref;
             }}
-            shiftRef={currentShift}
             texture={texture}
             planeWidth={planeWidth * smoothScale}
             planeHeight={planeHeight * smoothScale}

@@ -1,5 +1,5 @@
 import { getSocialMedia, SocialMedia } from "@/sanity/lib/getSocialMedia";
-import { useIsAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/useIsAnimated";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 

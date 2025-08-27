@@ -1,5 +1,5 @@
 import { AboutSettings } from "@/sanity/types/about";
-import { useIsAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/useIsAnimated";
 import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";

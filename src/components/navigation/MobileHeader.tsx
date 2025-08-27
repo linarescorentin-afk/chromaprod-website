@@ -29,7 +29,7 @@ function MobileHeader({
       <div className="flex space-x-10 items-center h-full ">
         <SwitchLangButton setIsMenuOpen={setIsMenuOpen} />
         <button
-          className="text-[80px] leading-[60px] -translate-y-2"
+          className="text-[50px] leading-[60px] -translate-y-2"
           onClick={() => {
             setIsMenuOpen(false);
           }}

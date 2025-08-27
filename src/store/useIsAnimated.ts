@@ -7,6 +7,8 @@ type useIsAnimated = {
   setIsAboutAnimated: (isAboutAnimated: boolean) => void;
   isContactAnimated: boolean;
   setIsContactAnimated: (isContactAnimated: boolean) => void;
+  isNavBarAnimated: boolean;
+  setIsNavBarAnimated: (isNavBarAnimated: boolean) => void;
 };
 
 export const useIsAnimated = create<useIsAnimated>((set) => ({
@@ -16,4 +18,6 @@ export const useIsAnimated = create<useIsAnimated>((set) => ({
   setIsAboutAnimated: (isAboutAnimated) => set({ isAboutAnimated }),
   isContactAnimated: false,
   setIsContactAnimated: (isContactAnimated) => set({ isContactAnimated }),
+  isNavBarAnimated: false,
+  setIsNavBarAnimated: (isNavBarAnimated) => set({ isNavBarAnimated }),
 }));

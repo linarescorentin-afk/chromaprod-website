@@ -2,28 +2,26 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import MobileNavItems from "./MobileNavItems";
-import { Category, useFilterStore } from "@/store/useFilterStore";
-import { useIsAnimated } from "@/store/isHomeAnimated";
-import { useRouter } from "next/navigation";
+import { Category } from "@/store/useFilterStore";
 import { useIsEnterState } from "@/store/useIsEnter";
 import MobileHeader from "./MobileHeader";
 
 function MobileNavbar({
   filterButtons,
-  setIsFilterClick,
   pathname,
   navItems,
+  onFilteredButtonClick,
+  onNavItemClick,
 }: {
   filterButtons: string[];
-  setIsFilterClick: (value: string | null) => void;
   pathname: string;
   navItems: { name: string; href: string }[];
+  onFilteredButtonClick: (item: string) => void;
+  onNavItemClick: (item: { name: string; href: string }) => void;
 }) {
   const { isEnter } = useIsEnterState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { setSelectedFilter } = useFilterStore();
-  const { setIsHomeAnimated } = useIsAnimated();
-  const router = useRouter();
+
   return (
     <>
       {" "}
@@ -35,7 +33,7 @@ function MobileNavbar({
         </Link>
         <button
           onClick={() => setIsMenuOpen(true)}
-          className=" bg-white px-5 py-[0.2rem] font-bold border-x border-black border-dashed text-2xl tracking-wider"
+          className=" bg-white px-5 py-[0.2rem] border-x border-black border-dashed text-2xl"
         >
           <p>MENU</p>
         </button>
@@ -54,24 +52,8 @@ function MobileNavbar({
               key={item}
               name={item.toUpperCase()}
               onClick={() => {
-                if (pathname === "/") {
-                  setIsMenuOpen(false);
-                  setSelectedFilter(value);
-                  setIsFilterClick(value);
-                  setIsHomeAnimated(false);
-                  setTimeout(() => {
-                    setIsHomeAnimated(true);
-                    setIsFilterClick(null);
-                  }, 3500);
-                } else {
-                  setIsMenuOpen(false);
-                  router.push("/");
-                  setSelectedFilter(value);
-                  setIsFilterClick(value);
-                  setTimeout(() => {
-                    setIsFilterClick(null);
-                  }, 3500);
-                }
+                setIsMenuOpen(false);
+                onFilteredButtonClick(value);
               }}
             />
           );
@@ -85,20 +67,10 @@ function MobileNavbar({
             name={item.name}
             onClick={() => {
               setIsMenuOpen(false);
-              router.push(item.href);
+              onNavItemClick(item);
             }}
           />
         ))}
-
-        <MobileNavItems
-          delay={0.6}
-          isMenuOpen={isMenuOpen}
-          pathname={pathname}
-          name={"CONTACT"}
-          onClick={() => {
-            setIsMenuOpen(false);
-          }}
-        />
       </div>
     </>
   );

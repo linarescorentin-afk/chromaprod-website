@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 import { AboutSettings } from "@/sanity/types/about";
 import Image from "next/image";
-import { useIsAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/useIsAnimated";
 import { useEffect } from "react";
 import { useScroll, motion } from "framer-motion";
 import useParallax from "@/hook/useParallax";

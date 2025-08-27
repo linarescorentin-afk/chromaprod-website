@@ -13,11 +13,11 @@ function SwitchButton({
       onClick={() => {
         onClick();
       }}
-      className={`flex items-end ${subtext !== "Switch to video" ? "flex-row-reverse" : ""} uppercase`}
+      className={`font-karantina flex items-end ${subtext !== "Switch to video" ? "flex-row-reverse" : ""} text-red-500 uppercase cursor-pointer underline`}
     >
       <ComeUpText height="h-6" text={subtext} />
       <Image
-        className={`mx-2 ${subtext === "Switch to video" ? "rotate-180" : ""}  group-hover:-translate-y-[2px] transition-all duration-700 ease-in-out hidden lg:flex`}
+        className={`mx-2 ${subtext === "Switch to video" ? "rotate-180" : ""}  group-hover:-translate-y-[2px] transition-all duration-700 ease-in-out`}
         src={"/arrowChr.svg"}
         alt="Arrow"
         height={10}

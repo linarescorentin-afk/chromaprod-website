@@ -2,7 +2,7 @@ import { ServiceItem } from "@/sanity/types/about";
 import AnimUp from "../ui/animated/AnimUp";
 import Image from "next/image";
 import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
-import { useIsAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/useIsAnimated";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 

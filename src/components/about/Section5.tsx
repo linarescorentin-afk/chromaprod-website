@@ -1,6 +1,6 @@
 import { SocialMedia } from "@/sanity/lib/getSocialMedia";
 import { AboutSettings } from "@/sanity/types/about";
-import { useIsAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/useIsAnimated";
 import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 import Image from "next/image";
 import Link from "next/link";

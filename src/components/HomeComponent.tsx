@@ -16,7 +16,7 @@ import SwitchButton from "./ui/SwitchButton";
 import SocialMediaComponent from "./SocialMediaComponent";
 import ActiveVideo from "./ActiveVideo";
 import AnimUp from "./ui/animated/AnimUp";
-import { useIsAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/useIsAnimated";
 
 export default function HomeComponent() {
   const { isHomeAnimated } = useIsAnimated();
@@ -199,12 +199,12 @@ export default function HomeComponent() {
           height={100}
           width={100}
           alt="arrow"
-          className={`absolute transform -translate-x-[21px] -translate-y-1/2 bottom-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[2000ms]`}
+          className={`absolute transform -translate-x-[21px] -translate-y-1/2 bottom-26 lg:bottom-21 left-1/2 pointer-events-none ${isHomeAnimated ? "opacity-100" : "opacity-0"} transition-all *:ease-in-out duration-[2000ms]`}
         />
         <AnimUp
           duration={2}
           inView={isHomeAnimated}
-          className={`font-karantina min-w-[126px]  lg:min-w-[110px] group fixed bottom-21 lg:bottom-23  lg:right-1/2 -translate-x-[25px]  lg:-translate-x-[32px] right-5 test z-30 uppercase cursor-pointer text-xl  text-right lg:text-red-500 lg:transparent lg:p-0 underline px-5 lg:px-0 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
+          className={` min-w-[112px]  lg:min-w-[110px] group fixed bottom-28 lg:bottom-23  lg:right-1/2 -translate-x-[25px]  lg:-translate-x-[32px] right-5 z-30  text-xl  text-right  lg:transparent`}
         >
           <SwitchButton
             onClick={() => {
@@ -216,7 +216,7 @@ export default function HomeComponent() {
         <AnimUp
           duration={2}
           inView={isHomeAnimated}
-          className={`font-karantina min-w-[123px] lg:min-w-[110px] group fixed bottom-21 lg:bottom-23 lg:left-1/2 translate-x-[25px] lg:translate-x-[35px] left-5" z-30 uppercase cursor-pointer text-xl  text-left lg:text-red-500 lg:p-0 underline px-5 py-2 lg:bg-transparent bg-white text-black lg:border-none border-x border-dashed`}
+          className={` min-w-[120px] lg:min-w-[110px] group fixed bottom-28 lg:bottom-23 lg:left-1/2 translate-x-[25px] lg:translate-x-[35px] left-5 z-30  text-xl  text-left`}
         >
           <SwitchButton
             onClick={() => {
@@ -260,12 +260,14 @@ export default function HomeComponent() {
         })}
       </div>
 
-      {(2 >= widthPercent || widthPercent >= 95) && (
-        <div className="fixed bottom-8 space-y-2 z-30 left-1/2 -translate-x-1/2  animate-fadeIn font-karla text-[12px]  flex-col items-center mix-blend-difference hidden lg:flex">
+      <div className="fixed bottom-8 space-y-2 z-30 left-1/2 -translate-x-1/2 font-karla text-[12px] h-[50px] overflow-hidden  mix-blend-difference hidden lg:flex   ">
+        <div
+          className={`flex flex-col items-center justify-center ${(2 >= widthPercent || widthPercent >= 95) && isHomeAnimated ? "translate-y-0" : "translate-y-full"} transition-all ease-in-out transform duration-[1000ms]`}
+        >
           <p>scroll down to Explore</p>
           <Image src="/downArrow.svg" alt="scroll down" width={5} height={5} />
         </div>
-      )}
+      </div>
     </div>
   );
 }

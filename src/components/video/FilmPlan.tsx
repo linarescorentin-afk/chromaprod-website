@@ -1,4 +1,3 @@
-import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
@@ -8,7 +7,7 @@ export default function FilmPlan({
   texture,
   planeWidth,
   planeHeight,
-  shiftRef,
+
   onClick,
 }: {
   position: [number, number, number];
@@ -18,7 +17,6 @@ export default function FilmPlan({
   texture: THREE.Texture;
   planeWidth: number;
   planeHeight: number;
-  shiftRef: React.MutableRefObject<number>;
   onClick: () => void;
 }) {
   const materialRef = useRef<{

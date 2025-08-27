@@ -7,11 +7,16 @@ import { useEffect, useMemo, useState } from "react";
 import LenisProvider from "../LenisProvider";
 import { useInView } from "react-intersection-observer";
 import AnimUp from "../ui/animated/AnimUp";
-import { useIsAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/useIsAnimated";
 
 function ContactPage() {
   const { selectedLanguage } = useIsSelectedLanguage();
-  const { isContactAnimated, setIsContactAnimated } = useIsAnimated();
+  const {
+    isContactAnimated,
+    setIsContactAnimated,
+    isNavBarAnimated,
+    setIsNavBarAnimated,
+  } = useIsAnimated();
   const [content, setContent] = useState<ContactSettings | null>(null);
   const [ref, inView] = useInView({ threshold: 0.2 });
 
@@ -31,8 +36,12 @@ function ContactPage() {
       }
     };
 
+    if (!isNavBarAnimated) {
+      setIsNavBarAnimated(true);
+    }
+
     fetchContent();
-  }, []);
+  }, [isNavBarAnimated, setIsNavBarAnimated]);
 
   const isContentAvailable = useMemo(() => {
     return content !== null;

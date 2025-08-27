@@ -3,13 +3,7 @@ import { Scroll } from "@react-three/drei";
 import { IVideo } from "../VideoComponent";
 import { motion } from "framer-motion";
 
-export default function Overlay({
-  videos,
-  widthPercent,
-}: {
-  videos: IVideo[];
-  widthPercent: number;
-}) {
+export default function Overlay({ videos }: { videos: IVideo[] }) {
   return (
     <Scroll html>
       <div
@@ -19,7 +13,7 @@ export default function Overlay({
         {videos.map((video, index) => (
           <motion.div
             key={index}
-            className="px-5 w-screen lg:px-32 h-screen flex flex-col py-32 lg:lg:py-32 text-white font-karantina justify-between  mx-auto"
+            className="px-5 w-screen lg:px-32 h-screen flex flex-col py-32 lg:py-42 text-white font-karantina justify-between  mx-auto"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeInOut" }}

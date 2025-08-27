@@ -3,7 +3,7 @@ import AnimUp from "../ui/animated/AnimUp";
 import Image from "next/image";
 import { AboutSettings } from "@/sanity/types/about";
 import { useInView } from "react-intersection-observer";
-import { useIsAnimated } from "@/store/isHomeAnimated";
+import { useIsAnimated } from "@/store/useIsAnimated";
 
 function Section3({ about }: { about: AboutSettings }) {
   const [isAnimated, setIsAnimated] = React.useState(false);

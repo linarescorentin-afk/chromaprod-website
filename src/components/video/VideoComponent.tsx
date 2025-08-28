@@ -39,8 +39,9 @@ function VideoComponent({
   const [videosFetched, setVideosFetched] = useState<IVideo[]>([]);
   const category = useFilterStore((state) => state.selectedFilter);
   const { setIsVideoLoading, setIsVideoCanvasLoading } = useIsLoading();
-
   const { setIsHomeAnimated, setIsNavBarAnimated } = useIsAnimated();
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     async function load() {

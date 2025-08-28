@@ -3,7 +3,6 @@ import { Karantina, Karla } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/navigation/NavBar";
 import IntroWebsite from "@/components/loader/IntroWebsite";
-import LenisProvider from "@/components/LenisProvider";
 
 const karantina = Karantina({
   variable: "--font-karantina",
@@ -37,6 +36,7 @@ export default function RootLayout({
         <NavBar />
 
         <IntroWebsite />
+
         {children}
       </body>
     </html>

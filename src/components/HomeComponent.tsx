@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import PhotoComponent from "./PhotoComponent";
-import VideoComponent, { IVideo } from "./VideoComponent";
+import PhotoComponent from "./photo/PhotoComponent";
+import VideoComponent, { IVideo } from "./video/VideoComponent";
 import {
   animate,
   motion,
@@ -14,7 +14,7 @@ import Image from "next/image";
 import { useWindowsWidth } from "@/store/useWindowsWidth";
 import SwitchButton from "./ui/SwitchButton";
 import SocialMediaComponent from "./SocialMediaComponent";
-import ActiveVideo from "./ActiveVideo";
+import ActiveVideo from "./video/ActiveVideo";
 import AnimUp from "./ui/animated/AnimUp";
 import { useIsAnimated } from "@/store/useIsAnimated";
 
@@ -122,7 +122,7 @@ export default function HomeComponent() {
     <div>
       {/* SECTION VIDEO */}
       <motion.div
-        className={`absolute top-0 bg-black z-10 will-change-[clip-path] video-pane animate-left overflow-hidden`}
+        className={`absolute top-0 bg-black z-10 will-change-[clip-path] video-pane animate-left lg:overflow-hidden`}
         style={{ clipPath: clip }}
       >
         {/* {widthPercent * 0.01 <= 0.92 && (

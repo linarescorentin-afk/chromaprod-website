@@ -1,12 +1,13 @@
 import { ScrollControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { Suspense, useEffect, useState } from "react";
-import PhotoScene from "./photo/PhotoScene";
+import PhotoScene from "./PhotoScene";
 
 import { getPhotos } from "@/sanity/lib/getPhotos";
 import { useFilterStore } from "@/store/useFilterStore";
 import { useIsLoading } from "@/store/useIsLoading";
-import { R3FLoadingBridge } from "./loader/R3FLoadingBridge";
+import { R3FLoadingBridge } from "../loader/R3FLoadingBridge";
+import MobilePhotoComponent from "./MobilePhotoComponent";
 
 export interface IPhoto {
   image: string;
@@ -53,11 +54,13 @@ function PhotoComponent({
   }
 
   return (
-    <div className={`h-screen w-screen`}>
+    <div
+      className={`h-screen w-screen bg-red-600 overflow-y-scroll lg:overflow-hidden`}
+    >
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         frameloop={isPhotoVisible ? "always" : "demand"}
-        className={`canvas ${isPhotoVisible ? "visible" : "hidden"}`}
+        className={`canvas ${isPhotoVisible ? "visible" : "hidden"} hidden lg:block`}
       >
         <Suspense fallback={null}>
           <ScrollControls
@@ -75,6 +78,8 @@ function PhotoComponent({
 
         <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
       </Canvas>
+
+      <MobilePhotoComponent photos={photos} />
 
       {/* ✅ Overlay HTML */}
       {selectedIndex !== null && (

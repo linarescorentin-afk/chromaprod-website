@@ -7,7 +7,7 @@ import { TextureLoader } from "three";
 import FilmPlan from "./FilmPlan";
 import "./materials/filmEffectMaterial";
 import * as THREE from "three";
-import { IVideo } from "../VideoComponent";
+import { IVideo } from "./VideoComponent";
 
 function VideoScene({
   widthPercent,

@@ -128,7 +128,7 @@ export default function HomeComponent() {
     <div>
       {/* SECTION VIDEO */}
       <motion.div
-        className={`absolute top-0 bg-black z-10 will-change-[clip-path] video-pane animate-left lg:overflow-hidden`}
+        className={`absolute top-0 bg-black z-10 will-change-[clip-path] video-pane animate-left overflow-hidden`}
         style={{ clipPath: clip }}
       >
         {/* {widthPercent * 0.01 <= 0.92 && (
@@ -152,7 +152,7 @@ export default function HomeComponent() {
       `}
         />
       </motion.div>
-      <div className="relative">
+      <div className="relative overflow-x-hidden">
         {/* {widthPercent * 0.01 >= 0.015 && (
           <button
             className={`fixed top-0 w-full bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 h-full z-10 cursor-pointer`}

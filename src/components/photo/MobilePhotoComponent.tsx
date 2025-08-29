@@ -18,7 +18,7 @@ function MobilePhotoComponent({
   }, [setIsPhotoCanvasLoading]);
   return (
     <div
-      className={`bg-black w-[100vw] px-5 flex-col space-y-50 pt-20 pb-80 ${isPhotoVisible ? "flex" : "hidden"}`}
+      className={`bg-black w-full px-5 flex-col space-y-50 pt-20 pb-80 ${isPhotoVisible ? "flex" : "hidden"}`}
     >
       {photos.map((photo, index) => (
         <OneMobilePhoto key={index} index={index} photo={photo} />

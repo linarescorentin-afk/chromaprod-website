@@ -25,7 +25,7 @@ export default function Overlay({ videos }: { videos: IVideo[] }) {
               </p>
             </div>
             <div className="space-y-5">
-              <h1 className=" text-[80px] lg:text-[150px] font-bold uppercase leading-[70px] tracking-[0.02em] lg:leading-[120px]  w-full lg:w-[200px]">
+              <h1 className=" text-[70px] lg:text-[150px] font-bold uppercase leading-[60px] tracking-[0.02em] lg:leading-[120px]  w-full lg:w-[200px]">
                 {video.title}
               </h1>
             </div>

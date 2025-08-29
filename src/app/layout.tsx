@@ -34,7 +34,9 @@ export default function RootLayout({
         className={`${karla.variable} ${karantina.variable} antialiased bg-black`}
       >
         <NavBar />
+
         <IntroWebsite />
+
         {children}
       </body>
     </html>

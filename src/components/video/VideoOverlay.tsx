@@ -1,6 +1,6 @@
 "use client";
 import { Scroll } from "@react-three/drei";
-import { IVideo } from "../VideoComponent";
+import { IVideo } from "./VideoComponent";
 import { motion } from "framer-motion";
 
 export default function Overlay({ videos }: { videos: IVideo[] }) {
@@ -14,10 +14,10 @@ export default function Overlay({ videos }: { videos: IVideo[] }) {
           <motion.div
             key={index}
             className="px-5 w-screen lg:px-32 h-screen flex flex-col py-32 lg:py-42 text-white font-karantina justify-between  mx-auto"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             transition={{ duration: 1, ease: "easeInOut" }}
-            viewport={{ amount: 0.4 }} // déclenche quand 40% de l'élément est visible
+            viewport={{ amount: 0.1 }} // déclenche quand 40% de l'élément est visible
           >
             <div className="w-full flex items-center justify-between">
               <p className="text-sm text-gray-100 font-karla hidden">

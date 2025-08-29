@@ -11,7 +11,7 @@ import React, {
 import { TextureLoader } from "three";
 import PhotoPlane from "./PhotoPlane";
 import * as THREE from "three";
-import { IPhoto } from "../PhotoComponent";
+import { IPhoto } from "./PhotoComponent";
 import { urlForTex } from "@/sanity/lib/image";
 import { useWindowsWidth } from "@/store/useWindowsWidth";
 interface IProps {

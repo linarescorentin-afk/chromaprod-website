@@ -1,12 +1,13 @@
 import { ScrollControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { Suspense, useEffect, useState } from "react";
-import PhotoScene from "./photo/PhotoScene";
+import PhotoScene from "./PhotoScene";
 
 import { getPhotos } from "@/sanity/lib/getPhotos";
 import { useFilterStore } from "@/store/useFilterStore";
 import { useIsLoading } from "@/store/useIsLoading";
-import { R3FLoadingBridge } from "./loader/R3FLoadingBridge";
+import { R3FLoadingBridge } from "../loader/R3FLoadingBridge";
+import MobilePhotoComponent from "./MobilePhotoComponent";
 
 export interface IPhoto {
   image: string;
@@ -57,7 +58,7 @@ function PhotoComponent({
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         frameloop={isPhotoVisible ? "always" : "demand"}
-        className={`canvas ${isPhotoVisible ? "visible" : "hidden"}`}
+        className={`canvas ${isPhotoVisible ? "visible" : "hidden"} hidden lg:block`}
       >
         <Suspense fallback={null}>
           <ScrollControls
@@ -76,6 +77,10 @@ function PhotoComponent({
         <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
       </Canvas>
 
+      <div className="lg:hidden block">
+        <MobilePhotoComponent photos={photos} isPhotoVisible />
+      </div>
+
       {/* ✅ Overlay HTML */}
       {selectedIndex !== null && (
         <div className="fixed top-0 text-sm uppercase pointer-events-none left-0 flex flex-col items-start  justify-between z-50 transition-opacity duration-300 w-full h-full px-16 py-24 font-karla">
@@ -87,7 +92,6 @@ function PhotoComponent({
                 {photosFetched[selectedIndex].name}
               </h2>
             )}
-            <p className="text-sm font-karla">Scroll or click to close</p>
           </div>
           <div className="w-full  flex justify-between items-center">
             {photosFetched[selectedIndex].date && (

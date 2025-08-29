@@ -6,6 +6,8 @@ import LenisProvider from "./LenisProvider";
 import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 import { motion } from "framer-motion";
 import { useItemParallax } from "@/hook/useItemParralax";
+import AnimUp from "./ui/animated/AnimUp";
+import { useIsAnimated } from "@/store/useIsAnimated";
 
 function MobileVideoComponent({
   videosFetched,
@@ -24,19 +26,21 @@ function MobileVideoComponent({
   }, [setIsVideoCanvasLoading]);
 
   return (
-    <div
-      className={`bg-black w-[100vw]  flex-col space-y-20 pt-20 ${isVideoVisible ? "flex" : "hidden"}`}
-    >
-      {videosFetched.map((video, index) => (
-        <OneMobileVideo
-          key={index}
-          index={index}
-          video={video}
-          onVideoClick={onVideoClick}
-          selectedLanguage={selectedLanguage}
-        />
-      ))}
-    </div>
+    <LenisProvider>
+      <div
+        className={`bg-black w-[100vw]  flex-col space-y-20 pt-20 ${isVideoVisible ? "flex" : "hidden"}`}
+      >
+        {videosFetched.map((video, index) => (
+          <OneMobileVideo
+            key={index}
+            index={index}
+            video={video}
+            onVideoClick={onVideoClick}
+            selectedLanguage={selectedLanguage}
+          />
+        ))}
+      </div>
+    </LenisProvider>
   );
 }
 
@@ -54,6 +58,7 @@ function OneMobileVideo({
 }) {
   const itemRef = useRef<HTMLDivElement | null>(null);
   const y = useItemParallax(itemRef as RefObject<HTMLElement>, 0.15);
+  const { isHomeAnimated } = useIsAnimated();
 
   return (
     <div
@@ -72,16 +77,21 @@ function OneMobileVideo({
         />
       </motion.div>
       <div className="space-y-2 absolute inset-0 font-karantina z-50 px-5 flex flex-col justify-end items-start">
-        <button
-          onClick={() => onVideoClick(video)}
-          className="underline text-[30px]"
-        >
-          {selectedLanguage === "en" ? "WATCH VIDEO" : "VOIR LA VIDEO"}
-        </button>
-        <h1 className=" text-[80px] lg:text-[150px] font-bold uppercase leading-[70px] tracking-[0.02em] lg:leading-[120px]  w-full lg:w-[200px]">
-          {video.title}
-        </h1>
+        <AnimUp inView={isHomeAnimated} duration={1.5}>
+          <button
+            onClick={() => onVideoClick(video)}
+            className="underline text-[30px]"
+          >
+            {selectedLanguage === "en" ? "WATCH VIDEO" : "VOIR LA VIDEO"}
+          </button>
+        </AnimUp>
+        <AnimUp inView={isHomeAnimated} duration={1.5}>
+          <h1 className=" text-[80px] lg:text-[150px] font-bold uppercase leading-[70px] tracking-[0.02em] lg:leading-[120px]  w-full lg:w-[200px]">
+            {video.title}
+          </h1>
+        </AnimUp>
       </div>
+
       <div className=" w-full h-32 bottom-0 absolute z-10 bg-linear-to-b from-transparent from-1% to-black to-100%" />
     </div>
   );

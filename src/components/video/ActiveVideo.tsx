@@ -28,10 +28,10 @@ function ActiveVideo({ activeVideo, videoRef, setActiveVideo }: IProps) {
 
   return (
     <div
-      className={`absolute z-50 top-0 left-0 flex flex-col items-center justify-center h-full w-full bg-black lg:p-10 lg:pt-5 p-2 ${isAnimated ? "opacity-100" : "opacity-0"} transition-opacity duration-[2000ms]`}
+      className={`fixed z-50 top-0 left-0 flex flex-col items-center justify-center h-full w-full bg-black lg:p-10 lg:pt-5 p-2 ${isAnimated ? "opacity-100" : "opacity-0"} transition-opacity duration-[2000ms] h-screen`}
     >
       <div
-        className={`flex w-full justify-between uppercase py-2 ${isAnimated ? "translate-y-0" : "-translate-y-100"} transition-all ease-in-out duration-[2000ms]`}
+        className={`flex w-full justify-between uppercase px-5 py-4 ${isAnimated ? "translate-y-0" : "-translate-y-100"} transition-all ease-in-out duration-[2000ms]`}
       >
         <h3>{activeVideo.title}</h3>
         <button

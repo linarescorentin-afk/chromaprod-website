@@ -54,9 +54,7 @@ function PhotoComponent({
   }
 
   return (
-    <div
-      className={`h-screen w-screen bg-red-600 overflow-y-scroll lg:overflow-hidden`}
-    >
+    <div className={`h-screen w-screen`}>
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         frameloop={isPhotoVisible ? "always" : "demand"}
@@ -79,7 +77,7 @@ function PhotoComponent({
         <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
       </Canvas>
 
-      <MobilePhotoComponent photos={photos} />
+      <MobilePhotoComponent photos={photos} isPhotoVisible />
 
       {/* ✅ Overlay HTML */}
       {selectedIndex !== null && (

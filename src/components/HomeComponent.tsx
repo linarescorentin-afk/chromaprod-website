@@ -26,11 +26,11 @@ export default function HomeComponent() {
   const [isVideoVisible, setIsVideoVisible] = useState(true);
   const [isPhotoVisible, setIsPhotoVisible] = useState(true);
   const [activeVideo, setActiveVideo] = useState<IVideo | null>(null);
-  const { setWindowWidth } = useWindowsWidth();
+  const { setWindowWidth, windowWidth } = useWindowsWidth();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  // 🔄 gère l’animation au chargement de la page
+  const isMobile = windowWidth < 728;
 
   // 🔄 écoute le resize
   useEffect(() => {
@@ -57,6 +57,10 @@ export default function HomeComponent() {
 
     // On centre la barre au montage
     dragX.set(window.innerWidth / 2);
+
+    if (isMobile) {
+      dragX.set(window.innerWidth * 0.98);
+    }
     // Écoute dragX pour calculer le % en direct
     const unsubscribe = dragX.on("change", (latest) => {
       setIsDragging(true);
@@ -87,7 +91,7 @@ export default function HomeComponent() {
       unsubscribe();
       destroy();
     };
-  }, [dragX, screenWidth]);
+  }, [dragX, isMobile, screenWidth]);
 
   // ✅ Fonction pour “auto-drag” la barre
   function moveBarTo(target: "video" | "photo") {
@@ -117,6 +121,8 @@ export default function HomeComponent() {
   });
 
   const clip = useMotionTemplate`inset(0 calc(100% - ${clampedWidth}px) 0 0)`;
+
+  console.log(isMobile);
 
   return (
     <div>
@@ -170,7 +176,7 @@ export default function HomeComponent() {
 
       {/* BARRE DRAGGABLE */}
       <motion.div
-        drag="x"
+        drag={isMobile ? false : "x"}
         dragConstraints={{
           left: screenWidth ? screenWidth * 0.015 : 0,
           right: screenWidth ? screenWidth * 0.985 : 1000,
@@ -267,6 +273,20 @@ export default function HomeComponent() {
           <p>scroll down to Explore</p>
           <Image src="/downArrow.svg" alt="scroll down" width={5} height={5} />
         </div>
+      </div>
+      <div className="fixed top-20 left-5 z-30 flex flex-row space-x-5 font-karantina text-[28px] leading-[25px] lg:hidden">
+        <button
+          className={`${isVideoVisible ? "" : "opacity-50"} text-red-500  underline transition-all duration-500 ease-in-out`}
+          onClick={() => moveBarTo("video")}
+        >
+          VIDEOS(64)
+        </button>
+        <button
+          className={`${isPhotoVisible ? "" : "opacity-50"} text-red-500 underline transition-all duration-500 ease-in-out`}
+          onClick={() => moveBarTo("photo")}
+        >
+          PHOTO(82)
+        </button>
       </div>
     </div>
   );

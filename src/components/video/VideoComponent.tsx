@@ -72,7 +72,7 @@ function VideoComponent({
   }, [videosFetched, category]);
 
   return (
-    <div className="h-screen w-screen overflow-y-scroll lg:overflow-hidden">
+    <div className="lg:h-screen w-screen">
       <div className={`bg-black w-[100vw] lg:h-screen hidden lg:block`}>
         <Canvas
           camera={{ position: [0, 0, 5], fov: 50 }}

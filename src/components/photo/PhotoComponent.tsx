@@ -77,7 +77,9 @@ function PhotoComponent({
         <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
       </Canvas>
 
-      <MobilePhotoComponent photos={photos} isPhotoVisible />
+      <div className="lg:hidden block">
+        <MobilePhotoComponent photos={photos} isPhotoVisible />
+      </div>
 
       {/* ✅ Overlay HTML */}
       {selectedIndex !== null && (
@@ -90,7 +92,6 @@ function PhotoComponent({
                 {photosFetched[selectedIndex].name}
               </h2>
             )}
-            <p className="text-sm font-karla">Scroll or click to close</p>
           </div>
           <div className="w-full  flex justify-between items-center">
             {photosFetched[selectedIndex].date && (

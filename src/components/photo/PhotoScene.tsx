@@ -70,7 +70,7 @@ function PhotoScene({
 
     // ✅ Plus on scroll vite, plus shift monte
     if (isMobile) return;
-    const boost = Math.abs(delta) * 30;
+    const boost = Math.abs(delta) * 100;
     shift.current += boost;
 
     // ✅ shift revient doucement vers 0 (couleur)

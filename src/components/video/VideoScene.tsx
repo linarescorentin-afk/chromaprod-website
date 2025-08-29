@@ -77,7 +77,7 @@ function VideoScene({
     // ✅ bombage direct en fonction du scroll
     materials.current.forEach((mat, i) => {
       if (mat) {
-        mat.shift = currentShift.current * 1.4;
+        mat.shift = currentShift.current * 2.5;
 
         // ✅ scroll relatif : on “ramène” le scroll sur la zone de cette image
         const relativeScroll = scroll.offset * (textures.length - 1) - i;

@@ -30,7 +30,7 @@ function PhotoScene({
   // 📏 État pour la largeur de la fenêtre
   const { windowWidth } = useWindowsWidth();
   const scroll = useScroll();
-  const urls = photos.map((p) => urlForTex(p.image, { w: 1700, q: 90 }));
+  const urls = photos.map((p) => urlForTex(p.image, { w: 1200, q: 60 }));
 
   const textures = useLoader(TextureLoader, urls);
 
@@ -69,6 +69,7 @@ function PhotoScene({
     lastOffset.current = scroll.offset;
 
     // ✅ Plus on scroll vite, plus shift monte
+    if (isMobile) return;
     const boost = Math.abs(delta) * 30;
     shift.current += boost;
 

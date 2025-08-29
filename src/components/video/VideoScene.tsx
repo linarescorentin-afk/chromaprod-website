@@ -59,6 +59,7 @@ function VideoScene({
   const currentShift = useRef(0);
 
   useFrame(() => {
+    // ✅ effet bombé + parallax
     // 1️⃣ calcule la vitesse de scroll
     const delta = scroll.offset - lastOffset.current;
     lastOffset.current = scroll.offset;

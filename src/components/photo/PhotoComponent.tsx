@@ -77,7 +77,7 @@ function PhotoComponent({
         <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
       </Canvas>
 
-      <div className="lg:hidden block">
+      <div className="lg:hidden block bg-red-600">
         <MobilePhotoComponent photos={photos} isPhotoVisible />
       </div>
 

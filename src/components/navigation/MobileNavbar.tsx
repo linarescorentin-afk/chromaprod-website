@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import MobileNavItems from "./MobileNavItems";
 import { Category } from "@/store/useFilterStore";

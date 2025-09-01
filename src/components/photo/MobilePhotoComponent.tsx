@@ -36,7 +36,7 @@ function OneMobilePhoto({ photo, index }: { photo: IPhoto; index: number }) {
         className={`${photo.formats === "vertical" ? "h-[600px]" : "h-[300px] md:h-[600px]"} relative overflow-hidden`}
       >
         <Image
-          src={urlForTex(photo.image, { w: 1200, q: 90 })}
+          src={urlForTex(photo.image, { w: 900, q: 80 })}
           alt={photo.name || `Photo${index + 1}`}
           layout="fill"
           objectFit="cover"

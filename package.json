@@ -18,6 +18,8 @@
     "framer-motion": "^12.23.9",
     "next": "15.4.3",
     "next-sanity": "^10.0.10",
+    "next-seo": "^6.8.0",
+    "next-sitemap": "^4.2.3",
     "prettier": "^3.6.2",
     "r3f-perf": "^7.2.3",
     "react": "19.1.0",

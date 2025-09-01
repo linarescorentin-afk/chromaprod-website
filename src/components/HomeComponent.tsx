@@ -17,7 +17,6 @@ import SocialMediaComponent from "./SocialMediaComponent";
 import ActiveVideo from "./video/ActiveVideo";
 import AnimUp from "./ui/animated/AnimUp";
 import { useIsAnimated } from "@/store/useIsAnimated";
-import { useVideoAndPhotoQuantity } from "@/store/useVideoAndPhotoQuantity";
 
 export default function HomeComponent() {
   const { isHomeAnimated } = useIsAnimated();
@@ -29,7 +28,7 @@ export default function HomeComponent() {
   const [activeVideo, setActiveVideo] = useState<IVideo | null>(null);
   const { setWindowWidth, windowWidth } = useWindowsWidth();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { photoQuantity, videoQuantity } = useVideoAndPhotoQuantity();
+
   const isMobile = windowWidth < 728;
 
   // 🔄 écoute le resize
@@ -272,7 +271,7 @@ export default function HomeComponent() {
             className={`${isVideoVisible ? "" : "opacity-50"} text-red-500  underline transition-all duration-500 ease-in-out`}
             onClick={() => moveBarTo("video")}
           >
-            VIDEOS({videoQuantity})
+            VIDEOS
           </button>
         </AnimUp>
         <AnimUp inView={isHomeAnimated} duration={2}>
@@ -280,7 +279,7 @@ export default function HomeComponent() {
             className={`${isPhotoVisible ? "" : "opacity-50"} text-red-500 underline transition-all duration-500 ease-in-out`}
             onClick={() => moveBarTo("photo")}
           >
-            PHOTO({photoQuantity})
+            PHOTO
           </button>
         </AnimUp>
       </div>

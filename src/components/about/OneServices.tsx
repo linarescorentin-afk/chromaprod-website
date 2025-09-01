@@ -16,16 +16,14 @@ function OneServices({ service }: { service: ServiceItem }) {
   });
 
   useEffect(() => {
-    if (inView && isAboutAnimated) {
+    if (isAboutAnimated) {
       setIsAnimated(true);
     }
-    if (!isAboutAnimated && inView) {
+    if (!isAboutAnimated) {
       setDuration(5);
       setIsAnimated(false);
     }
   }, [inView, isAboutAnimated, setIsAnimated]);
-
-  console.log(isAboutAnimated, duration);
 
   return (
     <div

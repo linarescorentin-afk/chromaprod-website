@@ -17,6 +17,7 @@ import SocialMediaComponent from "./SocialMediaComponent";
 import ActiveVideo from "./video/ActiveVideo";
 import AnimUp from "./ui/animated/AnimUp";
 import { useIsAnimated } from "@/store/useIsAnimated";
+import { useVideoAndPhotoQuantity } from "@/store/useVideoAndPhotoQuantity";
 
 export default function HomeComponent() {
   const { isHomeAnimated } = useIsAnimated();
@@ -28,8 +29,7 @@ export default function HomeComponent() {
   const [activeVideo, setActiveVideo] = useState<IVideo | null>(null);
   const { setWindowWidth, windowWidth } = useWindowsWidth();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-
+  const { photoQuantity, videoQuantity } = useVideoAndPhotoQuantity();
   const isMobile = windowWidth < 728;
 
   // 🔄 écoute le resize
@@ -63,7 +63,6 @@ export default function HomeComponent() {
     }
     // Écoute dragX pour calculer le % en direct
     const unsubscribe = dragX.on("change", (latest) => {
-      setIsDragging(true);
       if (screenWidth) {
         const percent = (latest / screenWidth) * 100;
         setWidthPercent(Math.round(percent));
@@ -82,14 +81,9 @@ export default function HomeComponent() {
       }
     });
 
-    const destroy = dragX.on("animationComplete", () => {
-      setIsDragging(false);
-    });
-
     return () => {
       window.removeEventListener("resize", handleResize);
       unsubscribe();
-      destroy();
     };
   }, [dragX, isMobile, screenWidth]);
 
@@ -121,8 +115,6 @@ export default function HomeComponent() {
   });
 
   const clip = useMotionTemplate`inset(0 calc(100% - ${clampedWidth}px) 0 0)`;
-
-  console.log(isMobile);
 
   return (
     <div>
@@ -275,18 +267,22 @@ export default function HomeComponent() {
         </div>
       </div>
       <div className="fixed top-20 left-5 z-30 flex flex-row space-x-5 font-karantina text-[28px] leading-[25px] lg:hidden">
-        <button
-          className={`${isVideoVisible ? "" : "opacity-50"} text-red-500  underline transition-all duration-500 ease-in-out`}
-          onClick={() => moveBarTo("video")}
-        >
-          VIDEOS(64)
-        </button>
-        <button
-          className={`${isPhotoVisible ? "" : "opacity-50"} text-red-500 underline transition-all duration-500 ease-in-out`}
-          onClick={() => moveBarTo("photo")}
-        >
-          PHOTO(82)
-        </button>
+        <AnimUp inView={isHomeAnimated} duration={2}>
+          <button
+            className={`${isVideoVisible ? "" : "opacity-50"} text-red-500  underline transition-all duration-500 ease-in-out`}
+            onClick={() => moveBarTo("video")}
+          >
+            VIDEOS({videoQuantity})
+          </button>
+        </AnimUp>
+        <AnimUp inView={isHomeAnimated} duration={2}>
+          <button
+            className={`${isPhotoVisible ? "" : "opacity-50"} text-red-500 underline transition-all duration-500 ease-in-out`}
+            onClick={() => moveBarTo("photo")}
+          >
+            PHOTO({photoQuantity})
+          </button>
+        </AnimUp>
       </div>
     </div>
   );

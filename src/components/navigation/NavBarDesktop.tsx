@@ -31,7 +31,7 @@ function NavBarDesktop({
       className={`${isStudio ? "z-0" : "z-50"} ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[2000ms]  text-white p-8 w-full fixed top-0  items-center justify-between font-karantina hidden lg:flex`}
     >
       <button
-        onClick={() => onFilteredButtonClick("all")}
+        onClick={() => onFilteredButtonClick("All")}
         className="w-3/12 cursor-pointer"
       >
         <Image src="/chromalogo2.png" alt="Logo" width={200} height={100} />

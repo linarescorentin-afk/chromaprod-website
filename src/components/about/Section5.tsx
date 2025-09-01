@@ -24,7 +24,7 @@ function Section5({
   });
 
   useEffect(() => {
-    if (inView && isAboutAnimated) {
+    if (isAboutAnimated) {
       setIsAnimated(true);
     }
     if (!isAboutAnimated) {

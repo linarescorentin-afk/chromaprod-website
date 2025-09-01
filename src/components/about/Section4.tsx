@@ -15,7 +15,7 @@ function Section4({ about }: { about: AboutSettings }) {
   });
 
   useEffect(() => {
-    if (inView && isAboutAnimated) {
+    if (isAboutAnimated) {
       setIsAnimated(true);
     }
     if (!isAboutAnimated && inView) {

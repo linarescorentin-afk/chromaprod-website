@@ -5,6 +5,7 @@ import MobileNavItems from "./MobileNavItems";
 import { Category } from "@/store/useFilterStore";
 import { useIsEnterState } from "@/store/useIsEnter";
 import MobileHeader from "./MobileHeader";
+import { useIsAnimated } from "@/store/useIsAnimated";
 
 function MobileNavbar({
   filterButtons,
@@ -21,16 +22,20 @@ function MobileNavbar({
 }) {
   const { isEnter } = useIsEnterState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isNavBarAnimated } = useIsAnimated();
 
   return (
     <>
-      {" "}
       <div
-        className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-karantina text-xl ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[3000ms] `}
+        className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-karantina text-xl ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[3000ms] ${isNavBarAnimated ? "translate-y-0" : "-translate-y-[100%]"}`}
       >
-        <Link href="/">
+        <button
+          onClick={() => onFilteredButtonClick("All")}
+          className="w-6/12 cursor-pointer"
+        >
           <Image src="/chromalogo2.png" alt="Logo" width={170} height={100} />
-        </Link>
+        </button>
+
         <button
           onClick={() => setIsMenuOpen(true)}
           className=" bg-white px-5 py-[0.2rem] border-x border-black border-dashed text-2xl"

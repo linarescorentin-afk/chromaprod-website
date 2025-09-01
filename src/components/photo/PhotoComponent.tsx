@@ -8,6 +8,7 @@ import { useFilterStore } from "@/store/useFilterStore";
 import { useIsLoading } from "@/store/useIsLoading";
 import { R3FLoadingBridge } from "../loader/R3FLoadingBridge";
 import MobilePhotoComponent from "./MobilePhotoComponent";
+import { useVideoAndPhotoQuantity } from "@/store/useVideoAndPhotoQuantity";
 
 export interface IPhoto {
   image: string;
@@ -29,15 +30,17 @@ function PhotoComponent({
   const category = useFilterStore((state) => state.selectedFilter);
   const [photosFetched, setPhotos] = useState<IPhoto[]>([]);
   const { setIsPhotoLoading, setIsPhotoCanvasLoading } = useIsLoading();
+  const { setPhotoQuantity } = useVideoAndPhotoQuantity();
 
   useEffect(() => {
     async function load() {
       const data = await getPhotos();
       setPhotos(data);
+      setPhotoQuantity(data.length);
       setIsPhotoLoading(false);
     }
     load();
-  }, [setIsPhotoLoading]);
+  }, [setIsPhotoLoading, setPhotoQuantity]);
 
   const photos = React.useMemo(() => {
     if (category === "all") return photosFetched;

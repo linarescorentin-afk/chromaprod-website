@@ -100,25 +100,18 @@ function ContactPage() {
             </AnimUp>
             <div className="space-y-2">
               <AnimUp duration={2.3} inView={isContactAnimated}>
-                <p>{content.hours?.monday}</p>
+                <p>
+                  {selectedLanguage === "fr"
+                    ? "7/7 SUR RDV de 9h à 18h"
+                    : "7/7 BY APPOINTMENT from 9am to 6pm"}
+                </p>
               </AnimUp>
               <AnimUp duration={2.4} inView={isContactAnimated}>
-                <p>{content.hours?.tuesday}</p>
-              </AnimUp>
-              <AnimUp duration={2.5} inView={isContactAnimated}>
-                <p>{content.hours?.wednesday}</p>
-              </AnimUp>
-              <AnimUp duration={2.6} inView={isContactAnimated}>
-                <p>{content.hours?.thursday}</p>
-              </AnimUp>
-              <AnimUp duration={2.7} inView={isContactAnimated}>
-                <p>{content.hours?.friday}</p>
-              </AnimUp>
-              <AnimUp duration={2.8} inView={isContactAnimated}>
-                <p>{content.hours?.saturday}</p>
-              </AnimUp>
-              <AnimUp duration={2.9} inView={isContactAnimated}>
-                <p>{content.hours?.sunday}</p>
+                <p>
+                  {selectedLanguage === "fr"
+                    ? "URGENCES (TOURNAGE) : 24/7"
+                    : "EMERGENCY (FILMING) : 24/7"}
+                </p>
               </AnimUp>
             </div>
           </div>

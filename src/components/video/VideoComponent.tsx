@@ -15,6 +15,7 @@ import { useIsLoading } from "@/store/useIsLoading";
 import { R3FLoadingBridge } from "../loader/R3FLoadingBridge";
 import { useIsAnimated } from "@/store/useIsAnimated";
 import MobileVideoComponent from "../MobileVideoComponent";
+import { useVideoAndPhotoQuantity } from "@/store/useVideoAndPhotoQuantity";
 
 export interface IVideo {
   title: string;
@@ -40,6 +41,7 @@ function VideoComponent({
   const category = useFilterStore((state) => state.selectedFilter);
   const { setIsVideoLoading, setIsVideoCanvasLoading } = useIsLoading();
   const { setIsHomeAnimated, setIsNavBarAnimated } = useIsAnimated();
+  const { setVideoQuantity } = useVideoAndPhotoQuantity();
 
   useEffect(() => {}, []);
 
@@ -47,10 +49,13 @@ function VideoComponent({
     async function load() {
       const videos = await getVideos();
       setVideosFetched(videos);
+      setVideoQuantity(videos.length);
       setIsVideoLoading(false);
     }
     load();
-  }, [setIsVideoLoading]);
+  }, [setIsVideoLoading, setActiveVideo, setVideoQuantity]);
+
+  // ✅ gère le clic sur une vidéo
 
   const onVideoClick = (video: IVideo) => {
     setIsHomeAnimated(false);

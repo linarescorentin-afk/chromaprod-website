@@ -33,6 +33,8 @@ function NavBar() {
     const value = item.toLowerCase() as Category;
     setIsDisabled(true);
 
+    console.log(value);
+
     switch (pathname) {
       case "/about":
         setIsAboutAnimated(false);

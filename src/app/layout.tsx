@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/navigation/NavBar";
 import IntroWebsite from "@/components/loader/IntroWebsite";
 import { site } from "./seo/site";
+import { Analytics } from "@vercel/analytics/next";
 
 const karantina = Karantina({
   variable: "--font-karantina",
@@ -144,7 +145,7 @@ export default function RootLayout({
         className={`${karla.variable} ${karantina.variable} antialiased bg-black`}
       >
         <NavBar />
-
+        <Analytics />
         <IntroWebsite />
 
         {children}

@@ -31,10 +31,10 @@ function ActiveVideo({ activeVideo, videoRef, setActiveVideo }: IProps) {
       className={`fixed z-50 top-0 left-0 flex flex-col items-center justify-center h-full w-full bg-black lg:p-10 lg:pt-5 p-2 ${isAnimated ? "opacity-100" : "opacity-0"} transition-opacity duration-[2000ms] h-screen`}
     >
       <div
-        className={`${isAnimated ? "translate-y-0" : "-translate-y-100"} transition-all ease-in-out duration-[2000ms]  flex flex-row w-full items-end justify-between`}
+        className={`${isAnimated ? "translate-y-0" : "-translate-y-100"} transition-all ease-in-out duration-[2000ms]  flex flex-col lg:flex-row w-full items-end justify-between`}
       >
         <div
-          className={`flex  flex-row w-full space-x-1 uppercase px-5 lg:px-0 items-center`}
+          className={`flex text-xs lg:text-base flex-row w-full space-x-1 uppercase px-5 lg:px-0 items-center pt-2 lg:pt-0`}
         >
           <h3>{activeVideo.title} /</h3>
           {activeVideo.categories.map((cat) => (

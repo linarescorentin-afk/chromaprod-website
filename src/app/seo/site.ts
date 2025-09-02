@@ -35,7 +35,7 @@ export const site = {
     legalName: "Chroma Production",
     email: "linarescorentin@gmail.com",
     phone: "+1 438 439 1921",
-    logo: "/logos/chromalogo.png", // place a real logo in /public/og/
+    logo: "/chromalogo.png", // place a real logo in /public/og/
     image: "/coverChromProd.png", // main brand image
     priceRange: "$$", // $, $$, $$$ …
     address: {

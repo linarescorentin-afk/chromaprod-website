@@ -3751,6 +3751,11 @@
   resolved "https://registry.npmjs.org/@vercel/edge/-/edge-1.2.2.tgz"
   integrity sha512-1+y+f6rk0Yc9ss9bRDgz/gdpLimwoRteKHhrcgHvEpjbP1nyT3ByqEMWm2BTcpIO5UtDmIFXc8zdq4LR190PDA==
 
+"@vercel/speed-insights@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@vercel/speed-insights/-/speed-insights-1.2.0.tgz#1656c3596d4ec02d93d301ca45944c1b9b245186"
+  integrity sha512-y9GVzrUJ2xmgtQlzFP2KhVRoCglwfRQgjyfY607aU0hh0Un6d0OUyrJkjuAlsV18qR4zfoFPs/BiIj9YDS6Wzw==
+
 "@vercel/stega@0.1.2":
   version "0.1.2"
   resolved "https://registry.npmjs.org/@vercel/stega/-/stega-0.1.2.tgz"

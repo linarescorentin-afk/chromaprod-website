@@ -5,6 +5,7 @@ import NavBar from "@/components/navigation/NavBar";
 import IntroWebsite from "@/components/loader/IntroWebsite";
 import { site } from "./seo/site";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const karantina = Karantina({
   variable: "--font-karantina",
@@ -146,6 +147,7 @@ export default function RootLayout({
       >
         <NavBar />
         <Analytics />
+        <SpeedInsights />
         <IntroWebsite />
 
         {children}

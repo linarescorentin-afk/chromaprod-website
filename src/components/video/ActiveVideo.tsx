@@ -48,7 +48,7 @@ function ActiveVideo({ activeVideo, videoRef, setActiveVideo }: IProps) {
             onClick={onClose}
             className="text-white text-sm z-50 cursor-pointer border-b hover:font-bold  transition-all duration-500"
           >
-            CLOSE X
+            CLOSE Xs
           </button>
         </div>
       </div>

@@ -12,6 +12,7 @@ interface IProps {
   onFilteredButtonClick: (item: string) => void;
   onNavItemClick: (item: { name: string; href: string }) => void;
   isDisabled: boolean;
+  elementClicked: string;
 }
 
 function NavBarDesktop({
@@ -23,6 +24,7 @@ function NavBarDesktop({
   onNavItemClick,
   onFilteredButtonClick,
   isDisabled,
+  elementClicked,
 }: IProps) {
   const { selectedFilter } = useFilterStore();
 
@@ -52,6 +54,7 @@ function NavBarDesktop({
               key={item}
               name={item.toUpperCase()}
               onClick={() => onFilteredButtonClick(item)}
+              elementClicked={elementClicked}
             />
           );
         })}
@@ -63,6 +66,7 @@ function NavBarDesktop({
             key={item.name}
             name={item.name}
             onClick={() => onNavItemClick(item)}
+            elementClicked={elementClicked}
           />
         ))}
       </div>

@@ -64,7 +64,7 @@ function VideoScene({
     lastOffset.current = scroll.offset;
 
     // 2️⃣ ajoute un “kick” si on scrolle
-    const boost = Math.abs(delta) * 5;
+    const boost = Math.abs(delta) * 2;
     currentShift.current += boost;
 
     // 3️⃣ ralentit progressivement

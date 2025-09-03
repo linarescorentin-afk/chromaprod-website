@@ -15,6 +15,7 @@ function NavBar() {
   const [isFilterClick, setIsFilterClick] = useState<string | null>(null);
   const { setSelectedFilter } = useFilterStore();
   const filterButtons = ["All", "Corporate", "Events", "SocialMedia"];
+  const [elementClicked, setElementClicked] = useState<string>("all");
   const { isNavBarAnimated } = useIsAnimated();
   const pathname = usePathname();
   const isStudio = pathname.includes("/studio"); // ou pathname.startsWith("/studio");
@@ -30,10 +31,10 @@ function NavBar() {
   }, [pathname, setSelectedFilter]);
 
   const onFilteredButtonClick = (item: string) => {
+    setElementClicked(item);
+    window.scrollTo(0, 0);
     const value = item.toLowerCase() as Category;
     setIsDisabled(true);
-
-    console.log(value);
 
     switch (pathname) {
       case "/about":
@@ -93,6 +94,8 @@ function NavBar() {
   };
 
   const onNavItemClick = (item: { name: string; href: string }) => {
+    setElementClicked(item.name);
+    window.scrollTo(0, 0);
     setIsDisabled(true);
     setSelectedFilter(null);
     setIsFilterClick(null);
@@ -148,6 +151,7 @@ function NavBar() {
             filterButtons={filterButtons}
             navItems={navItems}
             isDisabled={isDisabled}
+            elementClicked={elementClicked}
           />
           <div className="fixed top-1/2 font-karantina -translate-y-1/2 right-1/2 translate-x-1/2 text-[100px] leading-[80px] lg:text-[200px] z-20 uppercase h-[150px] lg:leading-[150px] overflow-hidden">
             <p className={`${isFilterClick ? "animate-filter" : ""}`}>

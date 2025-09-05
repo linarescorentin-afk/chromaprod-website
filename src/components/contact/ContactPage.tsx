@@ -122,7 +122,7 @@ function ContactPage() {
           </div>
           <AnimUp duration={3.0} inView={isContactAnimated}>
             <span className="text-xs hidden lg:flex">
-              WEBSITE DEVELOP & DESIGN BY THOMAS BARRIAL
+              WEBSITE DEVELOP & DESIGN BY THOMAS BARRIAL || 2024
             </span>
           </AnimUp>
         </div>

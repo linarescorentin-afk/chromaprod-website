@@ -40,7 +40,7 @@ function NavBarDesktop({
       </button>
 
       <div
-        className="flex items-center justify-between   h-9 space-x-0 relative rounded-sm overflow-hidden text-[20px] font-light"
+        className="flex items-center justify-between h-9 space-x-0 relative rounded-sm overflow-hidden text-[20px] font-light"
         style={{
           boxShadow: "10px 10px 30px rgba(0, 0, 0, 0.5)",
         }}

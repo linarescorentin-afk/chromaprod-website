@@ -45,7 +45,7 @@ function AboutPage() {
 
   return (
     <LenisProvider>
-      <div className="lg:pt-32 lg:pb-0 py-20 font-karla uppercase flex flex-col items-center space-y-20">
+      <div className="lg:pt-32 lg:pb-0 py-20 font-karla uppercase flex flex-col items-center space-y-20 bg-black text-white">
         {/* SECTION 1 */}
         <Section1 about={about} />
         <Section2 about={about} />
@@ -57,7 +57,7 @@ function AboutPage() {
         <div
           className={`flex flex-col items-center justify-center  transition-all ease-in-out transform duration-[1000ms] ${isAboutAnimated ? "translate-y-0" : "translate-y-full"}`}
         >
-          <p>scroll down to Explore</p>
+          <p className="text-white">scroll down to Explore</p>
           <Image src="/downArrow.svg" alt="scroll down" width={5} height={5} />
         </div>
       </div>

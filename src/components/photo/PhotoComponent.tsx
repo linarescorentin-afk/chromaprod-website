@@ -57,7 +57,7 @@ function PhotoComponent({
   }
 
   return (
-    <div className={`h-screen w-screen`}>
+    <div className={`h-screen w-screen bg-black`}>
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         frameloop={isPhotoVisible ? "always" : "demand"}
@@ -66,7 +66,7 @@ function PhotoComponent({
         <Suspense fallback={null}>
           <ScrollControls
             pages={photos.length + photos.length * 0.1}
-            damping={0.5}
+            damping={0.35}
           >
             <PhotoScene
               photos={photos}

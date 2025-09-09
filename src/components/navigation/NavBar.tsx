@@ -50,7 +50,7 @@ function NavBar() {
           setIsHomeAnimated(true);
           setIsFilterClick(null);
           setIsDisabled(false);
-        }, 4500);
+        }, 3700);
         break;
 
       case "/contact":
@@ -77,7 +77,7 @@ function NavBar() {
           setIsHomeAnimated(true);
           setIsFilterClick(null);
           setIsDisabled(false);
-        }, 2500);
+        }, 1800);
 
         break;
 
@@ -89,7 +89,7 @@ function NavBar() {
         setTimeout(() => {
           setIsHomeAnimated(true);
           setIsDisabled(false);
-        }, 3500);
+        }, 2300);
     }
   };
 
@@ -106,7 +106,7 @@ function NavBar() {
         setTimeout(() => {
           router.push(item.href);
           setIsDisabled(false);
-        }, 2000);
+        }, 1700);
         break;
 
       case "/about":
@@ -114,7 +114,7 @@ function NavBar() {
         setTimeout(() => {
           router.push(item.href);
           setIsDisabled(false);
-        }, 2000);
+        }, 1700);
         break;
 
       case "/contact":
@@ -122,7 +122,7 @@ function NavBar() {
         setTimeout(() => {
           router.push(item.href);
           setIsDisabled(false);
-        }, 2000);
+        }, 1700);
         break;
 
       default:
@@ -153,7 +153,7 @@ function NavBar() {
             isDisabled={isDisabled}
             elementClicked={elementClicked}
           />
-          <div className="fixed top-1/2 font-karantina -translate-y-1/2 right-1/2 translate-x-1/2 text-[100px] leading-[80px] lg:text-[200px] z-20 uppercase h-[150px] lg:leading-[150px] overflow-hidden">
+          <div className="fixed top-1/2 font-karantina -translate-y-1/2 right-1/2 translate-x-1/2 text-[100px] leading-[80px] lg:text-[200px] z-20 uppercase h-[150px] lg:leading-[150px] overflow-hidden text-white">
             <p className={`${isFilterClick ? "animate-filter" : ""}`}>
               {isFilterClick}
             </p>

@@ -53,7 +53,7 @@ function ContactPage() {
     <LenisProvider>
       <div
         ref={ref}
-        className="py-20 lg:pt-20 lg:pb-0 font-karla flex flex-col lg:flex-row lg:h-screen"
+        className="py-20 lg:pt-20 lg:pb-0 font-karla flex flex-col lg:flex-row lg:h-screen bg-black text-white"
       >
         <div
           className={`px-5 lg:w-6/12 lg:px-10 lg:py-5 space-y-10 ${isContactAnimated ? "translate-x-0" : "-translate-x-full"} transition-all ease-in-out duration-[2000ms] h-full flex flex-col justify-between`}
@@ -127,7 +127,7 @@ function ContactPage() {
           </AnimUp>
         </div>
         <div
-          className={`h-[500px] lg:h-full lg:w-6/12 flex relative lg:fixed lg:right-0 lg:top-0 ${isContactAnimated ? "translate-x-0" : "translate-x-full"} transition-all ease-in-out duration-[2500ms]`}
+          className={`h-[500px] lg:h-full lg:w-6/12 flex relative lg:fixed lg:right-0 lg:top-0 ${isContactAnimated ? "translate-x-0" : "translate-x-full"} transition-all ease-in-out duration-[2000ms]`}
         >
           <Image
             src={content.image ? (content.image.url as string) : "/contact.jpg"}

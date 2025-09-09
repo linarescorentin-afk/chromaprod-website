@@ -31,7 +31,7 @@ function Section1({ about }: { about: AboutSettings }) {
         <div className="flex flex-col justify-between h-full  lg:min-h-[80vh] lg:w-12/12 lg:pl-5 pt-10">
           <AnimUp
             inView={isAboutAnimated}
-            duration={2.5}
+            duration={1.5}
             y={250}
             className="md:h-fit"
           >
@@ -41,7 +41,7 @@ function Section1({ about }: { about: AboutSettings }) {
                 : about.h1.en?.toUpperCase()}
             </h1>
           </AnimUp>
-          <AnimUp inView={isAboutAnimated} duration={3.5} y={250}>
+          <AnimUp inView={isAboutAnimated} duration={1.5} y={250}>
             <h2 className="mt-10 w-8/12 border-b pb-10  px-5 hidden lg:flex">
               {selectedLanguage === "fr" ? about.h2.fr : about.h2.en}
             </h2>
@@ -49,7 +49,7 @@ function Section1({ about }: { about: AboutSettings }) {
         </div>
         <div className="flex flex-col items-end lg:justify-end space-y-2 w-full h-[100vh]">
           <div
-            className={`relative w-full h-full lg:absolute lg:w-5/12 lg:top-0 lg:h-[100vh] lg:-translate-y-20 ${isAboutAnimated ? "translate-x-0" : "translate-x-full"} transition-all ease-in-out duration-[3500ms] overflow-hidden`}
+            className={`relative w-full h-full lg:absolute lg:w-5/12 lg:top-0 lg:h-[100vh] lg:-translate-y-20 ${isAboutAnimated ? "translate-x-0" : "translate-x-full"} transition-all ease-in-out duration-[2000ms] overflow-hidden`}
           >
             <motion.div
               style={{ y }}
@@ -67,14 +67,14 @@ function Section1({ about }: { about: AboutSettings }) {
               />
             </motion.div>
           </div>
-          <AnimUp inView={isAboutAnimated} duration={4} y={250}>
+          <AnimUp inView={isAboutAnimated} duration={2} y={250}>
             <h3 className="w-10/12  italic text-sm  px-5 lg:w-full  pt-10">
               {selectedLanguage === "fr" ? about.h3.fr : about.h3.en}
             </h3>
           </AnimUp>
         </div>
       </div>
-      <AnimUp inView={isAboutAnimated} duration={4} y={250}>
+      <AnimUp inView={isAboutAnimated} duration={2} y={250}>
         <h2 className="mt-10 w-8/12 border-b pb-10  px-5 lg:hidden">
           {selectedLanguage === "fr" ? about.h2.fr : about.h2.en}
         </h2>

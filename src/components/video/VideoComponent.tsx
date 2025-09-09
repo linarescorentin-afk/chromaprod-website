@@ -85,7 +85,7 @@ function VideoComponent({
           className={`canvas ${isVideoVisible ? "visible" : "hidden"}`}
         >
           <Suspense fallback={null}>
-            <ScrollControls pages={videos.length + 0.5} damping={0.5}>
+            <ScrollControls pages={videos.length + 0.2} damping={0.5}>
               <VideoScene
                 onClick={onVideoClick}
                 videos={videos}

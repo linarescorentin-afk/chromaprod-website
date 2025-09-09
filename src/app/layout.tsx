@@ -143,7 +143,7 @@ export default function RootLayout({
         <JsonLd data={webSite} />
       </head>
       <body
-        className={`${karla.variable} ${karantina.variable} antialiased bg-black`}
+        className={`${karla.variable} ${karantina.variable} antialiased bg-black text-white`}
       >
         <NavBar />
         <Analytics />

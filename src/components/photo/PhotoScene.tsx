@@ -14,6 +14,8 @@ import * as THREE from "three";
 import { IPhoto } from "./PhotoComponent";
 import { urlForTex } from "@/sanity/lib/image";
 import { useWindowsWidth } from "@/store/useWindowsWidth";
+import { scrollToIndex } from "@/hook/useScrollToIndex";
+import { text } from "stream/consumers";
 interface IProps {
   photos: IPhoto[];
   selectedIndex: number | null;
@@ -148,6 +150,10 @@ function PhotoScene({
               delta={scroll.offset - lastOffset.current} // ✅ passe le delta pour l'animation
               onClick={() => {
                 if (isScrolling) return;
+
+                const el = scroll.el as HTMLElement | null;
+                if (!el) return;
+                scrollToIndex(el, i, textures.length);
 
                 if (selectedIndex === i) {
                   // si on reclique → on ferme

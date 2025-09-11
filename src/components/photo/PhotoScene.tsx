@@ -14,6 +14,7 @@ import * as THREE from "three";
 import { IPhoto } from "./PhotoComponent";
 import { urlForTex } from "@/sanity/lib/image";
 import { useWindowsWidth } from "@/store/useWindowsWidth";
+import { scrollToIndex } from "@/hook/useScrollToIndex";
 interface IProps {
   photos: IPhoto[];
   selectedIndex: number | null;
@@ -35,7 +36,7 @@ function PhotoScene({
   const textures = useLoader(TextureLoader, urls);
 
   const [clickOffset, setClickOffset] = useState<number | null>(null); // ✅ on mémorise la position du scroll
-
+  const [windowHeight, setWindowHeight] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -91,7 +92,7 @@ function PhotoScene({
     if (selectedIndex !== null && clickOffset !== null) {
       const distanceScrolled = Math.abs(scroll.offset - clickOffset);
 
-      if (distanceScrolled > 0.02) {
+      if (distanceScrolled > 0.01) {
         // 👈 ajustable (plus bas = plus sensible)
         setSelectedIndex(null);
         setClickOffset(null);
@@ -102,6 +103,16 @@ function PhotoScene({
   useEffect(() => {
     setSelectedIndex(null); // Réinitialise la sélection au montage
   }, [widthPercent, setSelectedIndex]);
+
+  useEffect(() => {
+    function handleRezise() {
+      setWindowHeight(window.innerHeight);
+    }
+    handleRezise();
+
+    window.addEventListener("resize", handleRezise);
+    return () => window.removeEventListener("resize", handleRezise);
+  }, []);
   return (
     <>
       <Scroll>
@@ -149,6 +160,10 @@ function PhotoScene({
               onClick={() => {
                 if (isScrolling) return;
 
+                const el = scroll.el as HTMLElement | null;
+                if (!el) return;
+                scrollToIndex(el, i, textures.length, windowHeight);
+
                 if (selectedIndex === i) {
                   // si on reclique → on ferme
                   setSelectedIndex(null);
@@ -160,7 +175,6 @@ function PhotoScene({
               }}
               shiftRef={shift} // ✅ passe le ref pour le shift
               isSelected={selectedIndex === i} // ✅ pour gérer la sélection
-              selectedIndex={selectedIndex} // ✅ pour gérer la sélection
             />
           );
         })}

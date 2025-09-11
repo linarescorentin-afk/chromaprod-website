@@ -46,9 +46,9 @@ function PhotoPlane({
     if (materialRef.current) {
       materialRef.current.shift = shiftRef.current;
 
-      const targetOpacity = selectedIndex !== null && !isSelected ? 0 : 1;
+      // const targetOpacity = selectedIndex !== null && !isSelected ? 0 : 1;
 
-      materialRef.current.opacityOnClick = targetOpacity;
+      // materialRef.current.opacityOnClick = targetOpacity;
     }
 
     // const baseExtra = texturesLength >= baseImages ? 0.55 : 0.48;

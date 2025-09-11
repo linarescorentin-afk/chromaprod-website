@@ -13,7 +13,6 @@ interface IProps {
   isSelected: boolean;
   isVertical: boolean;
   delta: number;
-  selectedIndex: number | null;
 }
 
 function PhotoPlane({
@@ -26,7 +25,6 @@ function PhotoPlane({
   isSelected,
   isVertical,
   delta,
-  selectedIndex,
 }: IProps) {
   const materialRef = useRef<{
     map: THREE.Texture | null;

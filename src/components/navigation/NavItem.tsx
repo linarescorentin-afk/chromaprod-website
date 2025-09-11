@@ -13,11 +13,6 @@ function NavItem({
   selectedFilter: string | null;
   elementClicked: string;
 }) {
-  console.log(
-    "elementClicked dans NavItem:",
-    elementClicked,
-    name.toLocaleLowerCase(),
-  );
   return (
     <button
       disabled={disabled}

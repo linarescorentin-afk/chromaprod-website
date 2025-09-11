@@ -175,7 +175,6 @@ function PhotoScene({
               }}
               shiftRef={shift} // ✅ passe le ref pour le shift
               isSelected={selectedIndex === i} // ✅ pour gérer la sélection
-              selectedIndex={selectedIndex} // ✅ pour gérer la sélection
             />
           );
         })}

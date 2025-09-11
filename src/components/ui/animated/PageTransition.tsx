@@ -55,13 +55,6 @@ function PageTransition({
     }, 1500);
   }, [pathName]);
 
-  console.log(
-    "PageTransition render with pathName:",
-    pathName,
-    "and value:",
-    value,
-  );
-
   return (
     <>
       <div

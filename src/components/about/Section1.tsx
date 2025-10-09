@@ -32,7 +32,7 @@ function Section1({ about }: { about: AboutSettings }) {
           <AnimUp
             inView={isAboutAnimated}
             duration={1.5}
-            y={250}
+            y={380}
             className="md:h-fit"
           >
             <h1 className="font-karantina text-[100px] md:text-[150px] leading-[80px] md:leading-[120px] px-5">

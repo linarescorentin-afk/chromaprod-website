@@ -5,17 +5,22 @@ import { useEffect, useState } from "react";
 import MobileNavbar from "./MobileNavbar";
 import NavBarDesktop from "./NavBarDesktop";
 import { useIsAnimated } from "@/store/useIsAnimated";
+import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 
 function NavBar() {
   const navItems = [
-    { name: "ABOUT", href: "/about" },
-    { name: "CONTACT", href: "/contact" },
+    { nameEn: "ABOUT", nameFr: "À PROPOS", href: "/about" },
+    { nameEn: "CONTACT", nameFr: "CONTACT", href: "/contact" },
   ];
 
   const [isFilterClick, setIsFilterClick] = useState<string | null>(null);
   const { setSelectedFilter } = useFilterStore();
-  const filterButtons = ["All", "Corporate", "Events", "SocialMedia"];
-  const [elementClicked, setElementClicked] = useState<string>("all");
+  const filterButtons = [
+    { nameEn: "All", nameFr: "Tout" },
+    { nameEn: "Corporate", nameFr: "Corporate" },
+    { nameEn: "Events", nameFr: "Événements" },
+    { nameEn: "SocialMedia", nameFr: "RéseauxSociaux" },
+  ];
   const { isNavBarAnimated } = useIsAnimated();
   const pathname = usePathname();
   const isStudio = pathname.includes("/studio"); // ou pathname.startsWith("/studio");
@@ -23,6 +28,14 @@ function NavBar() {
     useIsAnimated();
   const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
+  const { selectedLanguage } = useIsSelectedLanguage();
+  const [elementClicked, setElementClicked] = useState<string>(
+    selectedLanguage === "en" ? "All" : "Tout",
+  );
+
+  useEffect(() => {
+    setElementClicked(selectedLanguage === "en" ? "All" : "Tout");
+  }, [selectedLanguage]);
 
   useEffect(() => {
     if (pathname !== "/") {
@@ -30,17 +43,23 @@ function NavBar() {
     }
   }, [pathname, setSelectedFilter]);
 
-  const onFilteredButtonClick = (item: string) => {
-    setElementClicked(item);
+  const onFilteredButtonClick = ({
+    itemName,
+    itemValue,
+  }: {
+    itemName: string;
+    itemValue: string;
+  }) => {
+    setElementClicked(itemName);
     window.scrollTo(0, 0);
-    const value = item.toLowerCase() as Category;
+    const value = itemValue.toLowerCase() as Category;
     setIsDisabled(true);
 
     switch (pathname) {
       case "/about":
         setIsAboutAnimated(false);
         setTimeout(() => {
-          setIsFilterClick(value);
+          setIsFilterClick(itemName);
           setSelectedFilter(value);
           setIsHomeAnimated(false);
           router.push("/");
@@ -56,7 +75,7 @@ function NavBar() {
       case "/contact":
         setIsContactAnimated(false);
         setTimeout(() => {
-          setIsFilterClick(value);
+          setIsFilterClick(itemName);
           setSelectedFilter(value);
           setIsHomeAnimated(false);
           router.push("/");
@@ -71,7 +90,7 @@ function NavBar() {
 
       case "/":
         setIsHomeAnimated(false);
-        setIsFilterClick(value);
+        setIsFilterClick(itemName);
         setTimeout(() => {
           setSelectedFilter(value);
           setIsHomeAnimated(true);
@@ -84,7 +103,7 @@ function NavBar() {
       default:
         router.push("/");
         setIsHomeAnimated(false);
-        setIsFilterClick(value);
+        setIsFilterClick(itemName);
         setSelectedFilter(value);
         setTimeout(() => {
           setIsHomeAnimated(true);
@@ -93,8 +112,12 @@ function NavBar() {
     }
   };
 
-  const onNavItemClick = (item: { name: string; href: string }) => {
-    setElementClicked(item.name);
+  const onNavItemClick = (item: {
+    nameEn: string;
+    nameFr: string;
+    href: string;
+  }) => {
+    setElementClicked(item.nameEn);
     window.scrollTo(0, 0);
     setIsDisabled(true);
     setSelectedFilter(null);

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import MobileNavItems from "./MobileNavItems";
-import { Category } from "@/store/useFilterStore";
 import { useIsEnterState } from "@/store/useIsEnter";
 import MobileHeader from "./MobileHeader";
 import { useIsAnimated } from "@/store/useIsAnimated";
+import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 
 function MobileNavbar({
   filterButtons,
@@ -13,15 +13,26 @@ function MobileNavbar({
   onFilteredButtonClick,
   onNavItemClick,
 }: {
-  filterButtons: string[];
+  filterButtons: { nameEn: string; nameFr: string }[];
   pathname: string;
-  navItems: { name: string; href: string }[];
-  onFilteredButtonClick: (item: string) => void;
-  onNavItemClick: (item: { name: string; href: string }) => void;
+  navItems: { nameEn: string; nameFr: string; href: string }[];
+  onFilteredButtonClick: ({
+    itemName,
+    itemValue,
+  }: {
+    itemName: string;
+    itemValue: string;
+  }) => void;
+  onNavItemClick: (item: {
+    nameEn: string;
+    nameFr: string;
+    href: string;
+  }) => void;
 }) {
   const { isEnter } = useIsEnterState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isNavBarAnimated } = useIsAnimated();
+  const { selectedLanguage } = useIsSelectedLanguage();
 
   return (
     <>
@@ -29,7 +40,12 @@ function MobileNavbar({
         className={`w-full z-50 fixed top-0 p-5 flex justify-between lg:hidden text-black font-karantina text-xl ${isEnter ? "translate-y-0" : "-translate-y-[100%]"} transition-all transform ease-in-out duration-[3000ms] ${isNavBarAnimated ? "translate-y-0" : "-translate-y-[100%]"}`}
       >
         <button
-          onClick={() => onFilteredButtonClick("All")}
+          onClick={() =>
+            onFilteredButtonClick({
+              itemName: selectedLanguage === "en" ? "All" : "Tout",
+              itemValue: "All",
+            })
+          }
           className="w-6/12 cursor-pointer"
         >
           <Image src="/chromalogo2.png" alt="Logo" width={170} height={100} />
@@ -47,17 +63,24 @@ function MobileNavbar({
       >
         <MobileHeader isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         {filterButtons.map((item, index) => {
-          const value = item.toLowerCase() as Category;
           return (
             <MobileNavItems
               delay={index * 0.1}
               isMenuOpen={isMenuOpen}
               pathname={pathname}
-              key={item}
-              name={item.toUpperCase()}
+              key={item.nameEn}
+              name={
+                selectedLanguage === "en"
+                  ? item.nameEn.toUpperCase()
+                  : item.nameFr.toUpperCase()
+              }
               onClick={() => {
                 setIsMenuOpen(false);
-                onFilteredButtonClick(value);
+                onFilteredButtonClick({
+                  itemName:
+                    selectedLanguage === "en" ? item.nameEn : item.nameFr,
+                  itemValue: item.nameEn,
+                });
               }}
             />
           );
@@ -67,8 +90,8 @@ function MobileNavbar({
             delay={0.4}
             isMenuOpen={isMenuOpen}
             pathname={pathname}
-            key={item.name}
-            name={item.name}
+            key={selectedLanguage === "en" ? item.nameEn : item.nameFr}
+            name={selectedLanguage === "en" ? item.nameEn : item.nameFr}
             onClick={() => {
               setIsMenuOpen(false);
               onNavItemClick(item);

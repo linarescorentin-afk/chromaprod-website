@@ -48,7 +48,12 @@ function MobileNavbar({
           }
           className="w-6/12 cursor-pointer"
         >
-          <Image src="/chromalogo2.png" alt="Logo" width={170} height={100} />
+          <Image
+            src="/logoCLVMgauche.webp"
+            alt="Logo"
+            width={170}
+            height={100}
+          />
         </button>
 
         <button

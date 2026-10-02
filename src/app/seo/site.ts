@@ -1,26 +1,26 @@
 export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  name: "Chroma Production — Vidéaste & Photographe à Montréal",
-  brand: "Chroma Production",
-  tagline: "Vidéaste & Photographe indépendant à Montréal et au Québec",
+  name: "CL VisualMaker — Vidéaste & Photographe à Montréal",
+  brand: "CL VisualMaker",
+  tagline: "CLVM | Vidéaste, Photographe, télépilote de drone.",
   description:
-    "Vidéaste et photographe indépendant à Montréal. Films corporate, évènementiel, pub, et photographie professionnelle au Québec.",
+    "CL Visualmaker est une entreprise de production audiovisuelle passionnée par la création de contenus visuels exceptionnels. Notre équipe talentueuse travaille avec engagement pour donner vie à des projets uniques et innovants. Nous sommes fiers de raconter des histoires captivantes à travers la puissance de l'audiovisuel.",
   keywords: [
-    "vidéaste indépendant montréal",
-    "photographe indépendant montréal",
-    "production vidéo montréal",
-    "agence communication vidéo montréal",
+    "vidéaste indépendant" ,
+    "photographe indépendant" ,
+    "production vidéo" ,
+    "agence communication vidéo" ,
     "corporate video montreal",
     "social media video montreal",
     "event videographer montreal",
     "corporate photo montreal",
     "social media photo montreal",
     "event photographer montreal",
-    "studio photo montréal",
-    "photographe professionnel montréal",
-    "photographe corporate montréal",
-    "photographe évènementiel montréal",
-    "photo entreprise montréal",
+    "studio photo" ,
+    "photographe professionnel" ,
+    "photographe corporate" ,
+    "photographe évènementiel" ,
+    "photo entreprise" ,
     "video production quebec",
     "videographer quebec",
     "video production france",
@@ -39,15 +39,10 @@ export const site = {
     image: "/coverChromProd.png", // main brand image
     priceRange: "$$", // $, $$, $$$ …
     address: {
-      streetAddress: "5250 Rue Molson",
-      addressLocality: "Montréal",
-      addressRegion: "QC",
-      postalCode: "H1Y 0C7",
-      addressCountry: "CA",
-    },
-    geo: {
-      latitude: 45.556, // put your true lat
-      longitude: -73.568, // put your true lng
+      streetAddress: "9 allée des salamandres",
+      addressLocality: "Gradignan",
+      postalCode: "33170",
+      addressCountry: "FR",
     },
     sameAs: [
       "https://www.instagram.com/corentin.linares/",
@@ -61,9 +56,6 @@ export const site = {
       "Mo-Fr 09:00-18:00",
     ],
     areaServed: [
-      "Montréal",
-      "Québec",
-      "Canada",
       "France",
       "Bordeaux",
       "international",

@@ -50,7 +50,7 @@ function NavBarDesktop({
         }
         className="w-3/12 cursor-pointer"
       >
-        <Image src="/chromalogo2.png" alt="Logo" width={200} height={100} />
+        <Image src="/logoCLVMgauche.webp" alt="Logo" width={200} height={100} />
       </button>
 
       <div

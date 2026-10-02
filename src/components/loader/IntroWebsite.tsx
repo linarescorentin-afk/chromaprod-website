@@ -52,7 +52,7 @@ function IntroWebsite() {
       <div className="z-[100] flex flex-col items-center justify-center font-karla font-bold space-y-10 pt-32 w-10/12">
         <AnimUp inView={inView} duration={2.5}>
           <Image
-            src="/LogoCLVMblanc.webp"
+            src="/logoCLVMblanc.webp"
             alt="Logo"
             width={570}
             height={100}

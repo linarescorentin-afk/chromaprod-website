@@ -234,7 +234,7 @@ export default function HomeComponent() {
       <p
         className={`hidden lg:flex fixed bottom-12 left-10  z-30 mix-blend-difference text-xs font-karla text-center ${isHomeAnimated ? "translate-y-0" : "translate-y-[500%]"} transition-all transform ease-in-out duration-[3000ms] `}
       >
-        - BASED IN MONTRÉAL
+        - BASED IN THE ALL WORLD
       </p>
 
       <p

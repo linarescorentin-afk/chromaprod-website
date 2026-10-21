@@ -9,10 +9,10 @@ import { getCategories, ICategoryItem } from "@/sanity/lib/getCategories";
 
 const DEFAULT_FILTER_BUTTONS: ICategoryItem[] = [
   { value: "all", nameEn: "All", nameFr: "Tout" },
+  { value: "resort", nameEn: "Resort", nameFr: "Resort" },
   { value: "corporate", nameEn: "Corporate", nameFr: "Corporate" },
   { value: "events", nameEn: "Events", nameFr: "Événements" },
   { value: "socialmedia", nameEn: "SocialMedia", nameFr: "RéseauxSociaux" },
-  { value: "resort", nameEn: "Resort", nameFr: "Resort" },
 ];
 
 function NavBar() {

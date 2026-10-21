@@ -4,7 +4,7 @@
 > Chaque agent le **lit au début** de chaque session et le **met à jour à la fin** de chaque travail.
 > Règles d'écriture : voir `AGENTS.md`.
 
-_Dernière mise à jour : 2026-10-21 — par Gemini_
+_Dernière mise à jour : 2026-10-22 — par Gemini_
 
 ---
 
@@ -59,6 +59,11 @@ _Dernière mise à jour : 2026-10-21 — par Gemini_
 ## 6. Journal des sessions
 
 <!-- Le plus récent EN HAUT. Format : ### AAAA-MM-JJ — Agent — titre court, puis 2 à 5 puces (fait / fichiers / reste à faire). -->
+
+### 2026-10-22 — Gemini — Réalignement de l'ordre des catégories de navigation (aligné sur À propos)
+- **Ordre unifié** : Alignement de l'ordre des catégories dans la barre de navigation haute (`NavBarDesktop.tsx`) et dans le menu mobile (`MobileNavbar.tsx`) sur celui de la section services de la page À propos : 1. `TOUT / ALL`, 2. `RESORT`, 3. `CORPORATE`, 4. `ÉVÉNEMENTS / EVENTS`, 5. `RÉSEAUX SOCIAUX / SOCIAL MEDIA`, suivis de `À PROPOS` et `CONTACT`.
+- **Fichiers modifiés** : `src/sanity/lib/getCategories.ts` (implémentation du tri par défaut avec respect de `orderPlace` Sanity) et `src/components/navigation/NavBar.tsx` (`DEFAULT_FILTER_BUTTONS`).
+- **Validation** : Build de production `yarn build` exécuté avec succès (0 erreur, 0 avertissement). Branché sur `feat/reorder-nav-categories`.
 
 ### 2026-10-21 — Gemini — Résolution du crash client Vercel (CORS Three.js WebGL & CanvasErrorBoundary)
 - **Origine du crash** : Sur les domaines de prévisualisation Vercel dynamiques, le CDN Sanity ne renvoie pas d'en-tête CORS (`Access-Control-Allow-Origin`). Lors du chargement des textures Three.js dans `useLoader(TextureLoader)`, le canvas WebGL a levé une exception réseau CORS non rattrapée, provoquant la perte de contexte et le démontage de l'arborescence React 19 (`Application error: a client-side exception has occurred`).

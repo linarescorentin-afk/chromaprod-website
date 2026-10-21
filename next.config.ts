@@ -3,6 +3,14 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: false,
+  async rewrites() {
+    return [
+      {
+        source: "/sanity-cdn/:path*",
+        destination: "https://cdn.sanity.io/:path*",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

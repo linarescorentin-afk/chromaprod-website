@@ -39,7 +39,7 @@ function ActiveVideo({ activeVideo, videoRef, setActiveVideo }: IProps) {
           className={`flex text-xs lg:text-base flex-row w-full space-x-1 uppercase px-5 lg:px-0 items-center pt-2 lg:pt-0`}
         >
           <h3>{activeVideo.title} /</h3>
-          {activeVideo.categories.map((cat) => (
+          {activeVideo.categories?.map((cat) => (
             <h3 className="text-sm opacity-50" key={cat}>
               {cat}
             </h3>

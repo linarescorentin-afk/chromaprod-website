@@ -20,6 +20,10 @@ export function urlForTex(
 
   let cleanSource = source;
   if (typeof cleanSource === "string") {
+    // Si la chaîne contient déjà /sanity-cdn/, on remet le domaine Sanity pour le builder
+    if (cleanSource.startsWith("/sanity-cdn/")) {
+      cleanSource = cleanSource.replace("/sanity-cdn/", "https://cdn.sanity.io/");
+    }
     // Si la chaîne contient déjà des query params, on les retire pour permettre à @sanity/image-url de parser l'URL correctement
     if (cleanSource.includes("?")) {
       cleanSource = cleanSource.split("?")[0];
@@ -30,13 +34,16 @@ export function urlForTex(
     const w = opts?.w ?? 1600; // adapte au layout
     const q = opts?.q ?? 70; // 60–75 = bon compromis
     const dpr = opts?.dpr ?? getDpr();
-    return builder
+    const url = builder
       .image(cleanSource)
       .width(Math.round(w * dpr))
       .fit("max") // pas d’upscale
       .auto("format") // webp/avif si possible
       .quality(q)
       .url();
+
+    // Redirige vers le rewrite same-origin /sanity-cdn/ pour garantir 0 blocage CORS WebGL/Three.js
+    return url ? url.replace("https://cdn.sanity.io/", "/sanity-cdn/") : "";
   } catch (err) {
     console.warn("urlForTex error fallback:", err);
     return typeof source === "string" ? source : "";

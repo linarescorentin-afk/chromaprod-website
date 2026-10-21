@@ -48,11 +48,16 @@ function VideoScene({
   const planeWidth = isMobile ? 4 : isTablet ? 5.7 : 7;
   const planeHeight = isMobile ? 2.5 : isTablet ? 4.1 : 4.1;
 
-  // ✅ Textures
-  const textures = useLoader(
-    TextureLoader,
-    videos.map((video) => video.thumbnail),
-  );
+  const thumbnailUrls = videos.map((video) => {
+    const thumb = video.thumbnail || "";
+    if (thumb.startsWith("https://cdn.sanity.io/")) {
+      return thumb.replace("https://cdn.sanity.io/", "/sanity-cdn/");
+    }
+    return thumb;
+  });
+
+  // ✅ Textures (chargées depuis le proxy same-origin pour éliminer tout blocage CORS en WebGL)
+  const textures = useLoader(TextureLoader, thumbnailUrls);
 
   // ✅ Variables pour le bombé
   const lastOffset = useRef(0);

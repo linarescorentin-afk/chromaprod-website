@@ -44,7 +44,7 @@ _Dernière mise à jour : 2026-10-21 — par Gemini_
 ## 5. Points d'attention / à faire
 
 <!-- Ce qui reste ouvert. Retirer la ligne quand c'est réglé. -->
-- PR #20 (`rebrand/clvm-bordeaux`) : modifications locales (repositionnement international « Artiste vidéaste & photographe ») **non poussées** — attendre l'accord de Corentin pour pousser.
+- PR #20 (`rebrand/clvm-bordeaux`) : poussée sur GitHub, aperçu Vercel en cours de génération pour validation par Corentin.
 - Vidéo d'intro `public/nuitMontreal.mov` (nuit à Montréal) à remplacer par un plan plus international / haut de gamme.
 - Sanity : vider le champ téléphone « second numéro » (ancien n° Canada) sinon il s'affiche sur /contact ; vérifier les textes Sanity (à propos, contact) qui peuvent encore citer Montréal.
 - Image fallback `public/mtlcontact.webp` (section contact de /about) probablement montréalaise.
@@ -58,10 +58,14 @@ _Dernière mise à jour : 2026-10-21 — par Gemini_
 
 <!-- Le plus récent EN HAUT. Format : ### AAAA-MM-JJ — Agent — titre court, puis 2 à 5 puces (fait / fichiers / reste à faire). -->
 
+### 2026-10-21 — Gemini — Push de la branche rebrand/clvm-bordeaux (PR #20)
+- Ajout et commit des fichiers de règles et mémoire partagée (`MEMORY.md`, `AGENTS.md`, etc.).
+- Push de `rebrand/clvm-bordeaux` sur GitHub suite à la demande explicite de Corentin.
+- Déclenchement du build de prévisualisation Vercel sur la PR #20.
+
 ### 2026-10-21 — Gemini — Ajustement positionnement : Artiste vidéaste & photographe
 - Mise à jour de `src/app/seo/site.ts` : `name`, `tagline` et `description` passent à « Artiste vidéaste & photographe », mots-clés enrichis en photographie haut de gamme.
 - Compilation `yarn build` validée sans erreur.
-- En attente de la demande de Corentin pour commit/push.
 
 ### 2026-10-21 — Claude — Repositionnement international (artiste vidéaste & filmmaker)
 - `src/app/seo/site.ts` : nom « CL Visual Maker — Artiste vidéaste & filmmaker », tagline, description et mots-clés internationaux (plus de Bordeaux), areaServed Worldwide/Europe/France.

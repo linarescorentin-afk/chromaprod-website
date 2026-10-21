@@ -15,10 +15,19 @@ interface RawCategory {
 }
 
 const DEFAULT_TRANSLATIONS: Record<string, { nameEn: string; nameFr: string }> = {
+  resort: { nameEn: "Resort", nameFr: "Resort" },
   corporate: { nameEn: "Corporate", nameFr: "Corporate" },
   events: { nameEn: "Events", nameFr: "Événements" },
   socialmedia: { nameEn: "SocialMedia", nameFr: "RéseauxSociaux" },
-  resort: { nameEn: "Resort", nameFr: "Resort" },
+};
+
+const getCategoryRank = (key: string, orderPlace?: number): number => {
+  if (typeof orderPlace === "number") return orderPlace;
+  if (key.includes("resort")) return 1;
+  if (key.includes("corporate")) return 2;
+  if (key.includes("event") || key.includes("evenement")) return 3;
+  if (key.includes("social") || key.includes("reseau")) return 4;
+  return 99;
 };
 
 export async function getCategories(): Promise<ICategoryItem[]> {
@@ -42,8 +51,11 @@ export async function getCategories(): Promise<ICategoryItem[]> {
         value: key,
         nameEn: fallback?.nameEn ?? rawTitle,
         nameFr: cat.titleFr?.trim() || fallback?.nameFr || rawTitle,
+        orderRank: getCategoryRank(key, cat.orderPlace),
       };
-    });
+    })
+    .sort((a, b) => a.orderRank - b.orderRank)
+    .map(({ value, nameEn, nameFr }) => ({ value, nameEn, nameFr }));
 
   return [{ value: "all", nameEn: "All", nameFr: "Tout" }, ...mapped];
 }

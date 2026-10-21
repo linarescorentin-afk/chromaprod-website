@@ -3,7 +3,7 @@ import { defineType, defineField } from "sanity";
 
 export default defineType({
   name: "aboutSettings",
-  title: "Page – À propos (Chroma)",
+  title: "Page – À propos",
   type: "document",
   fields: [
     defineField({
@@ -75,7 +75,7 @@ export default defineType({
   ],
   preview: {
     prepare() {
-      return { title: "À propos – Chroma" };
+      return { title: "À propos" };
     },
   },
 });

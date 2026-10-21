@@ -24,7 +24,7 @@ function MobileHeader({
       className="h-full w-full bg-black flex items-center px-5 justify-between"
     >
       <Link href="/">
-        <Image src="/chromalogo2.png" alt="Logo" width={170} height={100} />
+        <Image src="/logoCLVMgauche.webp" alt="Logo" width={170} height={100} />
       </Link>
       <div className="flex space-x-10 items-center h-full ">
         <SwitchLangButton setIsMenuOpen={setIsMenuOpen} />

@@ -7,9 +7,9 @@ export default defineType({
   fields: [
     defineField({
       name: "ca",
-      title: "Canada",
+      title: "Second numéro (optionnel)",
       type: "string",
-      description: "Ex: +1 438 439 1921",
+      description: "Laisser vide pour ne pas l'afficher (ancien numéro Canada)",
     }),
     defineField({
       name: "fr",

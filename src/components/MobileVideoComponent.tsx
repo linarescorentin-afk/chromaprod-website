@@ -71,7 +71,7 @@ function OneMobileVideo({
       <div className=" w-full h-32 absolute inset-0 z-10 bg-linear-to-b from-black from-1% to-transparent to-100%" />
       <motion.div style={{ y }} className={`relative h-[150%] w-full`}>
         <Image
-          src={urlForTex(video.thumbnail, { w: 900, q: 80 })}
+          src={video.thumbnail ? urlForTex(video.thumbnail, { w: 900, q: 80 }) : ""}
           alt={video.title}
           layout="fill"
           objectFit="cover"

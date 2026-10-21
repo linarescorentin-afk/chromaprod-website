@@ -13,5 +13,13 @@ const query = groq`*[_type == "contactSettings"][0]{
 }`;
 
 export async function getContactSettings(): Promise<ContactSettings | null> {
-  return await client.fetch(query);
+  const data = await client.fetch<ContactSettings | null>(query);
+  if (!data) return null;
+
+  return {
+    ...data,
+    address: data.address
+      ? data.address.replace(/allée de salamandres/i, "allée des salamandres")
+      : data.address,
+  };
 }

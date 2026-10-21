@@ -9,7 +9,11 @@ import { useInView } from "react-intersection-observer";
 import AnimUp from "../ui/animated/AnimUp";
 import { useIsAnimated } from "@/store/useIsAnimated";
 
-function ContactPage() {
+function ContactPage({
+  initialContent = null,
+}: {
+  initialContent?: ContactSettings | null;
+}) {
   const { selectedLanguage } = useIsSelectedLanguage();
   const {
     isContactAnimated,
@@ -17,7 +21,9 @@ function ContactPage() {
     isNavBarAnimated,
     setIsNavBarAnimated,
   } = useIsAnimated();
-  const [content, setContent] = useState<ContactSettings | null>(null);
+  const [content, setContent] = useState<ContactSettings | null>(
+    initialContent,
+  );
   const [ref, inView] = useInView({ threshold: 0.2 });
 
   useEffect(() => {
@@ -40,14 +46,19 @@ function ContactPage() {
       setIsNavBarAnimated(true);
     }
 
-    fetchContent();
-  }, [isNavBarAnimated, setIsNavBarAnimated]);
+    if (!initialContent) {
+      fetchContent();
+    }
+  }, [isNavBarAnimated, setIsNavBarAnimated, initialContent]);
 
   const isContentAvailable = useMemo(() => {
     return content !== null;
   }, [content]);
 
   if (!isContentAvailable || !content) return null;
+
+  const activePhone = content.phone?.ca || "+1 438 439 1921";
+  const cleanPhoneHref = `tel:${activePhone.replace(/\s+/g, "")}`;
 
   return (
     <LenisProvider>
@@ -56,28 +67,31 @@ function ContactPage() {
         className="py-20 lg:pt-20 lg:pb-0 font-karla flex flex-col lg:flex-row lg:h-screen bg-black text-white"
       >
         <div
-          className={`px-5 lg:w-6/12 lg:px-10 lg:py-5 space-y-10 ${isContactAnimated ? "translate-x-0" : "-translate-x-full"} transition-all ease-in-out duration-[2000ms] h-full flex flex-col justify-between`}
+          className={`px-5 lg:w-6/12 lg:px-10 lg:py-8 space-y-10 ${isContactAnimated ? "translate-x-0" : "-translate-x-full"} transition-all ease-in-out duration-[2000ms] h-full flex flex-col justify-between`}
         >
-          <div>
-            <div className="space-y-5  lg:text-base">
+          <div className="space-y-8 lg:space-y-10">
+            {/* CONTACT */}
+            <div className="space-y-3 lg:text-base">
               <AnimUp duration={1.5} inView={isContactAnimated}>
-                <h2 className="font-bold border-b pb-2 border-dashed">
+                <h2 className="font-bold border-b pb-2 border-dashed uppercase">
                   {selectedLanguage === "fr" ? "CONTACT" : "CONTACT"}
                 </h2>
               </AnimUp>
-              <div className="space-y-2">
-                <AnimUp duration={1.6} inView={isContactAnimated}>
-                  <p>{content.phone?.fr}</p>
-                </AnimUp>
+              <div className="space-y-1.5">
                 <AnimUp duration={1.7} inView={isContactAnimated}>
-                  <p>{content.phone?.ca}</p>
+                  <a
+                    href={cleanPhoneHref}
+                    className="underline hover:opacity-75 transition-opacity block"
+                  >
+                    {activePhone}
+                  </a>
                 </AnimUp>
                 <AnimUp duration={1.9} inView={isContactAnimated}>
                   <a
                     href={`mailto:${content.mail}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline"
+                    className="underline hover:opacity-75 transition-opacity block"
                   >
                     {content.mail}
                   </a>
@@ -85,9 +99,10 @@ function ContactPage() {
               </div>
             </div>
 
-            <div className="space-y-5  lg:text-base">
+            {/* ADRESSE */}
+            <div className="space-y-3 lg:text-base">
               <AnimUp duration={2.0} inView={isContactAnimated}>
-                <h2 className="font-bold border-b pb-2 border-dashed">
+                <h2 className="font-bold border-b pb-2 border-dashed uppercase">
                   {selectedLanguage === "fr" ? "ADRESSE" : "ADDRESS"}
                 </h2>
               </AnimUp>
@@ -96,13 +111,14 @@ function ContactPage() {
               </AnimUp>
             </div>
 
-            <div className="space-y-5  lg:text-base ">
+            {/* HORAIRES */}
+            <div className="space-y-3 lg:text-base">
               <AnimUp duration={2.2} inView={isContactAnimated}>
-                <h2 className="font-bold border-b pb-2 border-dashed">
+                <h2 className="font-bold border-b pb-2 border-dashed uppercase">
                   {selectedLanguage === "fr" ? "HORAIRES" : "HOURS"}
                 </h2>
               </AnimUp>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <AnimUp duration={2.3} inView={isContactAnimated}>
                   <p>
                     {selectedLanguage === "fr"
@@ -122,7 +138,7 @@ function ContactPage() {
           </div>
           <AnimUp duration={3.0} inView={isContactAnimated}>
             <span className="text-xs hidden lg:flex">
-              WEBSITE DEVELOP & DESIGN BY THOMAS BARRIAL || 2024
+              WEBSITE DEVELOPED & DESIGNED BY THOMAS BARRIAL || 2026
             </span>
           </AnimUp>
         </div>
@@ -137,7 +153,7 @@ function ContactPage() {
           />
         </div>
         <span className="text-xs mt-10 lg:hidden flex px-5">
-          WEBSITE DEVELOP & DESIGN BY THOMAS BARRIAL
+          WEBSITE DEVELOPED & DESIGNED BY THOMAS BARRIAL || 2026
         </span>
       </div>
     </LenisProvider>

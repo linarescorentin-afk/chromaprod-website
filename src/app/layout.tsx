@@ -94,17 +94,12 @@ export default function RootLayout({
     areaServed: site.business.areaServed,
   };
 
-  // JSON-LD WebSite + SearchAction
+  // JSON-LD WebSite
   const webSite = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     url: site.url,
     name: site.brand,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${site.url}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (

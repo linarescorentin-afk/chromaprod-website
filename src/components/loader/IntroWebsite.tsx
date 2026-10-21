@@ -7,14 +7,38 @@ import AnimUp from "../ui/animated/AnimUp";
 import { usePathname } from "next/navigation";
 import { useIsEnterState } from "@/store/useIsEnter";
 import { useIsAnimated } from "@/store/useIsAnimated";
+import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 
 function IntroWebsite() {
-  const { getAllReady } = useIsLoading();
+  const {
+    getAllReady,
+    setIsVideoLoading,
+    setIsVideoCanvasLoading,
+    setIsPhotoLoading,
+    setIsPhotoCanvasLoading,
+  } = useIsLoading();
   const { isEnter, setIsEnter } = useIsEnterState();
   const [inView, setInView] = React.useState(false);
   const { setIsHomeAnimated, setIsNavBarAnimated } = useIsAnimated();
+  const { selectedLanguage } = useIsSelectedLanguage();
 
   const path = usePathname();
+
+  useEffect(() => {
+    // Sécurité globale : évite de rester bloqué sur "CHARGEMENT..." si un asset réseau ou 3D traîne
+    const failsafe = setTimeout(() => {
+      setIsVideoLoading(false);
+      setIsVideoCanvasLoading(false);
+      setIsPhotoLoading(false);
+      setIsPhotoCanvasLoading(false);
+    }, 3500);
+    return () => clearTimeout(failsafe);
+  }, [
+    setIsVideoLoading,
+    setIsVideoCanvasLoading,
+    setIsPhotoLoading,
+    setIsPhotoCanvasLoading,
+  ]);
 
   useEffect(() => {
     setInView(true);
@@ -40,7 +64,7 @@ function IntroWebsite() {
         className={`absolute z-50 top-0 animate-fadeIn left-0 flex items-center justify-center h-full w-full bg-black lg:p-10 p-2 ${inView && "fadeIn"}`}
       >
         <video
-          src={`/nuitMontreal.mov`}
+          src={`/nuitMontreal.mp4`}
           controls={false}
           autoPlay
           muted
@@ -58,14 +82,6 @@ function IntroWebsite() {
             height={100}
           />
         </AnimUp>
-        {/* <div className="space-y-3 items-center flex flex-col">
-          <AnimUp inView={inView} duration={3.8}>
-            <h2 className="text-lg">VIDEO MAKING & PHOTOGRAPHY</h2>
-          </AnimUp>
-          <AnimUp inView={inView} duration={3.5}>
-            <h3 className="text-sm">AROUND THE WORLD</h3>
-          </AnimUp>
-        </div> */}
         <AnimUp inView={inView} duration={3.8}>
           <div className="bg-white py-2 px-8 text-black border-x-2 group border-dashed border-black font-karantina  text-2xl cursor-pointer">
             {getAllReady() ? (
@@ -73,10 +89,13 @@ function IntroWebsite() {
                 className="w-full h-full cursor-pointer group-hover:scale-110 transition-all transform ease-in-out duration-500"
                 onClick={() => onClose()}
               >
-                <ComeUpText height="h-8" text="START THE EXPERIENCE" />
+                <ComeUpText
+                  height="h-8"
+                  text="START THE EXPERIENCE"
+                />
               </button>
             ) : (
-              <p>LOADING...</p>
+              <p>{selectedLanguage === "fr" ? "CHARGEMENT..." : "LOADING..."}</p>
             )}
           </div>
         </AnimUp>

@@ -42,6 +42,21 @@ function VideoComponent({
   const { setIsVideoLoading, setIsVideoCanvasLoading } = useIsLoading();
   const { setIsHomeAnimated, setIsNavBarAnimated } = useIsAnimated();
   const { setVideoQuantity } = useVideoAndPhotoQuantity();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 1024);
+    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVideoCanvasLoading(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [setIsVideoCanvasLoading]);
 
   useEffect(() => {
     if (window.innerWidth < 1024) {
@@ -87,26 +102,27 @@ function VideoComponent({
 
   return (
     <div className="lg:h-screen w-screen">
-      <div className={`bg-black w-[100vw] lg:h-screen hidden lg:block`}>
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 50 }}
-          frameloop={isVideoVisible ? "always" : "demand"}
-          className={`canvas ${isVideoVisible ? "visible" : "hidden"}`}
-        >
-          <Suspense fallback={null}>
-            <ScrollControls pages={videos.length + 0.2} damping={0.5}>
-              <VideoScene
-                onClick={onVideoClick}
-                videos={videos}
-                widthPercent={widthPercent}
-              />
-              <VideoOverlay videos={videos} />
-            </ScrollControls>
-          </Suspense>
-
-          <R3FLoadingBridge onDone={() => setIsVideoCanvasLoading(false)} />
-        </Canvas>
-      </div>
+      {isDesktop && (
+        <div className={`bg-black w-[100vw] lg:h-screen hidden lg:block`}>
+          <Canvas
+            camera={{ position: [0, 0, 5], fov: 50 }}
+            frameloop={isVideoVisible ? "always" : "demand"}
+            className={`canvas ${isVideoVisible ? "visible" : "hidden"}`}
+          >
+            <Suspense fallback={null}>
+              <ScrollControls pages={videos.length + 0.2} damping={0.2}>
+                <VideoScene
+                  onClick={onVideoClick}
+                  videos={videos}
+                  widthPercent={widthPercent}
+                />
+                <VideoOverlay videos={videos} />
+              </ScrollControls>
+              <R3FLoadingBridge onDone={() => setIsVideoCanvasLoading(false)} />
+            </Suspense>
+          </Canvas>
+        </div>
+      )}
       <div className="lg:hidden flex">
         <MobileVideoComponent
           isVideoVisible={isVideoVisible}

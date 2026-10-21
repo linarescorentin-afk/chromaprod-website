@@ -39,7 +39,7 @@ function Section5({
           <AnimUp inView={isAnimated} duration={1.5}>
             <h2 className="font-karantina text-[100px] leading-[80px]">
               {selectedLanguage === "fr"
-                ? "COMMENT POUVONS NOUS AIDER ?"
+                ? "COMMENT POUVONS-NOUS VOUS AIDER ?"
                 : "LET'S WORK TOGETHER"}
             </h2>
           </AnimUp>
@@ -47,7 +47,7 @@ function Section5({
             <Link href="/contact">
               <button className="border font-karantina text-4xl border-black px-5 py-2 bg-white text-black">
                 {selectedLanguage === "fr"
-                  ? "CONTACTER NOUS"
+                  ? "CONTACTEZ-NOUS"
                   : "LET'S WORK TOGETHER"}
               </button>
             </Link>
@@ -58,7 +58,11 @@ function Section5({
             <h3>Corentin Linares</h3>
           </AnimUp>
           <AnimUp inView={isAnimated} duration={1.5}>
-            <h3>Video Making & Photography</h3>
+            <h3>
+              {selectedLanguage === "fr"
+                ? "Artiste Vidéaste & Photographe"
+                : "Video Making & Photography"}
+            </h3>
           </AnimUp>
         </div>
 
@@ -79,12 +83,12 @@ function Section5({
         </div>
         <AnimUp inView={isAnimated} duration={1.5}>
           <span className="text-xs">
-            WEBSITE develop & DESIGN BY THOMAS BARRIAL
+            WEBSITE DEVELOPED & DESIGNED BY THOMAS BARRIAL
           </span>
         </AnimUp>
       </div>
       <div
-        className={`lg:w-6/12 hidden lg:flex bg-red-600 relative ${!isAboutAnimated ? "translate-x-full" : "translate-x-0"} transition-all ease-in-out duration-[2500ms]`}
+        className={`lg:w-6/12 hidden lg:flex bg-black relative ${!isAboutAnimated ? "translate-x-full" : "translate-x-0"} transition-all ease-in-out duration-[2500ms]`}
       >
         <Image
           src={about.contactSideImage?.url || "/mtlcontact.webp"}

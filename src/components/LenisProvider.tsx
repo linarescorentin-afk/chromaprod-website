@@ -24,7 +24,12 @@ const LenisProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <ReactLenis
       root
-      options={{ lerp: 0.025, duration: 2.5, smoothWheel: true }}
+      options={{
+        lerp: 0.08,
+        duration: 1.2,
+        smoothWheel: true,
+        wheelMultiplier: 1.2,
+      }}
     >
       {children as any}
     </ReactLenis>

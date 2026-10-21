@@ -39,8 +39,8 @@ export const site = {
   // Business info (used for LocalBusiness JSON‑LD)
   business: {
     legalName: "CL Visual Maker",
-    email: "linarescorentin@gmail.com",
-    phone: "+33 7 84 10 35 54",
+    email: "contact@clvm.productions",
+    phone: "+1 438 439 1921",
     logo: "/logo-clvm.png",
     image: "/og-clvm.png", // main brand image
     priceRange: "$$$", // $, $$, $$$ …

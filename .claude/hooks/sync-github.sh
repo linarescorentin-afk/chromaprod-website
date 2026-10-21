@@ -42,6 +42,15 @@ if [ -f "$stamp_file" ]; then
 fi
 echo "$now" > "$stamp_file" 2>/dev/null
 
+# Synchronisation tâche de fond AntigravitySync (Google Drive) Mac & PC
+if [ "$(uname -s 2>/dev/null)" = "Darwin" ]; then
+  [ -x "$HOME/.gemini/antigravity/bin/sync_drive_mac.sh" ] && "$HOME/.gemini/antigravity/bin/sync_drive_mac.sh" >/dev/null 2>&1 &
+else
+  if [ -f "G:/Mon Drive/AntigravitySync/sync_pc_helper.ps1" ]; then
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "if (!(Get-CimInstance Win32_Process -Filter \"Name='powershell.exe'\" | Where-Object { \$_.CommandLine -like '*sync_pc_helper.ps1*' })) { Start-Process powershell.exe -ArgumentList '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"G:\Mon Drive\AntigravitySync\sync_pc_helper.ps1\"' -WindowStyle Hidden }" >/dev/null 2>&1 &
+  fi
+fi
+
 branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
   [ "$is_agy" = true ] && echo "{}"

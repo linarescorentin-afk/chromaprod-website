@@ -8,6 +8,7 @@ import FilmPlan from "./FilmPlan";
 import "./materials/filmEffectMaterial";
 import * as THREE from "three";
 import { IVideo } from "./VideoComponent";
+import { urlForTex } from "@/sanity/lib/image";
 
 function VideoScene({
   widthPercent,
@@ -49,11 +50,7 @@ function VideoScene({
   const planeHeight = isMobile ? 2.5 : isTablet ? 4.1 : 4.1;
 
   const thumbnailUrls = videos.map((video) => {
-    const thumb = video.thumbnail || "";
-    if (thumb.startsWith("https://cdn.sanity.io/")) {
-      return thumb.replace("https://cdn.sanity.io/", "/sanity-cdn/");
-    }
-    return thumb;
+    return urlForTex(video.thumbnail, { w: 1200, q: 75 });
   });
 
   // ✅ Textures (chargées depuis le proxy same-origin pour éliminer tout blocage CORS en WebGL)

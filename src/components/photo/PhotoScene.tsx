@@ -31,13 +31,7 @@ function PhotoScene({
   // 📏 État pour la largeur de la fenêtre
   const { windowWidth } = useWindowsWidth();
   const scroll = useScroll();
-  const urls = photos.map((p) => {
-    const u = urlForTex(p.image, { w: 1200, q: 60 });
-    if (u.startsWith("https://cdn.sanity.io/")) {
-      return u.replace("https://cdn.sanity.io/", "/sanity-cdn/");
-    }
-    return u;
-  });
+  const urls = photos.map((p) => urlForTex(p.image, { w: 1200, q: 60 }));
 
   const textures = useLoader(TextureLoader, urls);
 

@@ -20,6 +20,10 @@ export function urlForTex(
 
   let cleanSource = source;
   if (typeof cleanSource === "string") {
+    // Si la chaîne contient déjà /api/proxy-image, on extrait l'URL source
+    if (cleanSource.includes("/api/proxy-image?url=")) {
+      cleanSource = decodeURIComponent(cleanSource.split("/api/proxy-image?url=")[1]);
+    }
     // Si la chaîne contient déjà /sanity-cdn/, on remet le domaine Sanity pour le builder
     if (cleanSource.startsWith("/sanity-cdn/")) {
       cleanSource = cleanSource.replace("/sanity-cdn/", "https://cdn.sanity.io/");
@@ -42,8 +46,9 @@ export function urlForTex(
       .quality(q)
       .url();
 
-    // Redirige vers le rewrite same-origin /sanity-cdn/ pour garantir 0 blocage CORS WebGL/Three.js
-    return url ? url.replace("https://cdn.sanity.io/", "/sanity-cdn/") : "";
+    if (!url) return "";
+    // Redirige via notre API proxy same-origin avec en-têtes Access-Control-Allow-Origin: * garantis
+    return `/api/proxy-image?url=${encodeURIComponent(url)}`;
   } catch (err) {
     console.warn("urlForTex error fallback:", err);
     return typeof source === "string" ? source : "";

@@ -9,6 +9,7 @@ import { useIsLoading } from "@/store/useIsLoading";
 import { R3FLoadingBridge } from "../loader/R3FLoadingBridge";
 import MobilePhotoComponent from "./MobilePhotoComponent";
 import { useVideoAndPhotoQuantity } from "@/store/useVideoAndPhotoQuantity";
+import { CanvasErrorBoundary } from "../ui/CanvasErrorBoundary";
 
 export interface IPhoto {
   image: string;
@@ -89,26 +90,28 @@ function PhotoComponent({
   return (
     <div className={`h-screen w-screen bg-black`}>
       {isDesktop && (
-        <Canvas
-          camera={{ position: [0, 0, 8], fov: 50 }}
-          frameloop={isPhotoVisible ? "always" : "demand"}
-          className={`canvas ${isPhotoVisible ? "visible" : "hidden"} hidden lg:block`}
-        >
-          <Suspense fallback={null}>
-            <ScrollControls
-              pages={photos.length + photos.length * 0.1}
-              damping={0.2}
-            >
-              <PhotoScene
-                photos={photos}
-                selectedIndex={selectedIndex}
-                setSelectedIndex={setSelectedIndex}
-                widthPercent={widthPercent}
-              />
-            </ScrollControls>
-            <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
-          </Suspense>
-        </Canvas>
+        <CanvasErrorBoundary>
+          <Canvas
+            camera={{ position: [0, 0, 8], fov: 50 }}
+            frameloop={isPhotoVisible ? "always" : "demand"}
+            className={`canvas ${isPhotoVisible ? "visible" : "hidden"} hidden lg:block`}
+          >
+            <Suspense fallback={null}>
+              <ScrollControls
+                pages={photos.length + photos.length * 0.1}
+                damping={0.2}
+              >
+                <PhotoScene
+                  photos={photos}
+                  selectedIndex={selectedIndex}
+                  setSelectedIndex={setSelectedIndex}
+                  widthPercent={widthPercent}
+                />
+              </ScrollControls>
+              <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
+            </Suspense>
+          </Canvas>
+        </CanvasErrorBoundary>
       )}
 
       <div className="lg:hidden block bg-black">

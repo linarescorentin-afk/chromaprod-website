@@ -16,6 +16,7 @@ import { R3FLoadingBridge } from "../loader/R3FLoadingBridge";
 import { useIsAnimated } from "@/store/useIsAnimated";
 import MobileVideoComponent from "../MobileVideoComponent";
 import { useVideoAndPhotoQuantity } from "@/store/useVideoAndPhotoQuantity";
+import { CanvasErrorBoundary } from "../ui/CanvasErrorBoundary";
 
 export interface IVideo {
   title: string;
@@ -104,23 +105,25 @@ function VideoComponent({
     <div className="lg:h-screen w-screen">
       {isDesktop && (
         <div className={`bg-black w-[100vw] lg:h-screen hidden lg:block`}>
-          <Canvas
-            camera={{ position: [0, 0, 5], fov: 50 }}
-            frameloop={isVideoVisible ? "always" : "demand"}
-            className={`canvas ${isVideoVisible ? "visible" : "hidden"}`}
-          >
-            <Suspense fallback={null}>
-              <ScrollControls pages={videos.length + 0.2} damping={0.2}>
-                <VideoScene
-                  onClick={onVideoClick}
-                  videos={videos}
-                  widthPercent={widthPercent}
-                />
-                <VideoOverlay videos={videos} />
-              </ScrollControls>
-              <R3FLoadingBridge onDone={() => setIsVideoCanvasLoading(false)} />
-            </Suspense>
-          </Canvas>
+          <CanvasErrorBoundary>
+            <Canvas
+              camera={{ position: [0, 0, 5], fov: 50 }}
+              frameloop={isVideoVisible ? "always" : "demand"}
+              className={`canvas ${isVideoVisible ? "visible" : "hidden"}`}
+            >
+              <Suspense fallback={null}>
+                <ScrollControls pages={videos.length + 0.2} damping={0.2}>
+                  <VideoScene
+                    onClick={onVideoClick}
+                    videos={videos}
+                    widthPercent={widthPercent}
+                  />
+                  <VideoOverlay videos={videos} />
+                </ScrollControls>
+                <R3FLoadingBridge onDone={() => setIsVideoCanvasLoading(false)} />
+              </Suspense>
+            </Canvas>
+          </CanvasErrorBoundary>
         </div>
       )}
       <div className="lg:hidden flex">

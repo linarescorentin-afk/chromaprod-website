@@ -45,6 +45,7 @@ _Dernière mise à jour : 2026-10-21 — par Gemini_
 - 2026-10-21 — Requêtes Sanity (`src/sanity/lib/get*.ts`) passées en Server Actions (`"use server"`) — évite les blocages CORS Sanity sur mobile/IP locale et domaines d'aperçu.
 - 2026-10-21 — Seul numéro de téléphone actif conservé : `+1 438 439 1921` (cliquable `tel:` sur `/contact` et dans `src/app/seo/site.ts`), email business aligné sur `contact@clvm.productions`.
 - 2026-10-21 — Optimisation automatique des miniatures vidéo à la récupération Sanity (`getVideo.ts` via `urlForTex(..., { w: 1200, q: 75 })`) et désactivation du `<Canvas>` 3D WebGL sur mobile (`windowWidth < 1024`) pour éviter la surchauffe batterie/GPU.
+- 2026-10-21 — Route handler proxy edge `/api/proxy-image` + `CanvasErrorBoundary` pour Three.js — élimine tout blocage CORS sur les domaines d'aperçu Vercel et protège l'application de tout crash WebGL.
 
 ## 5. Points d'attention / à faire
 
@@ -58,6 +59,13 @@ _Dernière mise à jour : 2026-10-21 — par Gemini_
 ## 6. Journal des sessions
 
 <!-- Le plus récent EN HAUT. Format : ### AAAA-MM-JJ — Agent — titre court, puis 2 à 5 puces (fait / fichiers / reste à faire). -->
+
+### 2026-10-21 — Gemini — Résolution du crash client Vercel (CORS Three.js WebGL & CanvasErrorBoundary)
+- **Origine du crash** : Sur les domaines de prévisualisation Vercel dynamiques, le CDN Sanity ne renvoie pas d'en-tête CORS (`Access-Control-Allow-Origin`). Lors du chargement des textures Three.js dans `useLoader(TextureLoader)`, le canvas WebGL a levé une exception réseau CORS non rattrapée, provoquant la perte de contexte et le démontage de l'arborescence React 19 (`Application error: a client-side exception has occurred`).
+- **Route Handler Proxy Edge** : Création de `src/app/api/proxy-image/route.ts` (Next.js Edge runtime) qui proxifie les images Sanity côté serveur et leur adjoint systématiquement les en-têtes CORS universels (`Access-Control-Allow-Origin: *`, `Cache-Control: public, max-age=31536000, immutable`).
+- **Routage des textures WebGL** : Adaptation de `urlForTex` (`src/sanity/lib/image.ts`), `VideoScene.tsx` et `PhotoScene.tsx` pour acheminer les textures 3D via `/api/proxy-image?url=...`.
+- **Blindage Error Boundary** : Création de `src/components/ui/CanvasErrorBoundary.tsx` encapsulant les `<Canvas>` de `VideoComponent.tsx` et `PhotoComponent.tsx` afin qu'aucune perte de contexte WebGL ou erreur de chargement ne puisse faire crasher l'application React.
+- **Validation** : Build de production `yarn build` exécuté et validé avec succès (0 erreur).
 
 ### 2026-10-21 — Gemini — Synchronisation automatique Mac ↔ PC (GitHub) & hooks Gemini/Claude
 - Ajout de `.gitattributes` (`eol=lf`) pour éviter les conflits de fins de ligne entre macOS et Windows (PC).

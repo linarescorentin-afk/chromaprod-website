@@ -63,7 +63,7 @@ function IntroWebsite() {
             <h2 className="text-lg">VIDEO MAKING & PHOTOGRAPHY</h2>
           </AnimUp>
           <AnimUp inView={inView} duration={3.5}>
-            <h3 className="text-sm">BASED IN BORDEAUX</h3>
+            <h3 className="text-sm">AROUND THE WORLD</h3>
           </AnimUp>
         </div> */}
         <AnimUp inView={inView} duration={3.8}>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IVideo } from "./VideoComponent";
 import { useIsAnimated } from "@/store/useIsAnimated";
+import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 
 interface IProps {
   activeVideo: IVideo;
@@ -10,6 +11,7 @@ interface IProps {
 
 function ActiveVideo({ activeVideo, videoRef, setActiveVideo }: IProps) {
   const [isAnimated, setIsAnimated] = useState(false);
+  const { selectedLanguage } = useIsSelectedLanguage();
 
   const { setIsHomeAnimated, setIsNavBarAnimated } = useIsAnimated();
 
@@ -37,7 +39,7 @@ function ActiveVideo({ activeVideo, videoRef, setActiveVideo }: IProps) {
           className={`flex text-xs lg:text-base flex-row w-full space-x-1 uppercase px-5 lg:px-0 items-center pt-2 lg:pt-0`}
         >
           <h3>{activeVideo.title} /</h3>
-          {activeVideo.categories.map((cat) => (
+          {activeVideo.categories?.map((cat) => (
             <h3 className="text-sm opacity-50" key={cat}>
               {cat}
             </h3>
@@ -48,7 +50,7 @@ function ActiveVideo({ activeVideo, videoRef, setActiveVideo }: IProps) {
             onClick={onClose}
             className="text-white text-sm z-50 cursor-pointer border-b hover:font-bold  transition-all duration-500"
           >
-            CLOSE X
+            {selectedLanguage === "fr" ? "FERMER X" : "CLOSE X"}
           </button>
         </div>
       </div>

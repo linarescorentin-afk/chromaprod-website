@@ -13,7 +13,7 @@ function MobileNavbar({
   onFilteredButtonClick,
   onNavItemClick,
 }: {
-  filterButtons: { nameEn: string; nameFr: string }[];
+  filterButtons: { value?: string; nameEn: string; nameFr: string }[];
   pathname: string;
   navItems: { nameEn: string; nameFr: string; href: string }[];
   onFilteredButtonClick: ({
@@ -43,7 +43,7 @@ function MobileNavbar({
           onClick={() =>
             onFilteredButtonClick({
               itemName: selectedLanguage === "en" ? "All" : "Tout",
-              itemValue: "All",
+              itemValue: "all",
             })
           }
           className="w-6/12 cursor-pointer"
@@ -68,12 +68,14 @@ function MobileNavbar({
       >
         <MobileHeader isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         {filterButtons.map((item, index) => {
+          const itemKey = item.value || item.nameEn;
           return (
             <MobileNavItems
               delay={index * 0.1}
               isMenuOpen={isMenuOpen}
               pathname={pathname}
-              key={item.nameEn}
+              key={itemKey}
+              itemKey={itemKey}
               name={
                 selectedLanguage === "en"
                   ? item.nameEn.toUpperCase()
@@ -84,7 +86,7 @@ function MobileNavbar({
                 onFilteredButtonClick({
                   itemName:
                     selectedLanguage === "en" ? item.nameEn : item.nameFr,
-                  itemValue: item.nameEn,
+                  itemValue: itemKey,
                 });
               }}
             />
@@ -96,6 +98,7 @@ function MobileNavbar({
             isMenuOpen={isMenuOpen}
             pathname={pathname}
             key={selectedLanguage === "en" ? item.nameEn : item.nameFr}
+            itemKey={item.nameEn}
             name={selectedLanguage === "en" ? item.nameEn : item.nameFr}
             onClick={() => {
               setIsMenuOpen(false);

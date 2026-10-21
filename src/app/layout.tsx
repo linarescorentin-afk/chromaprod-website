@@ -30,31 +30,7 @@ export const metadata: Metadata = {
     template: `%s — ${site.brand}`,
   },
   description: site.description,
-  keywords: [
-    "vidéaste indépendant montréal",
-    "photographe indépendant montréal",
-    "production vidéo montréal",
-    "agence communication vidéo montréal",
-    "corporate video montreal",
-    "social media video montreal",
-    "event videographer montreal",
-    "corporate photo montreal",
-    "social media photo montreal",
-    "event photographer montreal",
-    "studio photo montréal",
-    "photographe professionnel montréal",
-    "photographe corporate montréal",
-    "photographe évènementiel montréal",
-    "photo entreprise montréal",
-    "video production quebec",
-    "videographer quebec",
-    "video production france",
-    "videographer france",
-    "photographe professionnel quebec",
-    "photographe professionnel france",
-    "photographe professionnel bordeaux",
-    "videaste professionnel bordeaux",
-  ],
+  keywords: [...site.keywords],
   alternates: { canonical: site.url },
   openGraph: {
     type: "website",
@@ -64,13 +40,14 @@ export const metadata: Metadata = {
     description: site.description,
     images: [
       {
-        url: `${site.url}/coverChromProd.png`,
+        url: `${site.url}/og-clvm.png`,
         width: 1200,
         height: 630,
         alt: `${site.brand} — ${site.tagline}`,
       },
     ],
-    locale: "fr_CA",
+    locale: "fr_FR",
+    alternateLocale: ["en_US"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -117,21 +94,16 @@ export default function RootLayout({
     areaServed: site.business.areaServed,
   };
 
-  // JSON-LD WebSite + SearchAction
+  // JSON-LD WebSite
   const webSite = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     url: site.url,
     name: site.brand,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${site.url}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (
-    <html lang="fr-CA">
+    <html lang="fr">
       <head>
         <JsonLd data={localBusiness} />
         <JsonLd data={webSite} />

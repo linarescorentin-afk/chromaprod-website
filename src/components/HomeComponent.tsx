@@ -17,9 +17,11 @@ import SocialMediaComponent from "./SocialMediaComponent";
 import ActiveVideo from "./video/ActiveVideo";
 import AnimUp from "./ui/animated/AnimUp";
 import { useIsAnimated } from "@/store/useIsAnimated";
+import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 
 export default function HomeComponent() {
   const { isHomeAnimated } = useIsAnimated();
+  const { selectedLanguage } = useIsSelectedLanguage();
   const dragX = useMotionValue(0);
   const [widthPercent, setWidthPercent] = useState(50);
   const [screenWidth, setScreenWidth] = useState<number | null>(null);
@@ -102,7 +104,11 @@ export default function HomeComponent() {
     });
   }
 
-  const splitedSentence = "_ VIDEO _ PHOTOGRAPHY _".split("");
+  const splitedSentence = (
+    selectedLanguage === "fr"
+      ? "_ VIDÉO _ PHOTOGRAPHIE _"
+      : "_ VIDEO _ PHOTOGRAPHY _"
+  ).split("");
 
   // ✅ Clamp la largeur SEULEMENT si screenWidth est défini
   const clampedWidth = useTransform(dragX, (x) => {
@@ -122,13 +128,6 @@ export default function HomeComponent() {
         className={`absolute top-0 bg-black z-10 will-change-[clip-path] video-pane animate-left overflow-hidden`}
         style={{ clipPath: clip }}
       >
-        {/* {widthPercent * 0.01 <= 0.92 && (
-          <button
-            className={`bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 absolute top-0 w-full h-full z-30 cursor-pointer`}
-            onClick={() => moveBarTo("video")}
-          />
-        )} */}
-
         <VideoComponent
           setActiveVideo={setActiveVideo}
           isVideoVisible={isVideoVisible}
@@ -143,14 +142,7 @@ export default function HomeComponent() {
       `}
         />
       </motion.div>
-      <div className="relative overflow-x-hidden bg-bla">
-        {/* {widthPercent * 0.01 >= 0.015 && (
-          <button
-            className={`fixed top-0 w-full bg-transparent ${!isDragging && "hover:bg-white/10"} transform transition-all ease-in-out duration-300 h-full z-10 cursor-pointer`}
-            onClick={() => moveBarTo("photo")}
-          />
-        )} */}
-
+      <div className="relative overflow-x-hidden bg-black">
         {/* SECTION PHOTO */}
         <PhotoComponent
           isPhotoVisible={isPhotoVisible}
@@ -207,7 +199,11 @@ export default function HomeComponent() {
             onClick={() => {
               moveBarTo("photo");
             }}
-            subtext="Switch to photo"
+            subtext={
+              selectedLanguage === "fr"
+                ? "Passer aux photos"
+                : "Switch to photo"
+            }
           />
         </AnimUp>
         <AnimUp
@@ -219,7 +215,11 @@ export default function HomeComponent() {
             onClick={() => {
               moveBarTo("video");
             }}
-            subtext="Switch to video"
+            subtext={
+              selectedLanguage === "fr"
+                ? "Passer aux vidéos"
+                : "Switch to video"
+            }
           />
         </AnimUp>
       </motion.div>
@@ -234,7 +234,9 @@ export default function HomeComponent() {
       <p
         className={`hidden lg:flex fixed bottom-12 left-10  z-30 mix-blend-difference text-xs font-karla text-center ${isHomeAnimated ? "translate-y-0" : "translate-y-[500%]"} transition-all transform ease-in-out duration-[3000ms] `}
       >
-        - BASED ALL AROUND WORLD
+        {selectedLanguage === "fr"
+          ? "- PARTOUT DANS LE MONDE"
+          : "- BASED ALL AROUND THE WORLD"}
       </p>
 
       <p
@@ -261,7 +263,11 @@ export default function HomeComponent() {
         <div
           className={`flex flex-col items-center justify-center ${(2 >= widthPercent || widthPercent >= 95) && isHomeAnimated ? "translate-y-0" : "translate-y-full"} transition-all ease-in-out transform duration-[1000ms]`}
         >
-          <p>scroll down to Explore</p>
+          <p>
+            {selectedLanguage === "fr"
+              ? "défiler pour explorer"
+              : "scroll down to Explore"}
+          </p>
           <Image src="/downArrow.svg" alt="scroll down" width={5} height={5} />
         </div>
       </div>
@@ -271,7 +277,7 @@ export default function HomeComponent() {
             className={`${isVideoVisible ? "" : "opacity-50"} text-red-500  underline transition-all duration-500 ease-in-out`}
             onClick={() => moveBarTo("video")}
           >
-            VIDEOS
+            {selectedLanguage === "fr" ? "VIDÉOS" : "VIDEOS"}
           </button>
         </AnimUp>
         <AnimUp inView={isHomeAnimated} duration={2}>

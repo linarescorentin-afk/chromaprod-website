@@ -1,4 +1,6 @@
+"use server";
 import { client } from "./client";
+import { urlForTex } from "./image";
 
 export interface IVideo {
   title: string;
@@ -10,13 +12,22 @@ export interface IVideo {
 }
 
 export async function getVideos(): Promise<IVideo[]> {
-  return await client.fetch(`*[_type == "video"] | order(coalesce(orderPlace, 9999) asc, _createdAt desc) {
-    title,
-    description,
-    "video": video.asset->url,
-    "thumbnail": thumbnail.asset->url,
-    clientName,
-    "categories": categories[]->title,
-    "orderPlace": orderPlace
-  }`);
+  const videos: IVideo[] = await client.fetch(
+    `*[_type == "video"] | order(coalesce(orderPlace, 9999) asc, _createdAt desc) {
+      title,
+      description,
+      "video": video.asset->url,
+      "thumbnail": thumbnail.asset->url,
+      clientName,
+      "categories": categories[]->title,
+      "orderPlace": orderPlace
+    }`,
+  );
+
+  return videos.map((v) => ({
+    ...v,
+    thumbnail: v.thumbnail
+      ? urlForTex(v.thumbnail, { w: 1200, q: 75 })
+      : v.thumbnail,
+  }));
 }

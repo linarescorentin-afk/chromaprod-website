@@ -11,19 +11,46 @@ function getDpr() {
   return Math.min(dpr, 1.5); // évite 2.0+ qui coûte cher
 }
 
-/** URL d’image optimisée pour une texture WebGL */
+/** URL d’image optimisée pour une texture WebGL ou affichage optimisé */
 export function urlForTex(
   source: SanityImageSource,
   opts?: { w?: number; q?: number; dpr?: number },
 ) {
-  const w = opts?.w ?? 1600; // adapte à ton layout
-  const q = opts?.q ?? 70; // 60–75 = bon compromis
-  const dpr = opts?.dpr ?? getDpr();
-  return builder
-    .image(source)
-    .width(Math.round(w * dpr))
-    .fit("max") // pas d’upscale
-    .auto("format") // webp/avif si possible
-    .quality(q)
-    .url();
+  if (!source) return "";
+
+  let cleanSource = source;
+  if (typeof cleanSource === "string") {
+    // Si la chaîne contient déjà /api/proxy-image, on extrait l'URL source
+    if (cleanSource.includes("/api/proxy-image?url=")) {
+      cleanSource = decodeURIComponent(cleanSource.split("/api/proxy-image?url=")[1]);
+    }
+    // Si la chaîne contient déjà /sanity-cdn/, on remet le domaine Sanity pour le builder
+    if (cleanSource.startsWith("/sanity-cdn/")) {
+      cleanSource = cleanSource.replace("/sanity-cdn/", "https://cdn.sanity.io/");
+    }
+    // Si la chaîne contient déjà des query params, on les retire pour permettre à @sanity/image-url de parser l'URL correctement
+    if (cleanSource.includes("?")) {
+      cleanSource = cleanSource.split("?")[0];
+    }
+  }
+
+  try {
+    const w = opts?.w ?? 1600; // adapte au layout
+    const q = opts?.q ?? 70; // 60–75 = bon compromis
+    const dpr = opts?.dpr ?? getDpr();
+    const url = builder
+      .image(cleanSource)
+      .width(Math.round(w * dpr))
+      .fit("max") // pas d’upscale
+      .auto("format") // webp/avif si possible
+      .quality(q)
+      .url();
+
+    if (!url) return "";
+    // Redirige via notre API proxy same-origin avec en-têtes Access-Control-Allow-Origin: * garantis
+    return `/api/proxy-image?url=${encodeURIComponent(url)}`;
+  } catch (err) {
+    console.warn("urlForTex error fallback:", err);
+    return typeof source === "string" ? source : "";
+  }
 }

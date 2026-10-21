@@ -3,6 +3,7 @@ import { getAboutSettings } from "@/sanity/lib/getAboutSettings";
 import { getSocialMedia, SocialMedia } from "@/sanity/lib/getSocialMedia";
 import { AboutSettings } from "@/sanity/types/about";
 import { useIsAnimated } from "@/store/useIsAnimated";
+import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
 import React, { useEffect, useState } from "react";
 import LenisProvider from "../LenisProvider";
 import Section1 from "./Section1";
@@ -12,15 +13,24 @@ import Section3 from "./Section3";
 import Section4 from "./Section4";
 import Image from "next/image";
 
-function AboutPage() {
+function AboutPage({
+  initialAbout = null,
+  initialSocialMedia = null,
+}: {
+  initialAbout?: AboutSettings | null;
+  initialSocialMedia?: SocialMedia[] | null;
+}) {
   const {
     setIsHomeAnimated,
     isNavBarAnimated,
     setIsNavBarAnimated,
     isAboutAnimated,
   } = useIsAnimated();
-  const [socialMedia, setSocialMedia] = useState<SocialMedia[] | null>(null);
-  const [about, setAbout] = useState<AboutSettings | null>(null);
+  const { selectedLanguage } = useIsSelectedLanguage();
+  const [socialMedia, setSocialMedia] = useState<SocialMedia[] | null>(
+    initialSocialMedia,
+  );
+  const [about, setAbout] = useState<AboutSettings | null>(initialAbout);
 
   useEffect(() => {
     const fetchSocialMedia = async () => {
@@ -37,9 +47,19 @@ function AboutPage() {
     if (!isNavBarAnimated) {
       setIsNavBarAnimated(true);
     }
-    fetchSocialMedia();
-    fetchAbout();
-  }, [setIsHomeAnimated, isNavBarAnimated, setIsNavBarAnimated]);
+    if (!initialSocialMedia) {
+      fetchSocialMedia();
+    }
+    if (!initialAbout) {
+      fetchAbout();
+    }
+  }, [
+    setIsHomeAnimated,
+    isNavBarAnimated,
+    setIsNavBarAnimated,
+    initialSocialMedia,
+    initialAbout,
+  ]);
 
   if (!about || !socialMedia) return null;
 
@@ -57,7 +77,11 @@ function AboutPage() {
         <div
           className={`flex flex-col items-center justify-center  transition-all ease-in-out transform duration-[1000ms] ${isAboutAnimated ? "translate-y-0" : "translate-y-full"}`}
         >
-          <p className="text-white">scroll down to Explore</p>
+          <p className="text-white">
+            {selectedLanguage === "fr"
+              ? "défiler pour explorer"
+              : "scroll down to Explore"}
+          </p>
           <Image src="/downArrow.svg" alt="scroll down" width={5} height={5} />
         </div>
       </div>

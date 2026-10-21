@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { useItemParallax } from "@/hook/useItemParralax";
 import AnimUp from "./ui/animated/AnimUp";
 import { useIsAnimated } from "@/store/useIsAnimated";
+import { urlForTex } from "@/sanity/lib/image";
 
 function MobileVideoComponent({
   videosFetched,
@@ -50,6 +51,7 @@ function OneMobileVideo({
   video,
   onVideoClick,
   selectedLanguage,
+  index,
 }: {
   video: IVideo;
   onVideoClick: (video: IVideo) => void;
@@ -69,11 +71,11 @@ function OneMobileVideo({
       <div className=" w-full h-32 absolute inset-0 z-10 bg-linear-to-b from-black from-1% to-transparent to-100%" />
       <motion.div style={{ y }} className={`relative h-[150%] w-full`}>
         <Image
-          src={video.thumbnail}
+          src={video.thumbnail ? urlForTex(video.thumbnail, { w: 900, q: 80 }) : ""}
           alt={video.title}
           layout="fill"
           objectFit="cover"
-          priority
+          priority={index < 2}
         />
       </motion.div>
       <div className="space-y-2 absolute inset-0 font-karantina z-50 px-5 flex flex-col justify-end items-start">

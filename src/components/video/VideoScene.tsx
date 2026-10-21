@@ -8,6 +8,7 @@ import FilmPlan from "./FilmPlan";
 import "./materials/filmEffectMaterial";
 import * as THREE from "three";
 import { IVideo } from "./VideoComponent";
+import { urlForTex } from "@/sanity/lib/image";
 
 function VideoScene({
   widthPercent,
@@ -48,11 +49,12 @@ function VideoScene({
   const planeWidth = isMobile ? 4 : isTablet ? 5.7 : 7;
   const planeHeight = isMobile ? 2.5 : isTablet ? 4.1 : 4.1;
 
-  // ✅ Textures
-  const textures = useLoader(
-    TextureLoader,
-    videos.map((video) => video.thumbnail),
-  );
+  const thumbnailUrls = videos.map((video) => {
+    return urlForTex(video.thumbnail, { w: 1200, q: 75 });
+  });
+
+  // ✅ Textures (chargées depuis le proxy same-origin pour éliminer tout blocage CORS en WebGL)
+  const textures = useLoader(TextureLoader, thumbnailUrls);
 
   // ✅ Variables pour le bombé
   const lastOffset = useRef(0);

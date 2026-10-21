@@ -9,6 +9,7 @@ import { useIsLoading } from "@/store/useIsLoading";
 import { R3FLoadingBridge } from "../loader/R3FLoadingBridge";
 import MobilePhotoComponent from "./MobilePhotoComponent";
 import { useVideoAndPhotoQuantity } from "@/store/useVideoAndPhotoQuantity";
+import { CanvasErrorBoundary } from "../ui/CanvasErrorBoundary";
 
 export interface IPhoto {
   image: string;
@@ -31,22 +32,52 @@ function PhotoComponent({
   const [photosFetched, setPhotos] = useState<IPhoto[]>([]);
   const { setIsPhotoLoading, setIsPhotoCanvasLoading } = useIsLoading();
   const { setPhotoQuantity } = useVideoAndPhotoQuantity();
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
+    setIsDesktop(window.innerWidth >= 1024);
+    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPhotoCanvasLoading(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [setIsPhotoCanvasLoading]);
+
+  useEffect(() => {
+    if (window.innerWidth < 1024) {
+      setIsPhotoCanvasLoading(false);
+    }
     async function load() {
-      const data = await getPhotos();
-      setPhotos(data);
-      setPhotoQuantity(data.length);
-      setIsPhotoLoading(false);
+      try {
+        const data = await getPhotos();
+        setPhotos(data);
+        setPhotoQuantity(data.length);
+      } catch (err) {
+        console.error("Failed to load photos:", err);
+      } finally {
+        setIsPhotoLoading(false);
+        if (window.innerWidth < 1024) {
+          setIsPhotoCanvasLoading(false);
+        }
+      }
     }
     load();
-  }, [setIsPhotoLoading, setPhotoQuantity]);
+  }, [setIsPhotoLoading, setIsPhotoCanvasLoading, setPhotoQuantity]);
+
+  useEffect(() => {
+    setSelectedIndex(null);
+  }, [category]);
 
   const photos = React.useMemo(() => {
-    if (category === "all") return photosFetched;
+    if (!category || category === "all") return photosFetched;
 
     const photos = photosFetched.filter((p) =>
-      p.categories.some((c) => c === category),
+      p.categories?.some((c) => c.toLowerCase() === category.toLowerCase()),
     );
 
     return photos;
@@ -58,50 +89,53 @@ function PhotoComponent({
 
   return (
     <div className={`h-screen w-screen bg-black`}>
-      <Canvas
-        camera={{ position: [0, 0, 8], fov: 50 }}
-        frameloop={isPhotoVisible ? "always" : "demand"}
-        className={`canvas ${isPhotoVisible ? "visible" : "hidden"} hidden lg:block`}
-      >
-        <Suspense fallback={null}>
-          <ScrollControls
-            pages={photos.length + photos.length * 0.1}
-            damping={0.35}
+      {isDesktop && (
+        <CanvasErrorBoundary>
+          <Canvas
+            camera={{ position: [0, 0, 8], fov: 50 }}
+            frameloop={isPhotoVisible ? "always" : "demand"}
+            className={`canvas ${isPhotoVisible ? "visible" : "hidden"} hidden lg:block`}
           >
-            <PhotoScene
-              photos={photos}
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-              widthPercent={widthPercent}
-            />
-          </ScrollControls>
-        </Suspense>
+            <Suspense fallback={null}>
+              <ScrollControls
+                pages={photos.length + photos.length * 0.1}
+                damping={0.2}
+              >
+                <PhotoScene
+                  photos={photos}
+                  selectedIndex={selectedIndex}
+                  setSelectedIndex={setSelectedIndex}
+                  widthPercent={widthPercent}
+                />
+              </ScrollControls>
+              <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
+            </Suspense>
+          </Canvas>
+        </CanvasErrorBoundary>
+      )}
 
-        <R3FLoadingBridge onDone={() => setIsPhotoCanvasLoading(false)} />
-      </Canvas>
-
-      <div className="lg:hidden block bg-red-600">
+      <div className="lg:hidden block bg-black">
         <MobilePhotoComponent photos={photos} isPhotoVisible />
       </div>
 
       {/* ✅ Overlay HTML */}
-      {selectedIndex !== null && (
+      {selectedIndex !== null && photos[selectedIndex] && (
         <div className="fixed top-0 text-sm uppercase pointer-events-none left-0 flex flex-col items-start  justify-between z-50 transition-opacity duration-300 w-full h-full px-16 py-24 font-karla">
           <div
-            className={`text-white w-full flex ${photosFetched[selectedIndex].name ? "justify-between" : "justify-end"}`}
+            className={`text-white w-full flex ${photos[selectedIndex].name ? "justify-between" : "justify-end"}`}
           >
-            {photosFetched[selectedIndex].name && (
+            {photos[selectedIndex].name && (
               <h2 className=" font-karantina text-4xl mb-2">
-                {photosFetched[selectedIndex].name}
+                {photos[selectedIndex].name}
               </h2>
             )}
           </div>
           <div className="w-full  flex justify-between items-center">
-            {photosFetched[selectedIndex].date && (
-              <p>{photosFetched[selectedIndex].date}</p>
+            {photos[selectedIndex].date && (
+              <p>{photos[selectedIndex].date}</p>
             )}
-            {photosFetched[selectedIndex].client && (
-              <p>{photosFetched[selectedIndex].client}</p>
+            {photos[selectedIndex].client && (
+              <p>{photos[selectedIndex].client}</p>
             )}
           </div>
         </div>

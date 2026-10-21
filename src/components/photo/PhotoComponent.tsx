@@ -33,20 +33,35 @@ function PhotoComponent({
   const { setPhotoQuantity } = useVideoAndPhotoQuantity();
 
   useEffect(() => {
+    if (window.innerWidth < 1024) {
+      setIsPhotoCanvasLoading(false);
+    }
     async function load() {
-      const data = await getPhotos();
-      setPhotos(data);
-      setPhotoQuantity(data.length);
-      setIsPhotoLoading(false);
+      try {
+        const data = await getPhotos();
+        setPhotos(data);
+        setPhotoQuantity(data.length);
+      } catch (err) {
+        console.error("Failed to load photos:", err);
+      } finally {
+        setIsPhotoLoading(false);
+        if (window.innerWidth < 1024) {
+          setIsPhotoCanvasLoading(false);
+        }
+      }
     }
     load();
-  }, [setIsPhotoLoading, setPhotoQuantity]);
+  }, [setIsPhotoLoading, setIsPhotoCanvasLoading, setPhotoQuantity]);
+
+  useEffect(() => {
+    setSelectedIndex(null);
+  }, [category]);
 
   const photos = React.useMemo(() => {
-    if (category === "all") return photosFetched;
+    if (!category || category === "all") return photosFetched;
 
     const photos = photosFetched.filter((p) =>
-      p.categories.some((c) => c === category),
+      p.categories?.some((c) => c.toLowerCase() === category.toLowerCase()),
     );
 
     return photos;
@@ -85,23 +100,23 @@ function PhotoComponent({
       </div>
 
       {/* ✅ Overlay HTML */}
-      {selectedIndex !== null && (
+      {selectedIndex !== null && photos[selectedIndex] && (
         <div className="fixed top-0 text-sm uppercase pointer-events-none left-0 flex flex-col items-start  justify-between z-50 transition-opacity duration-300 w-full h-full px-16 py-24 font-karla">
           <div
-            className={`text-white w-full flex ${photosFetched[selectedIndex].name ? "justify-between" : "justify-end"}`}
+            className={`text-white w-full flex ${photos[selectedIndex].name ? "justify-between" : "justify-end"}`}
           >
-            {photosFetched[selectedIndex].name && (
+            {photos[selectedIndex].name && (
               <h2 className=" font-karantina text-4xl mb-2">
-                {photosFetched[selectedIndex].name}
+                {photos[selectedIndex].name}
               </h2>
             )}
           </div>
           <div className="w-full  flex justify-between items-center">
-            {photosFetched[selectedIndex].date && (
-              <p>{photosFetched[selectedIndex].date}</p>
+            {photos[selectedIndex].date && (
+              <p>{photos[selectedIndex].date}</p>
             )}
-            {photosFetched[selectedIndex].client && (
-              <p>{photosFetched[selectedIndex].client}</p>
+            {photos[selectedIndex].client && (
+              <p>{photos[selectedIndex].client}</p>
             )}
           </div>
         </div>

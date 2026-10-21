@@ -43,17 +43,26 @@ function VideoComponent({
   const { setIsHomeAnimated, setIsNavBarAnimated } = useIsAnimated();
   const { setVideoQuantity } = useVideoAndPhotoQuantity();
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
+    if (window.innerWidth < 1024) {
+      setIsVideoCanvasLoading(false);
+    }
     async function load() {
-      const videos = await getVideos();
-      setVideosFetched(videos);
-      setVideoQuantity(videos.length);
-      setIsVideoLoading(false);
+      try {
+        const videos = await getVideos();
+        setVideosFetched(videos);
+        setVideoQuantity(videos.length);
+      } catch (err) {
+        console.error("Failed to load videos:", err);
+      } finally {
+        setIsVideoLoading(false);
+        if (window.innerWidth < 1024) {
+          setIsVideoCanvasLoading(false);
+        }
+      }
     }
     load();
-  }, [setIsVideoLoading, setActiveVideo, setVideoQuantity]);
+  }, [setIsVideoLoading, setIsVideoCanvasLoading, setActiveVideo, setVideoQuantity]);
 
   // ✅ gère le clic sur une vidéo
 
@@ -67,10 +76,10 @@ function VideoComponent({
   };
 
   const videos = React.useMemo(() => {
-    if (category === "all") return videosFetched;
+    if (!category || category === "all") return videosFetched;
 
     const filteredVideos = videosFetched.filter((v) =>
-      v.categories.some((c) => c === category),
+      v.categories?.some((c) => c.toLowerCase() === category.toLowerCase()),
     );
 
     return filteredVideos;
@@ -102,7 +111,7 @@ function VideoComponent({
         <MobileVideoComponent
           isVideoVisible={isVideoVisible}
           onVideoClick={onVideoClick}
-          videosFetched={videosFetched}
+          videosFetched={videos}
         />
       </div>
     </div>

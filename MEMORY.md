@@ -40,11 +40,14 @@ _Dernière mise à jour : 2026-10-21 — par Gemini_
 - 2026-10-21 — Positionnement ajusté à « Artiste vidéaste & photographe » (au lieu de filmmaker) — demande de Corentin.
 - 2026-10-21 — SEO orienté international « artiste vidéaste & photographe », pas de ciblage Bordeaux — demande de Corentin.
 - 2026-10-21 — Mots-clés SEO centralisés dans `src/app/seo/site.ts` (layout les réutilise) ; image OG = `public/og-clvm.png`, logo JSON-LD = `public/logo-clvm.png` ; locale `fr_FR`.
+- 2026-10-21 — Catégories du menu récupérées dynamiquement depuis Sanity (`src/sanity/lib/getCategories.ts`) avec support FR/EN (`titleFr`) et ordre (`orderPlace`) + filtrage insensible à la casse — pour afficher « Resort » et toute future catégorie automatiquement.
+
+- 2026-10-21 — Requêtes Sanity (`src/sanity/lib/get*.ts`) passées en Server Actions (`"use server"`) — évite les blocages CORS Sanity sur mobile/IP locale et domaines d'aperçu.
 
 ## 5. Points d'attention / à faire
 
 <!-- Ce qui reste ouvert. Retirer la ligne quand c'est réglé. -->
-- PR #20 (`rebrand/clvm-bordeaux`) : poussée sur GitHub, aperçu Vercel en cours de génération pour validation par Corentin.
+- PR #20 (`rebrand/clvm-bordeaux`) : rebrand CLVM + catégories dynamiques (`Resort`) + correctifs mobile validés en local et poussés sur GitHub (prête à être fusionnée par Corentin).
 - Vidéo d'intro `public/nuitMontreal.mov` (nuit à Montréal) à remplacer par un plan plus international / haut de gamme.
 - Sanity : vider le champ téléphone « second numéro » (ancien n° Canada) sinon il s'affiche sur /contact ; vérifier les textes Sanity (à propos, contact) qui peuvent encore citer Montréal.
 - Image fallback `public/mtlcontact.webp` (section contact de /about) probablement montréalaise.
@@ -57,6 +60,13 @@ _Dernière mise à jour : 2026-10-21 — par Gemini_
 ## 6. Journal des sessions
 
 <!-- Le plus récent EN HAUT. Format : ### AAAA-MM-JJ — Agent — titre court, puis 2 à 5 puces (fait / fichiers / reste à faire). -->
+
+### 2026-10-21 — Gemini — Catégories dynamiques depuis Sanity & correctif loading mobile (poussé sur PR #20)
+- Création de `src/sanity/lib/getCategories.ts` et enrichissement de `src/sanity/schemaTypes/categoryType.ts` (`titleFr` et `orderPlace` optionnels, avec fallback automatique FR/EN pour les catégories existantes).
+- Connexion de `NavBar.tsx`, `NavBarDesktop.tsx`, `MobileNavbar.tsx`, `MobileNavItems.tsx`, `NavItem.tsx` et `useFilterStore.ts` aux catégories Sanity + maintien de l'état actif au changement de langue FR/EN.
+- Filtrage insensible à la casse (`toLowerCase()`) dans `VideoComponent.tsx` et `PhotoComponent.tsx` (corrige `"Resort"` vs `"resort"`) + correction du filtrage vidéo sur mobile et de l'overlay photo filtré.
+- Correctif du blocage `LOADING...` sur mobile : passage des requêtes Sanity (`getVideo.ts`, `getPhotos.ts`, `getCategories.ts`, `getAboutSettings.ts`, `getContactSettings.ts`, `getSocialMedia.ts`) en Server Actions (`"use server"`), sécurisation `try/finally` du loader mobile et optimisation des miniatures `MobileVideoComponent.tsx` (`urlForTex`).
+- Validation locale par Corentin (desktop + mobile) et push sur `rebrand/clvm-bordeaux` (PR #20).
 
 ### 2026-10-21 — Gemini — Push de la branche rebrand/clvm-bordeaux (PR #20)
 - Ajout et commit des fichiers de règles et mémoire partagée (`MEMORY.md`, `AGENTS.md`, etc.).

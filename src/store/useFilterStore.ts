@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 
-export type Category = "all" | "corporate" | "events" | "socialMedia";
+export type Category = string;
 
 type FilterStore = {
   selectedFilter: Category | null;

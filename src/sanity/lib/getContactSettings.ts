@@ -1,3 +1,4 @@
+"use server";
 import { groq } from "next-sanity";
 import { client } from "./client";
 import type { ContactSettings } from "../types/contact";

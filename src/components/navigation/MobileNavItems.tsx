@@ -3,18 +3,21 @@ import { motion } from "framer-motion";
 
 function MobileNavItems({
   name,
+  itemKey,
   onClick,
   pathname,
   isMenuOpen,
   delay,
 }: {
   name: string;
+  itemKey?: string;
   onClick: () => void;
   pathname: string;
   isMenuOpen: boolean;
   delay: number;
 }) {
   const selectedFilter = useFilterStore((state) => state.selectedFilter);
+  const keyToCompare = (itemKey || name).toLowerCase();
 
   const listVariants = {
     open: {
@@ -40,7 +43,7 @@ function MobileNavItems({
         key={name}
         variants={itemVariants}
         transition={{ duration: 0.5 + delay, delay }}
-        className={`${selectedFilter === name.toLowerCase() || pathname === `/${name.toLowerCase()}` ? "bg-black border-white text-white border" : "text-black bg-white"} border border-black w-full h-full border-dashed cursor-pointer`}
+        className={`${selectedFilter?.toLowerCase() === keyToCompare || pathname === `/${keyToCompare}` ? "bg-black border-white text-white border" : "text-black bg-white"} border border-black w-full h-full border-dashed cursor-pointer`}
         onClick={onClick}
       >
         {name}

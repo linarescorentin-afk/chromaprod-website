@@ -40,7 +40,7 @@ function OneMobilePhoto({ photo, index }: { photo: IPhoto; index: number }) {
           alt={photo.name || `Photo${index + 1}`}
           layout="fill"
           objectFit="cover"
-          priority
+          priority={index < 2}
         />
       </div>
       <p className="mt-2 text-sm">{photo.date}</p>

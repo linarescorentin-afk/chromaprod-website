@@ -1,3 +1,4 @@
+"use server";
 // /sanity/lib/getAboutSettings.ts
 import { groq } from "next-sanity";
 import { client } from "./client"; // ton client Sanity configuré

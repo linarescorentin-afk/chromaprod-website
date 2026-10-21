@@ -8,7 +8,7 @@ interface IProps {
   isStudio: boolean;
   isEnter: boolean;
   pathname: string;
-  filterButtons: { nameEn: string; nameFr: string }[];
+  filterButtons: { value?: string; nameEn: string; nameFr: string }[];
   navItems: { nameEn: string; nameFr: string; href: string }[];
   onFilteredButtonClick: (item: {
     itemName: string;
@@ -45,27 +45,29 @@ function NavBarDesktop({
         onClick={() =>
           onFilteredButtonClick({
             itemName: selectedLanguage === "en" ? "All" : "Tout",
-            itemValue: "All",
+            itemValue: "all",
           })
         }
-        className="w-3/12 cursor-pointer"
+        className="w-2/12 cursor-pointer"
       >
         <Image src="/logoCLVMgauche.webp" alt="Logo" width={200} height={100} />
       </button>
 
       <div
-        className="flex items-center justify-between h-9 space-x-0 relative rounded-sm overflow-hidden text-[20px] font-light w-6/12 min-w-[600px] max-w-4xl"
+        className="flex items-center justify-between h-9 space-x-0 relative rounded-sm overflow-hidden text-[20px] font-light w-auto min-w-[650px] max-w-5xl"
         style={{
           boxShadow: "10px 10px 30px rgba(0, 0, 0, 0.5)",
         }}
       >
         {filterButtons.map((item) => {
+          const itemKey = item.value || item.nameEn;
           return (
             <NavItem
               disabled={isDisabled}
               selectedFilter={selectedFilter}
               pathname={pathname}
-              key={item.nameEn}
+              key={itemKey}
+              itemKey={itemKey}
               name={
                 selectedLanguage === "en"
                   ? item.nameEn.toUpperCase()
@@ -75,7 +77,7 @@ function NavBarDesktop({
                 onFilteredButtonClick({
                   itemName:
                     selectedLanguage === "en" ? item.nameEn : item.nameFr,
-                  itemValue: item.nameEn,
+                  itemValue: itemKey,
                 })
               }
               elementClicked={elementClicked}
@@ -88,6 +90,7 @@ function NavBarDesktop({
             selectedFilter={selectedFilter}
             pathname={pathname}
             key={selectedLanguage === "en" ? item.nameEn : item.nameFr}
+            itemKey={item.nameEn}
             name={selectedLanguage === "en" ? item.nameEn : item.nameFr}
             onClick={() => onNavItemClick(item)}
             elementClicked={elementClicked}

@@ -5,7 +5,15 @@ import { useEffect, useState } from "react";
 import MobileNavbar from "./MobileNavbar";
 import NavBarDesktop from "./NavBarDesktop";
 import { useIsAnimated } from "@/store/useIsAnimated";
-import { useIsSelectedLanguage } from "@/store/useSelectedLanguage";
+import { getCategories, ICategoryItem } from "@/sanity/lib/getCategories";
+
+const DEFAULT_FILTER_BUTTONS: ICategoryItem[] = [
+  { value: "all", nameEn: "All", nameFr: "Tout" },
+  { value: "corporate", nameEn: "Corporate", nameFr: "Corporate" },
+  { value: "events", nameEn: "Events", nameFr: "Événements" },
+  { value: "socialmedia", nameEn: "SocialMedia", nameFr: "RéseauxSociaux" },
+  { value: "resort", nameEn: "Resort", nameFr: "Resort" },
+];
 
 function NavBar() {
   const navItems = [
@@ -15,31 +23,35 @@ function NavBar() {
 
   const [isFilterClick, setIsFilterClick] = useState<string | null>(null);
   const { setSelectedFilter } = useFilterStore();
-  const filterButtons = [
-    { nameEn: "All", nameFr: "Tout" },
-    { nameEn: "Corporate", nameFr: "Corporate" },
-    { nameEn: "Events", nameFr: "Événements" },
-    { nameEn: "SocialMedia", nameFr: "RéseauxSociaux" },
-  ];
+  const [filterButtons, setFilterButtons] = useState<ICategoryItem[]>(
+    DEFAULT_FILTER_BUTTONS,
+  );
   const { isNavBarAnimated } = useIsAnimated();
   const pathname = usePathname();
-  const isStudio = pathname.includes("/studio"); // ou pathname.startsWith("/studio");
+  const isStudio = pathname.includes("/studio");
   const { setIsHomeAnimated, setIsAboutAnimated, setIsContactAnimated } =
     useIsAnimated();
   const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
-  const { selectedLanguage } = useIsSelectedLanguage();
-  const [elementClicked, setElementClicked] = useState<string>(
-    selectedLanguage === "en" ? "All" : "Tout",
-  );
+  const [elementClicked, setElementClicked] = useState<string>("all");
 
   useEffect(() => {
-    setElementClicked(selectedLanguage === "en" ? "All" : "Tout");
-  }, [selectedLanguage]);
+    getCategories()
+      .then((cats) => {
+        if (cats && cats.length > 0) {
+          setFilterButtons(cats);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch categories from Sanity:", err);
+      });
+  }, []);
 
   useEffect(() => {
     if (pathname !== "/") {
       setSelectedFilter(null);
+      if (pathname === "/about") setElementClicked("ABOUT");
+      if (pathname === "/contact") setElementClicked("CONTACT");
     }
   }, [pathname, setSelectedFilter]);
 
@@ -50,9 +62,9 @@ function NavBar() {
     itemName: string;
     itemValue: string;
   }) => {
-    setElementClicked(itemName);
-    window.scrollTo(0, 0);
     const value = itemValue.toLowerCase() as Category;
+    setElementClicked(value);
+    window.scrollTo(0, 0);
     setIsDisabled(true);
 
     switch (pathname) {

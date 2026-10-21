@@ -1,3 +1,4 @@
+"use server";
 import { client } from "./client";
 
 export interface IVideo {

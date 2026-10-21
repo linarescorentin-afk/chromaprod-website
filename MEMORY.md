@@ -43,16 +43,14 @@ _Dernière mise à jour : 2026-10-21 — par Gemini_
 - 2026-10-21 — Catégories du menu récupérées dynamiquement depuis Sanity (`src/sanity/lib/getCategories.ts`) avec support FR/EN (`titleFr`) et ordre (`orderPlace`) + filtrage insensible à la casse — pour afficher « Resort » et toute future catégorie automatiquement.
 
 - 2026-10-21 — Requêtes Sanity (`src/sanity/lib/get*.ts`) passées en Server Actions (`"use server"`) — évite les blocages CORS Sanity sur mobile/IP locale et domaines d'aperçu.
+- 2026-10-21 — Seul numéro de téléphone actif conservé : `+1 438 439 1921` (cliquable `tel:` sur `/contact` et dans `src/app/seo/site.ts`), email business aligné sur `contact@clvm.productions`.
+- 2026-10-21 — Optimisation automatique des miniatures vidéo à la récupération Sanity (`getVideo.ts` via `urlForTex(..., { w: 1200, q: 75 })`) et désactivation du `<Canvas>` 3D WebGL sur mobile (`windowWidth < 1024`) pour éviter la surchauffe batterie/GPU.
 
 ## 5. Points d'attention / à faire
 
 <!-- Ce qui reste ouvert. Retirer la ligne quand c'est réglé. -->
-- PR #20 (`rebrand/clvm-bordeaux`) : rebrand CLVM + catégories dynamiques (`Resort`) + correctifs mobile validés en local et poussés sur GitHub (prête à être fusionnée par Corentin).
-- Vidéo d'intro `public/nuitMontreal.mov` (nuit à Montréal) à remplacer par un plan plus international / haut de gamme.
-- Sanity : vider le champ téléphone « second numéro » (ancien n° Canada) sinon il s'affiche sur /contact ; vérifier les textes Sanity (à propos, contact) qui peuvent encore citer Montréal.
-- Image fallback `public/mtlcontact.webp` (section contact de /about) probablement montréalaise.
+- PR #20 (`rebrand/clvm-bordeaux`) : rebrand CLVM + catégories dynamiques (`Resort`) + correctifs mobile + les 13 optimisations de l'audit appliquées en local (en attente de vérification par Corentin avant push).
 - Compte TikTok CLVM à ajouter dans `sameAs` s'il existe (l'ancien @chromaprodmtl a été retiré).
-- Anciens assets Chroma dans `public/` (chromalogo*, coverChromProd, arrowChr…) à supprimer une fois vérifiés inutilisés.
 - PR #17 (brouillon Vercel CVE) probablement obsolète depuis la #18 → à fermer. ~17 branches distantes fusionnées à nettoyer.
 - `yarn` absent du PATH du terminal Claude : lint/build lancés via `npx --no-install next …`.
 - README = template Next.js par défaut.
@@ -60,6 +58,17 @@ _Dernière mise à jour : 2026-10-21 — par Gemini_
 ## 6. Journal des sessions
 
 <!-- Le plus récent EN HAUT. Format : ### AAAA-MM-JJ — Agent — titre court, puis 2 à 5 puces (fait / fichiers / reste à faire). -->
+
+### 2026-10-21 — Gemini — Synchronisation automatique Mac ↔ PC (GitHub) & hooks Gemini/Claude
+- Ajout de `.gitattributes` (`eol=lf`) pour éviter les conflits de fins de ligne entre macOS et Windows (PC).
+- Création de `.claude/hooks/sync-github.sh` branché sur `UserPromptSubmit` (`.claude/settings.json`) et `PreInvocation` (`.agent/hooks.json`) : vérifie `origin` à chaque nouvelle demande, fait un `git pull --ff-only` si le dossier local est propre et en retard, et force l'agent à relire `MEMORY.md`.
+- Extension de `.claude/hooks/check-memory.sh` et `.agent/hooks.json` pour que le blocage `Stop` s'applique aussi à Gemini (Antigravity).
+
+### 2026-10-21 — Gemini — Application des 13 améliorations & optimisations de l'audit global
+- **Contenu & Services (1.1, 1.2, 3.3)** : Correction dans `getAboutSettings.ts` de l'inversion des textes entre `ÉVÉNEMENTIEL` et `RÉSEAUX SOCIAUX` + ajout automatique du bloc service `RESORT` (FR/EN) illustré par la photo classée `Resort` dans Sanity. Sur `/contact` (`ContactPage.tsx`, `getContactSettings.ts`, `seo/site.ts`), affichage uniquement du numéro `+1 438 439 1921` en lien `tel:` cliquable, correction de `"9 allée des salamandres"` et des textes/fautes dans `Section5.tsx`.
+- **Performances & Médias (2.1, 2.2, 2.3, 2.4)** : Compression de `public/nuitMontreal.mov` (78 Mo) en `public/nuitMontreal.mp4` (**5,8 Mo**, H.264 `+faststart`) dans `IntroWebsite.tsx`. Compression WebP/AVIF automatique à la volée des miniatures vidéo dans `getVideo.ts` (`urlForTex(..., { w: 1200, q: 75 })`). Désactivation du montage du `<Canvas>` WebGL 3D sur mobile (`windowWidth < 1024`) dans `VideoComponent.tsx` et `PhotoComponent.tsx`. Suppression de ~165 Mo de fichiers obsolètes dans `public/`.
+- **UI & Traductions FR (3.1, 3.2)** : Suppression des fonds debug `bg-red-600` (`PhotoComponent.tsx`, `Section5.tsx`). Traduction en français de tous les textes restés en anglais (`IntroWebsite.tsx`, `HomeComponent.tsx`, `ActiveVideo.tsx`, `AboutPage.tsx`, `Section5.tsx`).
+- **SEO & Métadonnées (4.1, 4.2, 4.3)** : Pré-rendu serveur (SSR) + `export const metadata` sur `src/app/about/page.tsx` et `src/app/contact/page.tsx`. Génération de `public/apple-touch-icon.png` (180×180) et `public/favicon-32x32.png` (32×32). Suppression de la `SearchAction` JSON-LD cassée dans `src/app/layout.tsx` et alignement de `contact@clvm.productions` / `+1 438 439 1921` dans `src/app/seo/site.ts`.
 
 ### 2026-10-21 — Gemini — Catégories dynamiques depuis Sanity & correctif loading mobile (poussé sur PR #20)
 - Création de `src/sanity/lib/getCategories.ts` et enrichissement de `src/sanity/schemaTypes/categoryType.ts` (`titleFr` et `orderPlace` optionnels, avec fallback automatique FR/EN pour les catégories existantes).

@@ -1,0 +1,18 @@
+{
+  "github-sync": {
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "../.claude/hooks/sync-github.sh"
+      }
+    ]
+  },
+  "memory-checker": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "../.claude/hooks/check-memory.sh"
+      }
+    ]
+  }
+}

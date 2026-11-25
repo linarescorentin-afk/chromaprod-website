@@ -40,7 +40,7 @@ export const site = {
   business: {
     legalName: "CL Visual Maker",
     email: "contact@clvm.productions",
-    phone: "+1 438 439 1921",
+    phone: "+33 6 72 33 33 44",
     logo: "/logo-clvm.png",
     image: "/og-clvm.png", // main brand image
     priceRange: "$$$", // $, $$, $$$ …

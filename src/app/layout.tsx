@@ -17,7 +17,6 @@ const karantina = Karantina({
 const karla = Karla({
   variable: "--font-karla",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 

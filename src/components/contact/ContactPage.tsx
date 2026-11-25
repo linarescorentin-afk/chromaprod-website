@@ -57,7 +57,7 @@ function ContactPage({
 
   if (!isContentAvailable || !content) return null;
 
-  const activePhone = content.phone?.ca || "+1 438 439 1921";
+  const activePhone = content.phone?.fr || "+33 6 72 33 33 44";
   const cleanPhoneHref = `tel:${activePhone.replace(/\s+/g, "")}`;
 
   return (

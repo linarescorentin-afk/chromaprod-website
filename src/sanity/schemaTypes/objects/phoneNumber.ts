@@ -15,7 +15,7 @@ export default defineType({
       name: "fr",
       title: "France",
       type: "string",
-      description: "Ex: +33 7 84 10 35 54",
+      description: "Ex: +33 6 72 33 33 44",
     }),
   ],
 });

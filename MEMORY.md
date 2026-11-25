@@ -4,7 +4,7 @@
 > Chaque agent le **lit au début** de chaque session et le **met à jour à la fin** de chaque travail.
 > Règles d'écriture : voir `AGENTS.md`.
 
-_Dernière mise à jour : 2026-10-22 — par Gemini_
+_Dernière mise à jour : 2026-11-25 — par Gemini_
 
 ---
 
@@ -42,15 +42,14 @@ _Dernière mise à jour : 2026-10-22 — par Gemini_
 - 2026-10-21 — Mots-clés SEO centralisés dans `src/app/seo/site.ts` (layout les réutilise) ; image OG = `public/og-clvm.png`, logo JSON-LD = `public/logo-clvm.png` ; locale `fr_FR`.
 - 2026-10-21 — Catégories du menu récupérées dynamiquement depuis Sanity (`src/sanity/lib/getCategories.ts`) avec support FR/EN (`titleFr`) et ordre (`orderPlace`) + filtrage insensible à la casse — pour afficher « Resort » et toute future catégorie automatiquement.
 
+- 2026-11-25 — Nouveau numéro de téléphone officiel unique : `+33 6 72 33 33 44` (cliquable `tel:+33672333344` sur `/contact` et dans `src/app/seo/site.ts` JSON-LD), remplaçant l'ancien numéro Canada.
 - 2026-10-21 — Requêtes Sanity (`src/sanity/lib/get*.ts`) passées en Server Actions (`"use server"`) — évite les blocages CORS Sanity sur mobile/IP locale et domaines d'aperçu.
-- 2026-10-21 — Seul numéro de téléphone actif conservé : `+1 438 439 1921` (cliquable `tel:` sur `/contact` et dans `src/app/seo/site.ts`), email business aligné sur `contact@clvm.productions`.
 - 2026-10-21 — Optimisation automatique des miniatures vidéo à la récupération Sanity (`getVideo.ts` via `urlForTex(..., { w: 1200, q: 75 })`) et désactivation du `<Canvas>` 3D WebGL sur mobile (`windowWidth < 1024`) pour éviter la surchauffe batterie/GPU.
 - 2026-10-21 — Route handler proxy edge `/api/proxy-image` + `CanvasErrorBoundary` pour Three.js — élimine tout blocage CORS sur les domaines d'aperçu Vercel et protège l'application de tout crash WebGL.
 
 ## 5. Points d'attention / à faire
 
 <!-- Ce qui reste ouvert. Retirer la ligne quand c'est réglé. -->
-- PR #20 (`rebrand/clvm-bordeaux`) : rebrand CLVM + catégories dynamiques (`Resort`) + correctifs mobile + les 13 optimisations de l'audit appliquées et poussées sur GitHub (prête pour merge dans `main` par Corentin).
 - Compte TikTok CLVM à ajouter dans `sameAs` s'il existe (l'ancien @chromaprodmtl a été retiré).
 - PR #17 (brouillon Vercel CVE) probablement obsolète depuis la #18 → à fermer. ~17 branches distantes fusionnées à nettoyer.
 - `yarn` absent du PATH du terminal Claude : lint/build lancés via `npx --no-install next …`.
@@ -59,6 +58,11 @@ _Dernière mise à jour : 2026-10-22 — par Gemini_
 ## 6. Journal des sessions
 
 <!-- Le plus récent EN HAUT. Format : ### AAAA-MM-JJ — Agent — titre court, puis 2 à 5 puces (fait / fichiers / reste à faire). -->
+
+### 2026-11-25 — Gemini — Mise à jour du numéro de téléphone (+33 6 72 33 33 44) & fix police Turbopack
+- **Téléphone officiel mis à jour** : Remplacement de l'ancien numéro canadien par le numéro français `+33 6 72 33 33 44` (lien cliquable `tel:+33672333344`) sur `/contact` et dans les données structurées SEO JSON-LD (`telephone`).
+- **Fichiers modifiés** : `src/app/seo/site.ts`, `src/components/contact/ContactPage.tsx`, `src/sanity/lib/getContactSettings.ts`, `src/sanity/schemaTypes/objects/phoneNumber.ts` et `src/app/layout.tsx` (optimisation police variable Karla pour Turbopack).
+- **Validation** : Build `yarn build` validé avec succès (0 erreur) et testé en direct sur le serveur local (`feat/update-phone-number`).
 
 ### 2026-10-22 — Gemini — Réalignement de l'ordre des catégories de navigation (aligné sur À propos)
 - **Ordre unifié** : Alignement de l'ordre des catégories dans la barre de navigation haute (`NavBarDesktop.tsx`) et dans le menu mobile (`MobileNavbar.tsx`) sur celui de la section services de la page À propos : 1. `TOUT / ALL`, 2. `RESORT`, 3. `CORPORATE`, 4. `ÉVÉNEMENTS / EVENTS`, 5. `RÉSEAUX SOCIAUX / SOCIAL MEDIA`, suivis de `À PROPOS` et `CONTACT`.
